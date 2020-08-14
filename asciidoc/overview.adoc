@@ -1,0 +1,82 @@
+== Overview
+
+Vert.x 4 builds on the foundation laid by Vert.x 3 and brings a few significant improvements brought by the
+feedback of its community.
+
+If you are acquainted with Vert.x 3, you are almost ready to write a Vert.x 4 application.
+
+This overview explains the key changes between the two versions in order to facilitate the migration of a Vert.x 3
+application to Vert.x 4.
+
+=== Callback to the future
+
+Vert.x 3 programming model uses extensively callbacks for asynchronous operations
+
+```java
+HttpRequest request = client.get("/resource");
+request.send(ar -> {
+  if (ar.succeeded()) {
+    HttpResponse response = ar.result();
+  } else {
+    Throwable error = ar.cause();
+  }
+});
+```
+
+Vert.x 4 extends this model with futures: you can still use callbacks for asynchronous operations, but you can instead
+use its future counterpart
+
+```java
+HttpRequest request = client.get("/resource");
+Future<HttpResponse> response = request.send();
+response.onComplete(ar -> {
+  if (ar.succeeded()) {
+    HttpResponse response = ar.result();
+  } else {
+    Throwable failure = ar.cause();
+  }
+});
+```
+
+For simple operations you won't see much of a difference between callback and futures (since you ultimately need a callback
+to process the future result), however futures become very handy for composing asynchronous operations.
+
+Here is a callback example that composes two asynchronous operations:
+
+```java
+client.get("/resource1").send(ar1 -> {
+  if (ar1.succeeded()) {
+    HttpResponse response = ar.result();
+    JsonObject json = response.body();
+    client.put("/resource2").sendJsonObject(ar2 -> {
+      if (ar2.succeeded()) {
+        // Handle final result
+      } else {
+        Throwable failure2 = ar.cause();
+      }
+    });
+  } else {
+    Throwable failure1 = ar.cause();
+  }
+});
+```
+
+Here is the same example using future composition instead
+
+```java
+Future<HttpResponse> fut1 = client.get("/resource1").send();
+Future<HttpResponse> fut2 = fut1.compose(response -> client.put("/resource2").sendJsonObject(response.body()));
+fut2.onComplete(ar -> {
+  if (ar.succeeded()) {
+    // Handle final result
+  } else {
+    Throwable failure = ar.cause();
+  }
+});
+```
+
+One of the major improvements is error handling, callbacks needs to handle failures are every stage
+of the composition whereas the futures usually handle the failure once.
+
+=== Component stack changes (?)
+
