@@ -24,8 +24,8 @@ request.send(ar -> {
 });
 ```
 
-Vert.x 4 extends this model with futures: you can still use callbacks for asynchronous operations, but you can instead
-use its future counterpart.
+Vert.x 4 extends this model with futures: you can still use callbacks for asynchronous operations, but now you have instead
+the opportunity to use a future-ized version of the method
 
 ```java
 HttpRequest request = client.get("/resource");
