@@ -14,6 +14,7 @@ Vert.x 3 programming model uses extensively callbacks for asynchronous operation
 
 ```java
 HttpRequest request = client.get("/resource");
+
 request.send(ar -> {
   if (ar.succeeded()) {
     HttpResponse response = ar.result();
@@ -28,7 +29,9 @@ use its future counterpart.
 
 ```java
 HttpRequest request = client.get("/resource");
+
 Future<HttpResponse> response = request.send();
+
 response.onComplete(ar -> {
   if (ar.succeeded()) {
     HttpResponse response = ar.result();
@@ -68,7 +71,9 @@ Here is the same example using future composition instead
 
 ```java
 Future<HttpResponse> fut1 = client.get("/resource1").send();
+
 Future<HttpResponse> fut2 = fut1.compose(response -> client.put("/resource2").sendJsonObject(response.body()));
+
 fut2.onComplete(ar -> {
   if (ar.succeeded()) {
     // Handle final result
