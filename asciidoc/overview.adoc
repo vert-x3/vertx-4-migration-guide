@@ -24,7 +24,7 @@ request.send(ar -> {
 ```
 
 Vert.x 4 extends this model with futures: you can still use callbacks for asynchronous operations, but you can instead
-use its future counterpart
+use its future counterpart.
 
 ```java
 HttpRequest request = client.get("/resource");
@@ -37,6 +37,9 @@ response.onComplete(ar -> {
   }
 });
 ```
+
+There are various reasons behing this callback/future hybrid model design, the most important one being that it eases
+the migration of callback based applications to Vert.x 4 . Later these applications can be migrated to futures.
 
 For simple operations you won't see much of a difference between callback and futures (since you ultimately need a callback
 to process the future result), however futures become very handy for composing asynchronous operations.
