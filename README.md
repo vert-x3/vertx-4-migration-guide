@@ -7,7 +7,7 @@
 
 ## Guide structure
 
-- Overview
+- [Overview](asciidoc/overview.adoc)
   - foremost users need to understand what fundamentally changes between 3 and 4
 - Migration process
   - two kind of users: those migrating from latest 3 version and other still from a random version
