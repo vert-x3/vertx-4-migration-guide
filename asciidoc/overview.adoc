@@ -86,5 +86,39 @@ fut2.onComplete(ar -> {
 One of the major improvements is error handling, callbacks needs to handle failures are every stage
 of the composition whereas the futures usually handle the failure once.
 
+=== Deprecate me I'm famous
+
+Like any other piece of software Vert.x 4 improves existing API offered by Vert.x 3. Some of them changes
+can lead to API deprecations.
+
+Deprecated APIs follow these following principles
+
+1. The API is deprecated in Vert.x 3 and a new equivalent API is provided
+2. The API is removed in Vert.x 4
+
+If your code is using a deprecated Vert.x 3 API, you should update your code to use the equivalent replacement.
+
+Here is a simple example with the Event Bus
+
+```java
+// Send is deprecated in Vert.x 3
+vertx.eventBus().send("some-address", "hello world", ar -> {
+  // Handle response here
+});
+```
+
+The method `send(String,String,Handler<AsyncResult<Message>>)` is replaced in Vert.x 4 by `request(String,String,Handler<AsyncResult<Message>>)`
+
+```java
+// Works with Vert.x 3 and Vert.x 4
+vertx.eventBus().request("some-address", "hello world", ar -> {
+  // Handle response here
+});
+```
+
+When you plan to migrate your application, one part of your migration plan is to remove the usage of deprecated APIs.
+
+The Java compiler is configured by default for reporting deprecated API usage and can be very handy for this.
+
 === Component stack changes (?)
 
