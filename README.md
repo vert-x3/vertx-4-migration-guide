@@ -14,7 +14,7 @@
 - Components and features
   - components rewritten in Vert.x 4
     - vertx-jdbc-client → vertx-sql-client
-    - HTTP client -> HTTP client or Web client
+    - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)
     - ... 
   - components still in Vert.x 4 but deprecated to use without an alternative in the Vert.x stack (might be elsewhere or later)
      - vertx-sync (Loom)
