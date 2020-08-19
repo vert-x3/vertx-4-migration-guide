@@ -17,9 +17,43 @@ NOTE: Vert.x Web Client is written on top of Vert.x HTTP Client
 The Web Client is available in Vert.x 3 since Vert.x 3.4.0. The API remains the same between
 Vert.x 3 and Vert.x 4.
 
-todo.
+It provides HTTP simplified interactions and provides a few extra features that are not
+in HTTP Client, like HTTP session, JSON encoding/decoding, response predicates.
+
+Since the Web Client has been introduced we will keep this section small and give a simple overview
+example.
+
+```java
+// Vert.x 3
+HttpClientRequest request = client.get(80, "example.com", "/", response -> {
+  int statusCode = response.statusCode();
+  response.exceptionHandler(err -> {
+    // Handle connection error, e.g connection closed
+  });
+  response.bodyHandler(body -> {
+    // Handle body entirely
+  });
+});
+request.exceptionHandler(err -> {
+  // Handle connection error OR response error
+});
+request.end();
+
+// Web Client with Vert.x 3 or Vert.x 4
+client.get(80, "example.com", "/some-uri")
+  .send(ar -> {
+    if (ar.suceeded()) {
+      HttpResponse<Buffer> response = ar.result();
+      // Handle response
+    }  else {
+      // Handle error
+    }
+  });
+```
 
 ==== Migrating to the new HTTP Client
+
+The HTTP Client performs fine grained control over HTTP interactions and focus on the HTTP protocol.
 
 The HTTP client API has been greatly improved in Vert.x 4
 
@@ -113,10 +147,108 @@ WARNING: using the client with futures should respect a few key rules. Indeed an
 will start emitting buffers as soon as it is received, so the composition should either happen on the event-loop
 like in the example above or it should `pause`/`resume` the response
 
-===== Request streaming
+===== Sending requests
 
-todo.
+With Vert.x 3 the `end` method on `HttpClientRequest` sends the request
 
-===== Response streaming
+```java
+// Send a request with Vert.x 3
+request.end();
+```
 
-todo.
+the overloaded version sends a request with a body
+
+```java
+// Send a request with a body with Vert.x 3
+request.end(Buffer.buffer("hello world));
+```
+
+in addition since a `HttpClientRequest` is a `Writestream<Buffer>`, a pipe can stream the request
+
+```java
+// Send a request with a body with Vert.x 3
+writeStream.pipeTo(request, ar -> {
+  if (ar.succeeded()) {
+    // Sent the stream
+  }
+});
+```
+
+With Vert.x 4, the previous interactions remain possible. We added a new `send` method
+that will do all the above operations, yet this operation latches an `HttpClientResponse`
+
+```java
+// Send a request and process the response
+request.onComplete(ar -> {
+  if (ar.succeeded()) {
+    HttpClientResponse response = ar.result();
+    // Handle the response
+  }
+})
+request.end();
+
+// The new send method combines the above in a single operation
+request.send(ar -> {
+  if (ar.succeeded()) {
+    HttpClientResponse response = ar.result();
+    // Handle the response
+  }
+}));
+```
+
+The `send` method can take as argument a buffer, a string or a `ReadStream` and always gives
+back an `HttpClientResponse`.
+
+===== Handling responses
+
+There are no major changes to the `HttpClientResponse` interface, but there are a few improvements:
+
+The `body` method gives an async buffer, this supersedes advantageously the `bodyHandler`
+
+```java
+// Still possible with Vert.x 4
+response.bodyHandler(body -> {
+  // Process the body
+});
+response.exceptionHandler(err -> {
+  // Could not get a body
+});
+
+// Instead use
+response.body(ar -> {
+  if (ar.succeeded()) {
+    // Process the body
+  } else {
+    // Could not get a body
+  }
+});
+```
+
+The `end()` method achieve the same but discards the body, this supersedes the `endHandler`
+
+```java
+// Still possible with Vert.x 4
+response.endHandler(v -> {
+  // Response ended
+});
+response.exceptionHandler(err -> {
+  // Something wrong happened
+});
+
+// Instead use
+response.end(ar -> {
+  if (ar.succeeded()) {
+    // Response ended
+  } else {
+    // Something wrong happened
+  }
+});
+```
+
+===== Choosing between HTTP Client and Web Client
+
+You want to use the Vert.x HTTP Client for applications that will not interpret
+the HTTP exchanges.
+
+You want to use the Vert.x Web Client for applications that interact with the HTTP exchange
+content, e.g encoding to JSON a user decoding a JSON payload.
