@@ -1,4 +1,4 @@
-# Vertx 4 Mmigration Guide
+# Vertx 4 Migration Guide
 
 ## Goals
 
