@@ -1,0 +1,16 @@
+=== JDBC Client
+
+The Vert.x JDBC Client remains available in Vert.x 4 and will remain supported for the lifetime
+of Vert.x 4.
+
+A new SQL client has been designed for the past 2 years built on top of the experience we learned
+from the Vert.x JDBC Client feedback from the community.
+
+The new SQL client API has a few implementations
+
+- PostgreSQL client (formerly the Reactive PG Client)
+- MySQL client
+- DB2 client
+- the current JDBC client (offering the former JDBC client API and the SQL client API)
+
+todo.

@@ -13,7 +13,7 @@
   - two kind of users: those migrating from latest 3 version and other still from a random version
 - Components and features
   - components rewritten in Vert.x 4
-    - vertx-jdbc-client → vertx-sql-client
+    - [vertx-jdbc-client → vertx-sql-client](asciidoc/jdbc_client.adoc)
     - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)
     - ... 
   - components still in Vert.x 4 but deprecated to use without an alternative in the Vert.x stack (might be elsewhere or later)
