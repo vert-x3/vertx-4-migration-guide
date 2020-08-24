@@ -12,6 +12,7 @@
 - Migration process
   - two kind of users: those migrating from latest 3 version and other still from a random version
 - Components and features
+  - [JSON](asciidoc/json.adoc)
   - components rewritten in Vert.x 4
     - [vertx-jdbc-client → vertx-sql-client](asciidoc/jdbc_client.adoc)
     - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)

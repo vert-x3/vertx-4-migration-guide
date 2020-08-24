@@ -1,0 +1,39 @@
+=== JSON changes
+
+==== Object mapping
+
+Vert.x 3 requires at runtime the _Jackson Core_ and _Jackson Databind_ dependencies.
+
+Vert.x 4 requires at runtime the _Jackson Core_ dependency, unless JSON/Object mapping in which
+case _Jackson Databind_ is also required.
+
+If your application performs JSON/Object mapping with Vert.x then you might to add an explicit dependency
+on _Jackson databind_.
+
+The following methods
+
+- `JsonObject.mapFrom(Object)`
+- `JsonObject.mapTo(Class)`
+- `Json.decodeValue(Buffer, Class)`
+- `Json.decodeValue(String, Class)`
+- `Json.encode(Object)`
+- `Json.encodePrettily(Object)`
+- `Json.encodeToBuffer(Object)`
+
+work out of the box for a limited number of types
+
+- `JsonObject` and `JsonArray`
+- `Map` and `List`
+- `Number`
+- `Boolean`
+- `Enum`
+- `byte[]` and `Buffer`
+- `Instant`
+
+However as soon as your application performs arbitrary JSON mapping, then a dependency
+on `com.fasterxml.jackson.core:jackson-databind` is required.
+
+In addition the following methods `JsonObject.mapTo(Object)` and `JsonObject.mapFrom(Object)`
+are not supported at all without _Jackson Databind_.
+
+
