@@ -3,14 +3,16 @@
 The Vert.x JDBC Client remains available in Vert.x 4 and will remain supported for the lifetime
 of Vert.x 4.
 
-A new SQL client has been designed for the past 2 years built on top of the experience we learned
+A new reactive SQL client has been designed for the past 2 years built on top of the experience we learned
 from the Vert.x JDBC Client feedback from the community.
 
-The new SQL client API has a few implementations
+The new SQL client API has a few implementations:
 
-- PostgreSQL client (formerly the Reactive PG Client)
-- MySQL client
-- DB2 client
+- a reactive PostgreSQL client (formerly the Reactive PG Client)
+- a reactive MySQL client
+- a reactive DB2 client
 - the current JDBC client (offering the former JDBC client API and the SQL client API)
+
+The reactive implementations use the database network protocols and are resource-efficient, while the JDBC client uses worker threads to deal with the blocking nature of JDBC.
 
 todo.
