@@ -116,7 +116,8 @@ vertx.eventBus().request("some-address", "hello world", ar -> {
 });
 ```
 
-When you plan to migrate your application, one part of your migration plan is to remove the usage of deprecated APIs.
+Replacing the usage of deprecated APIs is an early part of an overall migration plan, it can be achieved
+early and has other benefits such as using a better or more robust API.
 
 The Java compiler is configured by default for reporting deprecated API usage and can be very handy for this.
 
