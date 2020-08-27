@@ -2,7 +2,7 @@
 
 The Vert.x Redis client has been rewritten in Vert.x 4. The latest releases of Vert.x 3.x included both the old API and the new API in the same module, but the old API has been removed in 4.
 
-The reason for such big change lies in the fact that the old API did not allow us to keep accomodating both the protocol enhancements and Redis server features.
+The reason for such big change lies in the fact that the old API did not allow us to keep accommodating both the protocol enhancements and Redis server features.
 
 The new client allows you to:
 
@@ -17,9 +17,10 @@ NOTE: In order to smooth the migration a helper class `RedisAPI` is present to a
 
 ==== Migrate to RedisAPI
 
-The first biggest difference in the API is that you can now decide how the connection is managed. Like before you can let the client manage the connection for you (using a pool underneath), or you can control the connection, by requesting a new connection and ensure to close/return it after the work is done.
+The first biggest difference in the API is that you can now decide how to manage the connection. Like before you can let the client manage the connection for you (using a pool underneath), or you can control the connection, by requesting a new connection and ensure to close/return it after the completing the work.
 
-```java
+[source,java]
+----
 // Create the redis client (3.x)
 RedisClient client = RedisClient
   .create(vertx, new RedisOptions().setHost(host));
@@ -29,19 +30,21 @@ Redis client = Redis
   .createClient(
     vertx,
     "redis://server.address:port");
-```
+----
 
 One of the changes here, is that the client now follows the official and standard connection string syntax:
 
-```
+[source]
+----
 redis[s]://[[user]:password@]server[:port]/[database]
-```
+----
 
-Once the client is created, using the managed mode to perform a simple `SET` and later `GET` requests can be coded as:
+After creating the client, use the managed mode to perform a simple `SET` and later `GET` requests can be coded as:
 
-```java
+[source,java]
+----
 // Using 3.x
-// ommiting the error hanlding for brevity
+// omitting the error handling for brevity
 client.set("key", "value", s -> {
   if (s.succeeded()) {
     System.out.println("key stored");
@@ -54,7 +57,7 @@ client.set("key", "value", s -> {
 });
 
 // Using 4.x
-// ommiting the error hanlding for brevity
+// omitting the error handling for brevity
 
 // 1. Wrap the client into a RedisAPI
 api = RedisAPI.api(client);
@@ -77,7 +80,7 @@ api.set(
       });
     }
 });
-```
+----
 
 ==== Migrating to the new Client directly
 
@@ -89,9 +92,10 @@ If you followed the previous migration, you may just decide to migrate to the cl
 
 If you haven't followed the previous migration, please follow how to create a client. Once we have the client, using it to perform a simple `SET` and later `GET` requests can be coded as:
 
-```java
+[source,java]
+----
 // Using 3.x
-// ommiting the error hanlding for brevity
+// omitting the error handling for brevity
 client.set("key", "value", s -> {
   if (s.succeeded()) {
     System.out.println("key stored");
@@ -104,7 +108,7 @@ client.set("key", "value", s -> {
 });
 
 // Using 4.x
-// ommiting the error hanlding for brevity
+// omitting the error handling for brevity
 
 import static io.vertx.redis.client.Request.cmd;
 import static io.vertx.redis.client.Command.*;
@@ -119,13 +123,13 @@ client.send(cmd(SET).arg("key").arg("value"), s -> {
       });
     }
 });
-```
+----
 
 All interactions are now going over the `send(Request)` method.
 
 ==== Migrating responses
 
-In Vert.x 3.x the client had hardcoded all known commands up to redis 5, and the responses where also typed according to the command. With the new client, the client follows what really happens on redis so the responses are of a newly added type `Response`.
+In Vert.x 3.x the client had hardcoded all known commands up to redis 5, and the responses where also typed according to the command. With the new client, the client follows what really happens on redis, so the responses are of a newly added type `Response`.
 
 This was needed to support API changes and redis extensions, plus the new wire protocol has a wider range of types. So while before a response would be of a type:
 
@@ -138,7 +142,7 @@ This was needed to support API changes and redis extensions, plus the new wire p
 The new client will always be:
 
 * null
-* `Response.`
+* `Response`
 
 The `Response` object has now simple converters for the type you would like it to be:
 
@@ -148,15 +152,16 @@ The `Response` object has now simple converters for the type you would like it t
 * toBuffer()
 * etc...
 
-If the data received is of the desired type, you will get it as is, otherwise a best effort to convert is done.
+If the data received is of the desired type, you will get it as is. Otherwise, the object will perform the best possible conversion.
 
-NOTE: Not all convertions are possible. `String` to `List` or `Map` will throw `UnsupportedOperationException`.
+NOTE: Not all conventions are possible. For example: `String` to `List` or `Map` will throw `UnsupportedOperationException`.
 
 Handling collections is also possible, as the `Response` object implements the `Iterable` interface, for example doing an MGET request:
 
-```java
+[source,java]
+----
 // Using 4.x
-// ommiting the error hanlding for brevity
+// omitting the error handling for brevity
 
 import static io.vertx.redis.client.Request.cmd;
 import static io.vertx.redis.client.Command.*;
@@ -165,5 +170,5 @@ client.send(cmd(MGET).arg("key1").arg("key2").arg("key3"), mget -> {
   mget.result()
     .forEach(value -> {
       // Do something with a single value...
-```
+----
 
