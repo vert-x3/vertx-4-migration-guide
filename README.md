@@ -14,6 +14,7 @@
 - Components and features
   - [JSON](asciidoc/json.adoc)
   - [vertx-auth](asciidoc/auth.adoc)
+  - [Kotlin](asciidoc/kotlin.adoc)
   - components rewritten in Vert.x 4
     - [vertx-jdbc-client → vertx-sql-client](asciidoc/jdbc_client.adoc)
     - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)

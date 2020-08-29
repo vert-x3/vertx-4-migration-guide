@@ -1,0 +1,30 @@
+=== Kotlin changes
+
+==== Generated coroutine extension methods
+
+Vert.x 3 generates extension suspending extension methods, e.g `get(Handler<AsyncResult<Result>>`
+generates `getAwait()` extension method.
+
+```kotlin
+// getSomethingAwait() is a generated extension method
+// and is deprecated
+var result = getSomethingAwait();
+```
+
+Vert.x 4 provides a future based model and the Vert.x `Future` has an `await()` extension methods
+that does the same. The code above can simply be rewritten as
+
+```kotlin
+var result = getSomething().await();
+```
+
+==== Script compiler
+
+Vert.x 3 provides a Kotlin Script compiler based on Kotlin Compiler API.
+
+The API often breaks and creates friction for upgrading Kotlin versions.
+
+This is removed in Vert.x 4.0.
+
+Such scripts should now be handled by Kotlin tools, e.g the Kotlin compiler has options
+to compile these scripts.
