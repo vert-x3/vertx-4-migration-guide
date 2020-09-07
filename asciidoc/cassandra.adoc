@@ -57,7 +57,28 @@ new CassandraClientOptions(CqlSession.builder());
 ```
 
 Methods `setPort`, `getContactPoints` and `setContactPoints` was removed. Instead,
-`addContactPoint` is expected to be used.
+`addContactPoint` is expected to be used:
+
+```java
+// Vert.x Cassandra Client 3.x:
+import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .setContactPoints(List.of("node1.address", "node2.address", "node3.address"))
+  .setPort(9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options); 
+
+// Vert.x Cassandra Client 4.x:
+import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .addContactPoint("node1.address", 9142)
+  .addContactPoint("node2.address", 9142)
+  .addContactPoint("node3.address", 9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options);  
+```
 
 ==== Removing Objects Mapper
 
