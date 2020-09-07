@@ -39,7 +39,7 @@ cassandraClient.execute(statement, done -> {
 
 ==== CassandraClientOptions changes
 
-Construction of CassandraClientOptions now might require different imports:
+Construction of `CassandraClientOptions` now might require different imports:
 
 ```java
 // Vert.x Cassandra Client 3.x:
