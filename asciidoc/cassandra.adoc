@@ -3,7 +3,7 @@
 ==== Underlying driver changes
 
 In Vert.x 4 Cassandra Client uses a new major 4.x version of Datastax Java driver, which
-is incompatible the previous one. Migration process might involve import changes and 
+is incompatible with the previous one. Migration process might involve import changes and 
 changes in the way you create statements: 
 
 ```java
