@@ -49,5 +49,5 @@ and removed in Vert.x 4:
 List<Pojo> pojos = Json.decodeValue(buffer, new TypeReference<List<Pojo>>() {})
 
 // Vert.x 3 and 4
-pojos = JacksonCodec.decodeValue(buffer, new TypeReference<List<Pojo>>() {})
+pojos = DatabindCodec.decodeValue(buffer, new TypeReference<List<Pojo>>() {})
 ```
