@@ -37,7 +37,7 @@ cassandraClient.execute(statement, done -> {
 });
 ```
 
-==== CassandraClientOptions changes
+==== `CassandraClientOptions` changes
 
 Construction of `CassandraClientOptions` now might require different imports:
 
