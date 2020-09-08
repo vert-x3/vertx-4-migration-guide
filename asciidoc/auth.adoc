@@ -9,6 +9,9 @@ The Vert.x Auth module has very significant changes in Vert.x 4. The most notabl
 This change means that any provider is now able to perform either `authentication` and `authorization` independently.
 This of course means that API changes had to be made, and your code may need to be migrated.
 
+Although these are the most notorious changes, this guide does not replace the full detailed list of breaking changes
+listed on the https://github.com/vert-x3/wiki/wiki/4.0.0-Deprecations-and-breaking-changes#vertx-auth-1[Vert.x WIKI].
+
 ==== Migrate Authentication
 
 The authentication mechanism is practically the same, the main change happens at the result level. Before the result
@@ -145,3 +148,123 @@ create new users:
 
 These helpers can create the user, roles and permissions directly on the target store, simplifying your work
 for migrations.
+
+=== Key management
+
+Handling keys has changed significantly with the new release. Many API limitations have been fixed and required behavior
+and code changes. The most notable one is that when loading a key there is not distinction between public buffer and
+private buffer.
+
+The previous key classes were:
+
+* `io.vertx.ext.auth.KeyStoreOptions` - to work with `jce` keystores
+* `io.vertx.ext.auth.SecretOptions` - to handle simmetric secrets
+* `io.vertx.ext.auth.PubSecKeyOptions` - to handle pub/sec keys
+
+==== Secrets Management
+
+In Vert.x 4.0 `SecretOptions` is no more, all key configuration is centralized on `PubSecKeyOptions`:
+
+[source,java]
+----
+// Configure a hashing secret (3.x)
+new SecretOptions()
+  .setType("HS256")
+  .setSecret("password");
+----
+
+You Should now use the new API:
+
+[source,java]
+----
+// Configure a hashing secret (4.0)
+new PubSecKeyOptions()
+  // algorithms follow the JOSE naming scheme
+  .setAlgorithm("HS256")
+  .setBuffer("password");
+----
+
+==== PubSecKeyOptions Management
+
+Public secret key management was quite opionated on Vert.x 3.x. The configuration object assumed that keys are
+configured as key-pairs and that the key data itself is a `PKCS8` encoded string without the standard delimiters.
+
+[source,java]
+----
+// Configure a key pair (3.x)
+new PubSecKeyOptions()
+  .setPublicKey(
+    // remove the boundaries
+    // (don't do this as it doesn't handle end of lines
+    // it's for illustration purposes)
+    pubPemString
+      .replaceAll("-----BEGIN PUBLIC KEY----")
+      .replaceAll("-----END PUBLIC KEY----"))
+  .setSecretKey(
+    // remove the boundaries
+    // (don't do this as it doesn't handle end of lines
+    // it's for illustration purposes)
+    secPemString
+      .replaceAll("-----BEGIN PUBLIC KEY----")
+      .replaceAll("-----END PUBLIC KEY----"));
+----
+
+
+In Vert.x 4.0 the configuration is **always** about a single key, so a key-pair should be 2 key (the public +
+the secret).
+
+[source,java]
+----
+// Configure a key pair (4.x)
+PubSecKeyOptions pubKey =
+  new PubSecKeyOptions()
+    // the buffer is the exact contents of the PEM file (boundaries included)
+    .setBuffer(pubPemString);
+
+PubSecKeyOptions secKey =
+  new PubSecKeyOptions()
+    // the buffer is the exact contents of the PEM file (boundaries included)
+    .setBuffer(secPemString);
+----
+
+This also means that handling `X509` certificates is possible with the same API:
+
+[source,java]
+----
+// Configure a key pair (4.x)
+PubSecKeyOptions x509Certificate =
+  new PubSecKeyOptions()
+    // the buffer is the exact contents of the PEM file (boundaries included)
+    .setBuffer(x509PemString);
+----
+
+==== KeyStore Management
+
+In Vert.x 3.x `KeyStoreOptions` assumes that the keystore format is `jceks`, and the store password is the same as the
+key's password. As `jceks` is a proprietary format, it is advised to use a standard format instead (as modern JDKs also
+recommend).
+
+[source,java]
+----
+// Loading a jceks keystore in 3.x
+new KeyStoreOptions()
+  .setPath("path/to/keystore.jks")
+  .setPassword("keystore-password");
+----
+
+In Vert.x 4.0 we assume the default format is the JDK configured default one. This means `PKCS12` in Java 9 and up.
+
+[source,java]
+----
+// Loading a **jceks** keystore in 4.0
+new KeyStoreOptions()
+  .setPath("path/to/keystore.jks")
+  // this is required as for modern JDKs this isn't the default
+  // type and probaly `pkcs12` will be picked instead
+  .setType("jceks")
+  .setPassword("keystore-password")
+  // optionally if your keys have different passwords
+  // if a key specific id is not provided it defaults to
+  // the keystore password
+  .putPasswordProtection("key-id", "key-specific-password");
+----
