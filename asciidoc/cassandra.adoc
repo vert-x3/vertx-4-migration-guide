@@ -1,0 +1,86 @@
+=== Cassandra Client
+
+==== Underlying driver changes
+
+In Vert.x 4 Cassandra Client uses the latest major version of Datastax Java driver (4.x), which
+is incompatible with the previous one. Migration process might involve import changes and 
+changes in the way you create statements: 
+
+```java
+// Vert.x Cassandra Client 3.x:
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.SimpleStatement;
+import io.vertx.cassandra.CassandraClient;
+
+SimpleStatement statement =
+  new SimpleStatement("SELECT release_version FROM system.local");
+cassandraClient.execute(statement, done -> {
+    ResultSet results = done.result();
+    Row row = resultSet.one();
+    System.out.println(row.getString("release_version"));
+});
+
+
+// Vert.x Cassandra Client 4.x:
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
+import io.vertx.cassandra.CassandraClient;
+
+SimpleStatement statement =
+  SimpleStatement.newInstance("SELECT release_version FROM system.local");
+cassandraClient.execute(statement, done -> {
+    ResultSet results = done.result();
+    Row row = resultSet.one();
+    System.out.println(row.getString("release_version"));
+});
+```
+
+==== `CassandraClientOptions` changes
+
+Construction of `CassandraClientOptions` now might require different imports:
+
+```java
+// Vert.x Cassandra Client 3.x:
+import com.datastax.driver.core.Cluster;
+import io.vertx.cassandra.CassandraClientOptions;
+
+new CassandraClientOptions(Cluster.builder());
+
+// Vert.x Cassandra Client 4.x:
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.CqlSessionBuilder;
+import io.vertx.cassandra.CassandraClientOptions;
+
+new CassandraClientOptions(CqlSession.builder());
+```
+
+Methods `setPort`, `getContactPoints` and `setContactPoints` was removed. Instead,
+`addContactPoint` is expected to be used:
+
+```java
+// Vert.x Cassandra Client 3.x:
+import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .setContactPoints(List.of("node1.address", "node2.address", "node3.address"))
+  .setPort(9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options); 
+
+// Vert.x Cassandra Client 4.x:
+import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .addContactPoint("node1.address", 9142)
+  .addContactPoint("node2.address", 9142)
+  .addContactPoint("node3.address", 9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options);  
+```
+
+==== Removing Objects Mapper
+
+Object mappers are no longer supported due to changes in Datastax Driver 4.x and required
+implementation complexity.
