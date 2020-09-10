@@ -1,0 +1,26 @@
+=== Apache Ignite Cluster Manager
+
+The Vert.x Ignite cluster manager has been rewritten to support the new Clustering SPI in Vert.x 4. This should not have any notable difference for the developer.
+
+The second change was about the configuration. The reason for doing so was to reduce the transient dependencies introduced by the `ignite-spring` extension which was used to parse XML configurations.
+This change removes more than 10MB of assets from your dependencies.
+
+If you are using the cluster manager without any configuration changes there is no migration required but if you were using a custom `ignite.xml` you can either switch to the new `ignite.json` format or add `ignite-spring` back to you classpath.
+
+==== Migrate to ignite.json
+
+Some text
+
+[source]
+----
+some code
+----
+
+==== Migrate back to ignite.xml with ignite-spring
+
+Some text
+
+[source]
+----
+some code
+----
