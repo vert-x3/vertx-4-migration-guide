@@ -36,6 +36,22 @@ on `com.fasterxml.jackson.core:jackson-databind` is required.
 In addition the following methods `JsonObject.mapTo(Object)` and `JsonObject.mapFrom(Object)`
 are not supported at all without _Jackson Databind_.
 
+===== Base64 support
+
+Vert.x 3 binary support in JSON claimed to implement RFC7493, however the implementation was wrong.
+The RFC states that the encoding should be BASE64 URL without padding, however the implementation
+was using the common BASE64.
+
+In Vert.x 4 the implementation has been fixed to use the right codec (base64url). However for cases
+when there is the need to interop with older applications (still on Vert.x 3), a config flag is
+available to use the "legacy" codec.
+
+```sh
+# Vert.x 4 will use the old codec (as used by Vert.x 3)
+java -Dvertx.json.base64=legacy ...
+```
+
+
 ==== Using Jackson type references
 
 In Vert.x 3 the `io.vertx.core.json.Json` interface defines a few specific Jackson methods decleraing
