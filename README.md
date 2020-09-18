@@ -20,7 +20,7 @@
     - [vertx-jdbc-client → vertx-sql-client](asciidoc/jdbc_client.adoc)
     - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)
     - [vertx-redis-client](asciidoc/redis.adoc)
-    - ... 
+    - [vertx-web-api-contract -> vertx-web-openapi](asciidoc/openapi.adoc)
   - components still in Vert.x 4 but deprecated to use without an alternative in the Vert.x stack (might be elsewhere or later)
      - vertx-sync (Loom)
      - vertx-service-factory
