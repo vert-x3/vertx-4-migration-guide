@@ -2,7 +2,7 @@
 
 ==== New module
 
-Vert.x 4 provides a new module in order to develop Contract Driven web applications using `vertx-web`: `vertx-web-openapi`.
+Vert.x 4 provides a new module in order to develop Contract-Driven applications using `vertx-web` and OpenAPI: `vertx-web-openapi`.
 In order to simplify the transitioning to the new module, we'll continue to publish `vertx-web-api-contract` over the Vert.x 4 lifecycle, but we strongly suggest our users to switch soon to `vertx-web-openapi`.
 
 Although the validation logic was completely rewritten from scratch, the new module behaves similarly to the previous one, but the API surface was reworked in order to make it simpler to use and consistent with Vert.x Web `Router`.
@@ -15,7 +15,7 @@ The new module main package is `io.vertx.ext.web.openapi`.
 Similarly to the old module, in `vertx-web-openapi` you start instantiating the `RouterFactory`:
 
 ```java
-RouterFactory.create(vertx, "petstore.yaml", ar -> {
+RouterFactory.create(vertx, "petstore.yaml").onComplete(ar -> {
   if (ar.succeeded()) {
     // Spec loaded with success
     RouterFactory routerFactory = ar.result();
@@ -24,6 +24,18 @@ RouterFactory.create(vertx, "petstore.yaml", ar -> {
     Throwable exception = ar.cause();
   }
 });
+```
+
+Or even better, using the new methods in Vert.x Futures:
+
+```java
+RouterFactory.create(vertx, "petstore.yaml")
+  .onSuccess(routerFactory -> {
+    // Spec loaded with success
+  })
+  .onFailure(exception -> {
+    // Something went wrong during router factory initialization
+  });
 ```
 
 Because in the new module we use the Vert.x Filesystem APIs to load the files, you don't need to specify the `/` for the classpath resources.
