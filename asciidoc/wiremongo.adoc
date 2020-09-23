@@ -1,0 +1,29 @@
+=== Testing Mongo DB Code
+
+The https://github.com/vert-x3/vertx-embedded-mongo-db[vertx-embedded-mongo-db] module is no longer supported in Vert.x 4. An alternative can be https://github.com/NoEnv/vertx-wiremongo[vertx-wiremongo] although it takes a different approach. While vertx-embedded-mongo-db spun up a full blown mongo server, vertx-wiremongo is an alternative in-memory implementation of Vert.x' `MongoClient` interface that allows specific mocking.
+
+Let's assume we want to test our persistence layer's `findApples` method to make sure it creates the correct mongo query. Here's what such a test may look like with vertx-wiremongo:
+
+```java
+@Test
+public void testFindApples(TestContext ctx) {
+
+  wiremongo.find()
+    .inCollection("warehouse")
+    .withQuery(q -> q.getString("type").equals("apple"))
+    .returns(List.of(new JsonObject()
+      .put("type", "apple")
+      .put("mass", 161)
+      .put("expiration", new JsonObject()
+        .put("$date", Instant.now().plus(7, DAYS)))));
+
+  db.findApples()
+    .onSuccess(l -> {
+      ctx.assertEquals(1, l.size());
+      ctx.assertEquals(161, l.get(0).getInteger("mass"));
+    })
+    .onComplete(ctx.asyncAssertSuccess());
+}
+```
+
+A complete documentation can be found https://github.com/NoEnv/vertx-wiremongo[here].

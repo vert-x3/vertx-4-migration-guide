@@ -21,6 +21,7 @@
     - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)
     - [vertx-redis-client](asciidoc/redis.adoc)
     - [vertx-web-api-contract -> vertx-web-openapi](asciidoc/openapi.adoc)
+    - [vertx-embedded-mongo-db → vertx-wiremongo](asciidoc/wiremongo.adoc)
   - components still in Vert.x 4 but deprecated to use without an alternative in the Vert.x stack (might be elsewhere or later)
      - vertx-sync (Loom)
      - vertx-service-factory
