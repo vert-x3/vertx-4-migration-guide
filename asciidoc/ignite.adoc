@@ -3,24 +3,128 @@
 The Vert.x Ignite cluster manager has been rewritten to support the new Clustering SPI in Vert.x 4. This should not have any notable difference for the developer.
 
 The second change was about the configuration. The reason for doing so was to reduce the transient dependencies introduced by the `ignite-spring` extension which was used to parse XML configurations.
-This change removes more than 10MB of assets from your dependencies.
+This change removes more than 10MB of assets from the dependencies.
 
-If you are using the cluster manager without any configuration changes there is no migration required but if you were using a custom `ignite.xml` you can either switch to the new `ignite.json` format or add `ignite-spring` back to you classpath.
+If the cluster manager is used without any configuration changes there is no migration required but if there was a custom `ignite.xml` used, it can be either switched to the new `ignite.json` format or the `ignite-spring` dependency can be added back to you classpath.
 
-==== Migrate to ignite.json
+==== Migrate to custom ignite.json
 
-Some text
+To overide the `default-ignite.json` you can simply add `ignite.json` to your classpath. The json format supports customizing ignite options, cache options, discovery options and ssl options. For further customization you need to fall back to the old XML format.
 
-[source]
+In the example below the default config is extended to activate TLS for cluster communication.
+[source,json]
 ----
-some code
+{
+  "cacheConfiguration": [{
+    "name": "__vertx.*",
+    "cacheMode": "REPLICATED",
+    "readFromBackup": false,
+    "atomicityMode": "ATOMIC",
+    "writeSynchronizationMode": "FULL_SYNC"
+  }, {
+    "name": "*",
+    "cacheMode": "PARTITIONED",
+    "backups": 1,
+    "readFromBackup": false,
+    "atomicityMode": "ATOMIC",
+    "writeSynchronizationMode": "FULL_SYNC"
+  }],
+  "sslContextFactory": {
+    "protocol": "TLSv1.2",
+    "keyStoreFilePath": "server.jks",
+    "keyStorePassword": "changeme",
+    "trustStoreFilePath": "server.jks",
+    "trustStorePassword": "changeme",
+    "trustAll": false
+  },
+  "includeEventTypes": ["EVT_CACHE_OBJECT_PUT", "EVT_CACHE_OBJECT_REMOVED"],
+  "metricsLogFrequency": 0
+}
 ----
 
 ==== Migrate back to ignite.xml with ignite-spring
 
-Some text
+Add the `ignite-spring` dependency and provide the `ignite.xml` configuration to your classpath.
 
-[source]
+* Maven (in your `pom.xml`):
+
+[source,xml,subs="+attributes"]
 ----
-some code
+<dependency>
+  <groupId>org.apache.ignite</groupId>
+  <artifactId>ignite-spring</artifactId>
+  <version>${ignite.version}</version>
+</dependency>
+----
+
+* Gradle (in your `build.gradle` file):
+
+[source,groovy,subs="+attributes"]
+----
+compile 'org.apache.ignite:ignite-spring:${ignite.version}'
+----
+
+Example from the original `default-ignite.xml` for this ClusterManager:
+
+[source,xml,subs="+attributes"]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util.xsd">
+
+  <bean class="org.apache.ignite.configuration.IgniteConfiguration">
+
+    <property name="discoverySpi">
+      <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+        <property name="ipFinder">
+          <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder"/>
+        </property>
+      </bean>
+    </property>
+
+    <property name="cacheConfiguration">
+      <list>
+        <bean class="org.apache.ignite.configuration.CacheConfiguration">
+          <property name="name" value="__vertx.*"/>
+          <property name="cacheMode" value="REPLICATED"/>
+          <property name="readFromBackup" value="false"/>
+          <property name="atomicityMode" value="ATOMIC"/>
+          <property name="writeSynchronizationMode" value="FULL_SYNC"/>
+        </bean>
+        <bean class="org.apache.ignite.configuration.CacheConfiguration">
+          <property name="name" value="*"/>
+          <property name="cacheMode" value="PARTITIONED"/>
+          <property name="backups" value="1"/>
+          <property name="readFromBackup" value="false"/>
+          <property name="atomicityMode" value="ATOMIC"/>
+          <property name="affinity">
+            <bean class="org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction">
+              <property name="partitions" value="128"/>
+            </bean>
+          </property>
+          <property name="writeSynchronizationMode" value="FULL_SYNC"/>
+        </bean>
+      </list>
+    </property>
+
+    <property name="includeEventTypes">
+      <list>
+        <util:constant static-field="org.apache.ignite.events.EventType.EVT_CACHE_OBJECT_PUT"/>
+        <util:constant static-field="org.apache.ignite.events.EventType.EVT_CACHE_OBJECT_REMOVED"/>
+      </list>
+    </property>
+
+    <property name="gridLogger">
+      <bean class="io.vertx.spi.cluster.ignite.impl.VertxLogger"/>
+    </property>
+
+    <property name="metricsLogFrequency" value="0"/>
+  </bean>
+</beans>
 ----
