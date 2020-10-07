@@ -15,6 +15,7 @@
   - [JSON](asciidoc/json.adoc)
   - [vertx-auth](asciidoc/auth.adoc)
   - [vertx-cassandra-client](asciidoc/cassandra.adoc)
+  - [SockJS Handler](asciidoc/sockjs.adoc)
   - [Kotlin](asciidoc/kotlin.adoc)
   - [Service Proxy](asciidoc/service_proxy.adoc)
   - components rewritten in Vert.x 4

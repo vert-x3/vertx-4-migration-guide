@@ -1,0 +1,30 @@
+=== SockJS Handler
+
+==== Event bus `writeHandler` is disabled by default
+
+In Vert.x 4 `SockJSSocket` no longer registers a clustered event bus consumer by default.
+In order to write to the socket over the event bus, you must now enable this behavior in `SockJSHandlerOptions`:
+
+```java
+Router router = Router.router(vertx);
+
+SockJSHandlerOptions options = new SockJSHandlerOptions()
+  .setRegisterWriteHandler(true); // enable the event bus consumer registration
+
+SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
+
+router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -> {
+
+  // Retrieve the writeHandlerID and store it (e.g. in a local map)
+  String writeHandlerID = sockJSSocket.writeHandlerID();
+
+}));
+```
+
+When enabled, the event bus consumer is now local only by default but this is configurable too:
+
+```java
+SockJSHandlerOptions options = new SockJSHandlerOptions()
+  .setRegisterWriteHandler(true) // enable the event bus consumer registration
+  .setLocalWriteHandler(false); // register a clustered event bus consumer
+```
