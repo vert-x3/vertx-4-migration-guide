@@ -16,6 +16,7 @@
   - [vertx-auth](asciidoc/auth.adoc)
   - [vertx-cassandra-client](asciidoc/cassandra.adoc)
   - [Kotlin](asciidoc/kotlin.adoc)
+  - [Service Proxy](asciidoc/service_proxy.adoc)
   - components rewritten in Vert.x 4
     - [vertx-jdbc-client → vertx-sql-client](asciidoc/jdbc_client.adoc)
     - [HTTP client -> HTTP client or Web client](asciidoc/http_client.adoc)
