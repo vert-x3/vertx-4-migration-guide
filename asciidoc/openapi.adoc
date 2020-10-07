@@ -123,3 +123,26 @@ In Vert.x 4, the validation logic is encapsulated in another module, called `ver
 
 The new entrypoint for this module is called `ValidationHandler` and It provides a completely different API from `HTTPRequestValidationHandler`.
 We encourage you to look at the documentation for more details: https://vertx-web-site.github.io/docs/vertx-web-validation/java/
+
+==== Vert.x Web API Service
+
+The `vertx-web-api-service` module was internally refactored to adapt it to `vertx-web-validation`.
+For OpenAPI users that will use `vertx-web-openapi`, the usage of this module doesn't change.
+
+On the other hand, if you're not an OpenAPI user, you can use this module using `vertx-web-validation` alone with the class `RouteToEBServiceHandler`:
+
+```java
+router.get("/api/transactions")
+  .handler(
+    ValidationHandlerBuilder.create(schemaParser)
+      .queryParameter(optionalParam("from", stringSchema()))
+      .queryParameter(optionalParam("to", stringSchema()))
+      .build()
+  ).handler(
+    RouteToEBServiceHandler.build(eventBus, "transactions.myapplication", "getTransactionsList")
+  );
+```
+
+We encourage you to look at the documentation for more details: https://vertx-web-site.github.io/docs/vertx-web-api-service/java/
+
+This module is not compatible anymore with `vertx-web-api-contract` so, if you're going to upgrade to Vert.x 4, please migrate your Vert.x OpenAPI code to `vertx-web-openapi`.
