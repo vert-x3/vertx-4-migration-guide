@@ -1,0 +1,21 @@
+=== Service Proxy
+
+Service Proxy module doesn't change in Vert.x 4, but the class `ServiceProxyProcessor` was removed.
+
+To use the Service proxy code generator, you just need to import `vertx-codegen` with `processor` classifier in your classpath:
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-codegen</artifactId>
+    <classifier>processor</classifier>
+  </dependency>
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-service-proxy</artifactId>
+  </dependency>
+</dependencies>
+```
+
+Service proxy will reuse `io.vertx.codegen.CodeGenProcessor` from `vertx-codegen` to start the code generation of service proxy and handler.
