@@ -21,7 +21,7 @@ RouterBuilder.create(vertx, "petstore.yaml").onComplete(ar -> {
     // Spec loaded with success
     RouterBuilder routerBuilder = ar.result();
   } else {
-    // Something went wrong during router factory initialization
+    // Something went wrong during router builder initialization
     Throwable exception = ar.cause();
   }
 });
@@ -35,7 +35,7 @@ RouterBuilder.create(vertx, "petstore.yaml")
     // Spec loaded with success
   })
   .onFailure(exception -> {
-    // Something went wrong during router factory initialization
+    // Something went wrong during router builder initialization
   });
 ```
 
