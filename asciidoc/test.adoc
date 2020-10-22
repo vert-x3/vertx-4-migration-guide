@@ -1,5 +1,5 @@
+include::attributes.adoc[]
+
 = Test
-:toc: left
-:foo: bar
 
 Test {foo}.
