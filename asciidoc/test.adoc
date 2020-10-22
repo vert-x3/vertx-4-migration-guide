@@ -1,0 +1,5 @@
+= Test
+:toc: left
+:foo: bar
+
+Test {foo}.
