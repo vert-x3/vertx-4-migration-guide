@@ -1,0 +1,18 @@
+[id="changes-in-vertx-config_{context}"]
+= Changes in {VertX} configuration
+
+The following section describes the changes in {VertX} configuration.
+
+== New method to retrieve configuration
+
+The method `ConfigRetriever.getConfigAsFuture()` has been removed. Use the method `retriever.getConfig()` instead.
+
+The following example shows how configuration was retrieved in {VertX} {3x} releases.
+----
+Future<JsonObject> fut = ConfigRetriever. getConfigAsFuture(retriever);
+----
+
+The following example shows how to retrieve configuration in {VertX} {4}.
+----
+fut = retriever.getConfig();
+----

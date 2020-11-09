@@ -1,0 +1,14 @@
+ifdef::context[:parent-context-of-changes-in-http: {context}]
+
+[id="changes-in-http_{context}"]
+= Changes in HTTP
+:context: changes-in-http
+
+This section explains the changes in HTTP methods.
+
+include::../modules/con_mg_generic-updates-in-vertx-http.adoc[leveloffset=+1]
+
+include::assembly_mg_changes-in-http-client.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-changes-in-http[:context: {parent-context-of-changes-in-http}]
+ifndef::parent-context-of-changes-in-http[:!context:]

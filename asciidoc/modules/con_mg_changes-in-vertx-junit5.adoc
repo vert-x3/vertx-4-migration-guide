@@ -1,0 +1,21 @@
+[id="changes-in-vertx-junit5_{context}"]
+= Changes in {VertX} JUnit5
+
+The following section describes the changes in {VertX} JUnit5.
+
+== Support `vertx-core` module and updates in extensions
+
+The `vertx-core` module has been updated to use a service provider interface for parameter injection.
+This change resulted in following updates in JUnit5:
+
+* You must call the `Vertx` parameter before any parameter that requires it for creation. For example, when injecting a `WebClient`.
+
+* `vertx-junit5` module supports only the `vertx-core` module.
+
+* `reactiverse-junit5-extensions` module hosts extensions that contain extra parameter types, such as, `WebClient`.
+
+* RxJava 1 and 2 bindings are now available as `vertx-junit5-rx-java` and `vertx-junit5-rx-java2` modules in the `vertx-junit5-extensions` repository.
+
+== Deprecated succeeding and failing methods in {VertX} text context
+
+The `VertxTestContext.succeeding()` and `VertxTestContext.failing()` methods have been deprecated. Use `VertxTestContext.succeedingThenComplete()` and `VertxTestContext.failingThenComplete()` methods instead.

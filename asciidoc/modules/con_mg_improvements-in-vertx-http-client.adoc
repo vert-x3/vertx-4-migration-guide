@@ -1,0 +1,203 @@
+[id="improvements-in-vertx-http-client_{context}"]
+= Improvements in the {VertX} HTTP client
+
+This section describes the improvements in HTTP client.
+
+== HTTP client request and response methods take an asynchronous handler as input argument
+
+The `HttpClient` and `HttpClientRequest` methods have been updated to use asynchronous handlers. The methods take `Handler<AsyncResult<HttpClientResponse>>` as input instead of `Handler<HttpClientResponse>`.
+
+In earlier releases of {VertX}, the `HttpClient` methods `getNow()`, `optionsNow()` and `headNow()` used to return `HttpClientRequest`, that you had to further send to perform a request. The `getNow()`, `optionsNow()` and `headNow()` methods have been removed. In {VertX} {4}, you can directly send a request with the required information using `Handler<AsyncResult<HttpClientResponse>>`.
+
+The following examples show how to send a request in {VertX} {4}:
+
+* To perform a GET operation:
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+Future<HttpClientResponse> f1 = client.get(8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"));
+----
+
+* To POST with a buffer body:
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+Future<HttpClientResponse> f2 = client.post(8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"), Buffer.buffer("some-data"));
+----
+
+* To POST with a streaming body:
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+Future<HttpClientResponse> f3 = client.post(8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"), asyncFile);
+----
+
+However, you can use the `HttpClientRequest.request()` methods to create an `HttpClientRequest` instance that has not been sent to perform a request operation. These methods can be used in basic interactions such as:
+
+* Sending the request headers
+* HTTP/2 specific operations such as setting a push handler, setting stream priority, pings, and so on.
+* Creating a NetSocket tunnel
+* Providing fine grained write control
+* Resetting a stream
+* Handling 100 continue headers manually
+
+The following example shows you how to create an `HTTPClientRequest`.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.request(HttpMethod.GET, 8080, "example.com", "/resource", ar -> {
+  if (ar.succeeded()) {
+    HttpClientRequest request = ar.result();
+    request.putHeader("content-type", "application/json")
+    request.send(new JsonObject().put("hello", "world"))
+      .onSuccess(response -> {
+      //
+      }).onFailure(err -> {
+      //
+       });
+     }
+})
+----
+
+== Removed the connection handler method from HTTP client request
+
+The `HttpClientRequest.connectionHandler()` method has been removed. Use `HttpClient.connectionHandler()` method instead to call connection handlers for client requests in your application.
+
+The following example shows how the `HttpClientRequest.connectionHandler()` method was used in {VertX} {3x} releases.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.request().connectionHandler(conn -> {
+  // Do something with connection
+}).end();
+----
+
+The following example shows you how to use the new `HttpClient.connectionHandler()` method.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.connectionHandler(conn -> {
+// Connection related code
+});
+----
+
+== HTTP client tunneling using the net socket method
+
+HTTP tunnels can be created using the `HttpClientResponse.netSocket()` method. In {VertX} {4} this method has been updated.
+
+To get a net socket for the connection of the request, send a socket handler in the request. The handler is called when the HTTP response header is received. The socket is ready for tunneling and can send and receive buffers.
+
+The following example shows how to get net socket for a connection in {VertX} {3x} releases.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.request(HttpMethod.CONNECT, uri, ar -> {
+  if (ar.succeeded()) {
+    HttpClientResponse response = ar.result();
+    if (response.statusCode() == 200) {
+      NetSocket so = response.netSocket();
+   }
+  }
+}).end();
+----
+
+The following example shows how to get net socket for a connection in {VertX} {4}:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.request(HttpMethod.CONNECT, uri, ar -> {
+}).netSocket(ar -> {
+  if (ar.succeeded()) {
+   // Got a response with a 200 status code
+   NetSocket so = ar.result();
+   // Go for tunneling
+  }
+}).end();
+----
+
+== New `send()` method in `HttpClient` class
+
+A new `send()` method is available in the `HttpClient` class. This method enables you to send requests in a generic way.
+
+The following code shows how to send a request in {VertX} {4}.
+
+----
+Future<HttpClientResponse> f1 = client.send(HttpMethod.GET, 8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"));
+----
+
+== HttpHeaders is an interface and contains `MultiMap` methods
+
+In {VertX} {4}, `HttpHeaders` is an interface. In earlier releases of {VertX},  `HttpHeaders` was a class.
+
+The following new `MultiMap` methods have been added in the `HttpHeaders` interface. Use these methods to create `MultiMap` instances.
+
+* `MultiMap.headers()`
+* `MultiMap.set(CharSequence name, CharSequence value)`
+* `MultiMap.set(String name, String value)`
+
+The following example shows how `MultiMap` instances were created in {VertX} {3x} releases.
+
+----
+MultiMap headers = MultiMap.caseInsensitiveMultiMap();
+----
+
+The following examples show how to create `MultiMap` instances in {VertX} {4}.
+
+----
+MultiMap headers = HttpHeaders.headers();
+----
+----
+MultiMap headers = HttpHeaders.set("content-type", "application.data");
+----
+
+== `CaseInsensitiveHeaders` class is no longer public
+
+The `CaseInsensitiveHeaders` class is no longer public. Use the `MultiMap.caseInsensitiveMultiMap()` method to create a multi-map implementation with case insensitive keys.
+
+The following example shows how `CaseInsensitiveHeaders` method was used in {VertX} {3x} releases.
+
+----
+CaseInsensitiveHeaders headers = new CaseInsensitiveHeaders();
+----
+
+The following examples show how `MultiMap` method is used in {VertX} {4}.
+
+----
+MultiMap multiMap = MultiMap#caseInsensitiveMultiMap();
+----
+OR
+----
+MultiMap headers = HttpHeaders.headers();
+----
+
+== Checking the version of HTTP running on the server
+
+In earlier releases of {VertX}, the version of HTTP running on a server was checked only if the application explicitly called the `HttpServerRequest.version()` method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.
+
+From {VertX} {4} onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the `HttpServerRequest.version()` method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.
+
+== New methods in request options
+
+In {VertX} {4}, the following new methods are available in the `RequestOptions` class:
+
+* Header
+* FollowRedirects
+* Timeout
+
+The following example shows you how to use these new methods:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.request(HttpMethod.GET, 8080, "example.com", "/resource", ar -> {
+  if (ar.succeeded()) {
+    HttpClientRequest request = ar.result();
+    request.putHeader("content-type", "application/json")
+    request.send(new JsonObject().put("hello", "world"))
+      .onSuccess(response -> {
+      //
+      }).onFailure(err -> {
+      //
+       });
+     }
+})
+----

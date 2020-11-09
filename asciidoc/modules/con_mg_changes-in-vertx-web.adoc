@@ -1,0 +1,97 @@
+[id="changes-in-vertx-web{context}"]
+= Changes in {VertX} web
+
+The following section describes the changes in {VertX} web.
+
+== Combined the functionality of user session handler in session handler
+
+In earlier releases of {VertX}, you had to specify both the `UserSessionHandler` and `SessionHandler` handlers when working in a session.
+
+To simplify the process, in {VertX} {4},  the `UserSessionHandler` class has been removed and its functionality has been added in the `SessionHandler` class. In {VertX} {4}, to work with sessions you must specify only one handler.
+
+== Removed the cookie interfaces
+
+The following cookie interfaces have been removed:
+
+* `io.vertx.ext.web.Cookie`
+* `io.vertx.ext.web.handler.CookieHandler`
+
+Use the `io.vertx.core.http.Cookie` interface instead.
+
+== Removed the locale interface
+
+The `io.vertx.ext.web.Locale` interface has been removed. Use the `io.vertx.ext.web.LanguageHeader` interface instead.
+
+== Removed the acceptable locales method
+
+The `RoutingContext.acceptableLocales()` method has been removed. Use the `RoutingContext.acceptableLanguages()` method instead.
+
+== Updated the method for mounting sub routers
+
+In earlier releases of {VertX}, the `Router.mountSubRouter()` method incorrectly returned a `Router`. This has been fixed, and the method now returns a `Route`.
+
+== Removed the create method with excluded strings for JWT authentication handling
+
+The `JWTAuthHandler.create(JWTAuth authProvider, String skip)` method has been removed. Use the `JWTAuthHandler.create(JWTAuth authProvider)` method instead.
+
+The following example shows how JWT authentication handler was created in {VertX} {3x} releases:
+
+----
+router
+   // protect everything but "/excluded/path"
+   .route().handler(JWTAuthHandler(jwtAuth, "/excluded/path")
+----
+
+TThe following example shows how JWT authentication handler was created in {VertX} {4}.
+
+----
+router
+   .route("/excluded/path").handler(/* public access to "/excluded/path" */)
+   // protect everything
+   .route().handler(JWTAuthHandler(jwtAuth)
+----
+
+== Removed the create handler method that was used in OSGi environments
+
+In {VertX} {4}, OSGi environment is no longer supported. The `StaticHandler.create(String, ClassLoader)` method has been removed because the method was used in the OSGi environment.
+
+If you have used this method in your applications, then in {VertX} {4} you can either add the resources to the application classpath or serve resources from the file system.
+
+== Removed the bridge options class
+
+The `sockjs.BridgeOptions` class has been removed. Use the new `sockjs.SockJSBridgeOptions` class instead. The `sockjs.SockJSBridgeOptions` class contains all the options that are required to configure the event bus bridge.
+
+There is no change in the behavior of the new class, except that the name of the data object class has changed.
+
+When you used `sockjs.BridgeOptions` class to add new bridges, there were a lot of duplicate configurations. The new class contains all the possible common configurations, and removes duplicate configurations.
+
+== SockJS socket event bus does not register a clustered event by default
+
+`SockJSSocket` no longer registers a clustered event bus consumer by default. If you want to write to the socket using the event bus, you must enable the `writeHandler` in `SockJSHandlerOptions`. When you enable the `writeHandler`, the event bus consumer is set to local by default.
+
+----
+Router router = Router.router(vertx);
+SockJSHandlerOptions options = new SockJSHandlerOptions()
+  .setRegisterWriteHandler(true); // enable the event bus consumer registration
+SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
+router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -> {
+  // Retrieve the writeHandlerID and store it (e.g. in a local map)
+  String writeHandlerID = sockJSSocket.writeHandlerID();
+}));
+----
+
+You can configure the event bus consumer to a cluster.
+
+----
+SockJSHandlerOptions options = new SockJSHandlerOptions()
+  .setRegisterWriteHandler(true) // enable the event bus consumer registration
+  .setLocalWriteHandler(false) // register a clustered event bus consumer
+----
+
+== New method for adding authentication provider
+
+The `SessionHandler.setAuthProvider(AuthProvider)` method has been deprecated. Use the `SessionHandler.addAuthProvider()` method instead. The new method allows an application to work with multiple authentication providers and link the session objects to these authentication providers.
+
+== OAuth2 authentication provider create methods require `vertx` as constructor argument
+
+From {VertX} {4}, `OAuth2Auth.create(Vertx vertx)` method requires `vertx` as a constructor argument. The `vertx` argument uses a secure non-blocking random number generator to generate nonce which ensures better security for applications.

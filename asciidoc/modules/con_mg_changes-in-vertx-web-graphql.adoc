@@ -1,0 +1,22 @@
+[id="changes-in-vertx-web-graphql_{context}"]
+= Changes in {VertX} Web GraphQL
+
+The following section describes the changes in {VertX} Web GraphQL.
+
+== Updated methods to be supported on multi-language (polyglot) environments
+
+{VertX} Web GraphQL is available as Technology Preview.
+
+[NOTE]
+====
+For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
+====
+
+The following methods have been updated and are now supported on polyglot environments:
+* `UploadScalar` is now a factory, use the method  `UploadScalar.create()` instead.
+
+* `VertxBatchLoader` is now a factory, use the method `io.vertx.ext.web.handler.graphql.dataloader.VertxBatchLoader.create()` instead.
+
+* `VertxDataFetcher` is now a factory, use the method `io.vertx.ext.web.handler.graphql.schema.VertxDataFetcher.create()` instead.
+
+* `VertxPropertyDataFetcher` is now a factory, use the method  `io.vertx.ext.web.handler.graphql.schema.VertxPropertyDataFetcher.create()` instead.

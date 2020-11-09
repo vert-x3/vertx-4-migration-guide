@@ -1,0 +1,128 @@
+[id="con_mg_generic-updates-in-vertx-http_{context}"]
+= Generic updates in {VertX} HTTP methods
+
+The following section describes the miscellaneous updates in {VertX} HTTP methods.
+
+== Updates in HTTP Methods for `WebSocket`
+
+The changes in `WebSocket` are:
+
+* The usage of the term `WebSocket` in method names was inconsistent. The method names had incorrect capitalization, for example, `Websocket`, instead of `WebSocket`. The methods that had inconsistent usage of `WebSocket` in the following classes have been removed. Use the new methods that have correct capitalization instead.
+
+** The following methods in `HttpServerOptions` class have been removed.
++
+[options="header"]
+|===
+|Removed methods|New methods
+|`getMaxWebsocketFrameSize()`|`getMaxWebSocketFrameSize()`
+|`setMaxWebsocketFrameSize()`|`setMaxWebSocketFrameSize()`
+|`getMaxWebsocketMessageSize()`|`getMaxWebSocketMessageSize()`
+|`setMaxWebsocketMessageSize()`|`setMaxWebSocketMessageSize()`
+|`getPerFrameWebsocketCompressionSupported()`|`getPerFrameWebSocketCompressionSupported()`
+|`setPerFrameWebsocketCompressionSupported()`|`setPerFrameWebSocketCompressionSupported()`
+|`getPerMessageWebsocketCompressionSupported()`|`getPerMessageWebSocketCompressionSupported()`
+|`setPerMessageWebsocketCompressionSupported()`|`setPerMessageWebSocketCompressionSupported()`
+|`getWebsocketAllowServerNoContext()`|`getWebSocketAllowServerNoContext()`
+|`setWebsocketAllowServerNoContext()`|`setWebSocketAllowServerNoContext()`
+|`getWebsocketCompressionLevel()`|`getWebSocketCompressionLevel()`
+|`setWebsocketCompressionLevel()`|`setWebSocketCompressionLevel()`
+|`getWebsocketPreferredClientNoContext()`|`getWebSocketPreferredClientNoContext()`
+|`setWebsocketPreferredClientNoContext()`|`setWebSocketPreferredClientNoContext()`
+|`getWebsocketSubProtocols()`|`getWebSocketSubProtocols()`
+|`setWebsocketSubProtocols()`|`setWebSocketSubProtocols()`
+|===
++
+The new methods for `WebSocket` subprotocols use `List<String>` data type instead of a comma separated string to store items.
+
+** The following methods in `HttpClientOptions` class have been removed.
++
+[options="header"]
+|===
+|Removed Methods|Replacing Methods
+|`getTryUsePerMessageWebsocketCompression()`|`getTryUsePerMessageWebSocketCompression()`
+|`setTryUsePerMessageWebsocketCompression()`|`setTryUsePerMessageWebSocketCompression()`
+|`getTryWebsocketDeflateFrameCompression()`|`getTryWebSocketDeflateFrameCompression()`
+|`getWebsocketCompressionAllowClientNoContext()`|`getWebSocketCompressionAllowClientNoContext()`
+|`setWebsocketCompressionAllowClientNoContext()`|`setWebSocketCompressionAllowClientNoContext()`
+|`getWebsocketCompressionLevel()`|`getWebSocketCompressionLevel()`
+|`setWebsocketCompressionLevel()`|`setWebSocketCompressionLevel()`
+|`getWebsocketCompressionRequestServerNoContext()`|`getWebSocketCompressionRequestServerNoContext()`
+|`setWebsocketCompressionRequestServerNoContext()`|`setWebSocketCompressionRequestServerNoContext()`
+|===
+
+** The following handler methods in `HttpServer` class have been removed.
++
+[options="header"]
+|===
+|Deprecated Methods|New Methods
+|`websocketHandler()`|`webSocketHandler()`
+|`websocketStream()`|`webSocketStream()`
+|===
+
+* `WebsocketRejectedException` is deprecated. The methods will throw the `UpgradeRejectedException` instead.
+
+* The `HttpClient` `webSocket()` methods use  `Handler<AsyncResult<WebSocket>>` instead of `Handler` or `Handler<Throwable>`.
+
+* The number of overloaded methods to connect an HTTP client to a websocket has also been reduced by using the methods in `WebSocketConnectOptions` class.
+
+== Added `HttpMethod` as a new interface and removed the `HttpMethod` enumeration type
+
+`HttpMethod` is a new interface. In earlier releases of {VertX}, `HttpMethod` was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You would have to use the  `HttpMethod.OTHER` value along with the `rawMethod` attribute during server and client HTTP requests.
+
+If you are using `HttpMethod` enumerated data type in a switch block, you can use the following code to migrate your application to {VertX} {4}.
+
+The following example shows a switch block in {VertX} {3x} releases.
+
+[source,java,options='nowrap',subs=`attributes`]
+----
+switch (method) {
+  case GET:
+    ...
+    break;
+  case OTHER:
+    String s = request.getRawMethod();
+    if (s.equals("PROPFIND") {
+      ...
+    } else ...
+}
+----
+
+The following example shows a switch block in {VertX} {4}.
+
+[source,java,options='nowrap',subs=`attributes`]
+----
+switch (method.name()) {
+  case "GET":
+    ...
+    break;
+  case "PROPFIND";
+    ...
+    break;
+}
+----
+
+You can also use the following code in {VertX} {4}.
+
+----
+HttpMethod PROPFIND = HttpMethod.valueOf("PROPFIND");
+
+if (method == HttpMethod.GET) {
+  ...
+} else if (method.equals(PROPFIND)) {
+  ...
+} else {
+  ...
+}
+----
+
+If you are using `HttpMethod.OTHER` value in your applications, use the following code to migrate the application to {VertX} {4}.
+
+The following example shows you the code in {VertX} {3x} releases.
+----
+client.request(HttpMethod.OTHER, ...).setRawName("PROPFIND");
+----
+
+The following example shows you the code in {VertX} {4}.
+----
+client.request(HttpMethod.valueOf("PROPFIND"), ...);
+----

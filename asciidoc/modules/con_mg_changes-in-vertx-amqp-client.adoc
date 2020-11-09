@@ -1,0 +1,15 @@
+[id="changes-in-vertx-amqp-client_{context}"]
+= Changes in {VertX} AMQP client
+
+The following section describes the changes in {VertX} AMQP client.
+
+== Removed methods in AMQP client that contain `AmqpMessage` argument
+
+The AMQP client methods that had `Handler<AmqpMessage>` as an argument have been removed. In earlier releases, you could set this handler on  `ReadStream<AmqpMessage>`. However, if you migrate your applications to use futures, such types of methods cannot be used.
+
+|===
+|Removed methods|Replacing methods
+|`AmqpClient.createReceiver(String address,  Handler<AmqpMessage> messageHandler, ...)`| `AmqpClient createReceiver(String address, Handler<AsyncResult<AmqpReceiver>> completionHandler)`
+|`AmqpConnection createReceiver(..., Handler<AsyncResult<AmqpReceiver>> completionHandler)`|`AmqpConnection createReceiver(String address, Handler<AsyncResult<AmqpReceiver>> completionHandler)`
+|`AmqpConnection createReceiver(.., Handler<AmqpMessage> messageHandler, Handler<AsyncResult<AmqpReceiver>> completionHandler)`|`AmqpConnection createReceiver(String address, Handler<AsyncResult<AmqpReceiver>> completionHandler)`
+|===

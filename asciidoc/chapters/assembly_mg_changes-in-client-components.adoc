@@ -1,0 +1,22 @@
+ifdef::context[:parent-context-of-changes-in-client-components: {context}]
+
+[id="changes-in-client-components_{context}"]
+= Changes in client components
+:context: changes-in-client-components
+
+This section explains the changes in {VertX} clients.
+
+include::../modules/con_mg_changes-in-vertx-kafka-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-jdbc-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-mail-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-cassandra-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-amqp-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-mongodb-client.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-changes-in-client-components[:context: {parent-context-of-changes-in-client-components}]
+ifndef::parent-context-of-changes-in-client-components[:!context:]

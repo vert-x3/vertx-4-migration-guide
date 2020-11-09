@@ -1,0 +1,72 @@
+[id="use-future-methods-instead-of-callback-for-asynchronous-operations_{context}"]
+= Use future methods for asynchronous operations
+
+{VertX} {4} uses futures for asynchronous operations. Every callback method has a corresponding future method. You can use a combination of callback and future methods to migrate callback-based applications to {VertX} {4}. However, you can also continue using callbacks for asynchronous operations.
+
+The following example shows you how a callback was used for asynchronous operations in {VertX} {3x} releases.
+
+----
+HttpRequest request = client.get("/resource");
+
+request.send(ar -> {
+  if (ar.succeeded()) {
+    HttpResponse response = ar.result();
+  } else {
+    Throwable error = ar.cause();
+  }
+});
+----
+
+The following example shows you how to use callback and future methods together for asynchronous operations in {VertX} {4}.
+
+----
+HttpRequest request = client.get("/resource");
+
+Future<HttpResponse> response = request.send();
+
+response.onComplete(ar -> {
+  if (ar.succeeded()) {
+    HttpResponse response = ar.result();
+  } else {
+    Throwable failure = ar.cause();
+  }
+});
+----
+
+In basic applications, you will not notice distinct difference between using callbacks and futures. However, futures are very useful for composing asynchronous operations. When you use futures, the error handling is better. In callbacks, you have to handle failures at every stage of the composition, whereas in futures you can handle the failure once in the end.
+
+The following example shows you how callbacks can be used to compose two asynchronous operations. You can see that the error is handled at every composition.
+
+----
+client.get("/resource1").send(ar1 -> {
+  if (ar1.succeeded()) {
+    HttpResponse response = ar.result();
+    JsonObject json = response.body();
+    client.put("/resource2").sendJsonObject(ar2 -> {
+      if (ar2.succeeded()) {
+        // Handle final result
+      } else {
+        Throwable failure2 = ar.cause();
+      }
+    });
+  } else {
+    Throwable failure1 = ar.cause();
+  }
+});
+----
+
+The following example shows you how callbacks and futures can be used to compose two asynchronous operations in {VertX} {4}. The error is handled only once in the end.
+
+----
+Future<HttpResponse> fut1 = client.get("/resource1").send();
+
+Future<HttpResponse> fut2 = fut1.compose(response -> client.put("/resource2").sendJsonObject(response.body()));
+
+fut2.onComplete(ar -> {
+  if (ar.succeeded()) {
+    // Handle final result
+  } else {
+    Throwable failure = ar.cause();
+  }
+});
+----

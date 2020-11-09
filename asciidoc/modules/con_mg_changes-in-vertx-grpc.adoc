@@ -1,0 +1,8 @@
+[id="changes-in-vertx-grpc_{context}"]
+= Changes in {VertX} gRPC
+
+The following section describes the changes in {VertX} gRPC.
+
+== Removed custom {VertX} APIs for gRPC
+
+In the earlier releases of {VertX}, custom APIs for gRPC were available. To use this customized gRPC, a fork of the gRPC compiler had to be maintained. Since this was not easy to maintain, in {VertX} {4} the custom {VertX} APIs for gRPC have been removed.

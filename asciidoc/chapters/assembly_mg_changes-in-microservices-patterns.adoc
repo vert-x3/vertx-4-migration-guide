@@ -1,0 +1,14 @@
+ifdef::context[:parent-context-of-changes-in-microservices-patterns: {context}]
+
+[id="changes-in-microservices-patterns_{context}"]
+= Changes in microservices patterns
+:context: changes-in-microservices-patterns
+
+This section explains the changes in microservices patterns.
+
+include::../modules/con_mg_changes-in-vertx-circuit-breaker.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-service-discovery.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-changes-in-microservices-patterns[:context: {parent-context-of-changes-in-microservices-patterns}]
+ifndef::parent-context-of-changes-in-microservices-patterns[:!context:]

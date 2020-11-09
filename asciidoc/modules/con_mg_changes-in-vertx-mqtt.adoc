@@ -1,0 +1,23 @@
+[id="changes-in-vertx-mqtt_{context}"]
+= Changes in {VertX} MQTT
+
+The following section describes the changes in {VertX} MQTT.
+
+== Some fluent methods in MQTT clients return future
+
+Some fluent methods in `MqttClient` class return `Future` instead of being fluent. For example, methods such as, `MqttClient.connect()`, `MqttClient.disconnect()`, `MqttClient.publish()` return future in {VertX} {4}.
+
+The following example shows the use of `publish()` method in {VertX} {3x} releases:
+
+----
+client
+   .publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false)
+   .publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);
+----
+
+The following example shows the use of `publish()` method in {VertX} {4} release:
+
+----
+client.publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false);
+client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);
+----

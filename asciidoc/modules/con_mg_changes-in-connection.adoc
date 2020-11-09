@@ -1,0 +1,30 @@
+[id="changes-in-connection_{context}"]
+= Changes in connection methods
+
+This section explains the changes in connection methods.
+
+== Checking if authentication is required client
+
+The `NetServerOptions.isClientAuthRequired()` method has been removed. Use the `getClientAuth() == ClientAuth.REQUIRED` enumerated type to check if client authentication is required.
+
+The following example shows you how to use a switch statement to check if authentication of the client is required.
+
+----
+switch (options.getClientAuth()) {
+case REQUIRED:
+// ... behavior same as in releases prior to {VertX} {4}
+break;
+default:
+// fallback statement...
+}
+----
+
+The following example shows you how to use the check if authentication of the client is required in {Vertx} {4}.
+----
+if (options.getClientAuth() == ClientAuth.REQUIRED) {
+// behavior in releases prior to {VertX} {4}
+----
+
+== Upgrade SSL method uses asynchronous handler
+
+The `NetSocket.upgradeToSsl()` method has been updated to use `Handler<AsyncResult>` instead of `Handler`. The handler is used to check if the channel has been successfully upgraded to SSL or TLS.

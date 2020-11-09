@@ -1,0 +1,12 @@
+[id="changes-in-logging_{context}"]
+= Changes in logging
+
+This section explains the changes in logging.
+
+== Deprecated logging classes and methods
+
+The logging classes `Logger` and `LoggerFactory` along with their methods have been deprecated. These logging classes and methods will be removed in a future release.
+
+== Removed Log4j 1 logger
+
+The `Log4j 1` logger is no longer available. However, if you want to use `Log4j 1` logger, it is available with `SLF4J`.

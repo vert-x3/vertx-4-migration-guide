@@ -1,0 +1,32 @@
+[id="handling_deprecations_and_removals_{context}"]
+= Handling deprecations and removals
+
+Some features and functions might have been deprecated or removed in {VertX} {4}. Before you migrate your applications to {VertX} {4}, check for deprecations and removals.
+
+* APIs were deprecated in a {VertX} {3x} release and new equivalent APIs were provided in that release.
+
+* Deprecated APIs have been removed in {VertX} {4}.
+
+If your application uses a deprecated API, you should update your application to use the new API. This helps in migrating applications to the latest version of the product.
+
+The Java compiler generates warnings when deprecated APIs are used. You can use the compiler to check for deprecated methods while migrating applications to {VertX} {4}.
+
+The following example shows you an EventBus method that was deprecated in a {VertX} {3x} release.
+
+----
+// Send was deprecated in Vert.x 3.x release
+vertx.eventBus().send("some-address", "hello world", ar -> {
+  // Handle response here
+});
+----
+
+The method `send(String,String,Handler<AsyncResult<Message>>)` has been replaced in {VertX} {4} with the method `request(String,String,Handler<AsyncResult<Message>>`).
+
+The following example shows you how to update your application to use the new method.
+
+----
+// New method can be used in Vert.x 3.x and Vert.x 4.x releases
+vertx.eventBus().request("some-address", "hello world", ar -> {
+  // Handle response here
+});
+----

@@ -1,0 +1,39 @@
+[id="migrating-authorization-applications_{context}"]
+= Migrating the authorization applications
+
+Authorization is a new feature in {VertX} {4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the `User` object. This meant that the provider was responsible for both authentication and authorization of the user. In {VertX} {4}, the user does not know who is the provider, so it can be used on different providers.
+
+The following example shows how an application checks if a user can use Printer #1234 in {VertX} {3x} releases.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+// omitting the error handling for brevity
+user.isAuthorized("printers:printer1234", res -> {
+  if (res.succeeded()) {
+    boolean hasAuthority = res.result();
+    if (hasAuthority) {
+      System.out.println("User has the authority");
+    } else {
+      System.out.println("User does not have the authority");
+    }
+  }
+});
+----
+
+This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From {VertX} {4}, it is possible to perform such authorization by using different providers.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+// omitting the error handling for brevity
+provider.getAuthorizations(user, res -> {
+  if (res.succeeded()) {
+    if (PermissionBasedAuthorization.create("printer1234").match(user)) {
+      System.out.println("User has the authority");
+    } else {
+      System.out.println("User does not have the authority");
+    }
+  }
+});
+----
+
+You can check authorizations on roles, permissions, logic operations, wildcards and any other implementation you add.

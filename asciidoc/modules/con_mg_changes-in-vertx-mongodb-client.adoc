@@ -1,0 +1,21 @@
+[id="changes-in-vertx-mongodb-client_{context}"]
+= Changes in {VertX} MongoDB client
+
+The following section describes the changes in {VertX} MongoDB client.
+
+== Methods removed from MongoDB client
+
+The following methods have been removed from `MongoClient` class.
+
+[options="header"]
+|===
+|Removed methods|Replacing methods
+|`MongoClient.update()`| `MongoClient.updateCollection()`
+|`MongoClient.updateWithOptions()`| `MongoClient.updateCollectionWithOptions()`
+|`MongoClient.replace()`| `MongoClient.replaceDocuments()`
+|`MongoClient.replaceWithOptions()`| `MongoClient.replaceDocumentsWithOptions()`
+|`MongoClient.remove()`| `MongoClient.removeDocuments()`
+|`MongoClient.removeWithOptions()`| `MongoClient.removeDocumentsWithOptions()`
+|`MongoClient.removeOne()`| `MongoClient.removeDocument()`
+|`MongoClient.removeOneWithOptions()`| `MongoClient.removeDocumentsWithOptions()`
+|===

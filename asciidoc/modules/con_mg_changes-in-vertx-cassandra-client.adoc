@@ -1,0 +1,88 @@
+[id="changes-in-vertx-cassandra-client_{context}"]
+= Changes in {VertX} Cassandra client
+
+The {VertX} Cassandra client enables applications to interact with an Apache Cassandra service.
+
+The following section describes the changes in {VertX} Cassandra client.
+
+== Changes in driver versions
+
+In {VertX} {4}, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your {VertX} {3x} applications to {VertX} {4}. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.
+
+The following example shows Datastax Java driver classes and create statements in {VertX} {3x} releases.
+
+----
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.SimpleStatement;
+import io.vertx.cassandra.CassandraClient;
+
+SimpleStatement statement =
+  new SimpleStatement("SELECT release_version FROM system.local");
+cassandraClient.execute(statement, done -> {
+    ResultSet results = done.result();
+    Row row = resultSet.one();
+    System.out.println(row.getString("release_version"));
+});
+----
+
+The following example shows Datastax Java driver classes and create statements in {VertX} {4}.
+
+----
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
+import io.vertx.cassandra.CassandraClient;
+
+SimpleStatement statement =
+  SimpleStatement.newInstance("SELECT release_version FROM system.local");
+cassandraClient.execute(statement, done -> {
+    ResultSet results = done.result();
+    Row row = resultSet.one();
+    System.out.println(row.getString("release_version"));
+});
+----
+
+== Objects mappers are not supported
+
+Object mappers are no longer supported because of changes in Datastax Java driver 4.x.
+
+The following mapping construction is not supported in {VertX} {4} release:
+
+----
+@Table(keyspace = "test", name = "names")
+public class MappedClass {
+  @PartitionKey
+  private String name;
+   ...
+}
+----
+
+== Updates in Cassandra client options
+
+The `CassandraClientOptions.setPort()`, `CassandraClientOptions.getContactPoints()`, and `CassandraClientOptions.setContactPoints()` methods have been removed. Use the `CassandraClientOptions.addContactPoint()` method instead.
+
+The following example shows the use of older methods in {VertX} {3x} releases.
+
+----
+import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .setContactPoints(List.of("node1.address", "node2.address", "node3.address"))
+  .setPort(9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options);
+----
+
+The following example shows how to use `CassandraClientOptions.addContactPoint()`method in {VertX} {4}.
+
+----
+import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .addContactPoint("node1.address", 9142)
+  .addContactPoint("node2.address", 9142)
+  .addContactPoint("node3.address", 9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options);
+----

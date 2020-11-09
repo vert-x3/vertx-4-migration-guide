@@ -1,0 +1,203 @@
+[id="migrating-applications-to-vertx-http-client_{context}"]
+
+= Migrating applications to {VertX} HTTP client
+
+The HTTP client has fine grained control over HTTP interactions and focuses on the HTTP protocol.
+
+The HTTP client has been updated and improved in {VertX} {4}:
+
+* Simplified API with fewer interactions
+* Robust error handling
+* Support for connection reset for HTTP/1
+
+The updates in HTTP client APIs are:
+
+* The methods in `HttpClientRequest` such as, `get()`, `delete()`, `put()` have been removed. Use the method `HttpClientRequest>	request(HttpMethod method, …)` instead.
+
+* `HttpClientRequest` instance is created when a request or response is possible. For example, an `HttpClientRequest` instance is created when the client connects to the server or a connection is reused from the pool.
+
+== Sending a simple request
+
+The following example shows how to send a GET request in {VertX} {3x} releases:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+HttpClientRequest request = client.get(80, "example.com", "/", response -> {
+  int statusCode = response.statusCode();
+  response.exceptionHandler(err -> {
+    // Handle connection error, e.g connection closed
+  });
+  response.bodyHandler(body -> {
+    // Handle body entirely
+  });
+});
+request.exceptionHandler(err -> {
+  // Handle connection error OR response error
+});
+request.end();
+----
+
+The following example shows how to send a GET request in {VertX} {4} release:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+client.request(HttpMethod.GET, 80, "example.com", "/", ar -> {
+  if (ar.succeeded()) {
+    HttpClientRequest = ar.result();
+    request.send(ar2 -> {
+      if (ar2.succeeded()) {
+        HttpClientResponse = ar2.result();
+        int statusCode = response.statusCode();
+        response.body(ar3 -> {
+          if (ar3.succeeded()) {
+            Buffer body = ar3.result();
+            // Handle body entirely
+          } else {
+            // Handle server error, e.g connection closed
+          }
+        });
+      } else {
+        // Handle server error, e.g connection closed
+      }
+    });
+  } else {
+    // Deal connection error, e.g the invalid server or invalid SSL certificate
+  }
+});
+----
+
+You can see that error handling is better in the new HTTP client.
+
+The following example shows you how to use future composition in GET operation in {VertX} {4}:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+Future<Buffer> fut = client.request(HttpMethod.GET, 80, "example.com", "/")
+  .compose(request -> request.send().compose(response -> {
+    int statusCode = response.statusCode();
+    if (statusCode == 200) {
+      return response.body();
+    } else {
+      return Future.failedFuture("Unexpectd status code");
+    }
+  })
+});
+fut.onComplete(ar -> {
+  if (ar.succeeded()) {
+    Buffer body = ar.result();
+    // Handle body entirely
+  } else {
+    // Handle error
+  }
+});
+----
+
+Future composition improves exception handling. The example checks if the status code is 200, otherwise it returns an error.
+
+WARNING: When you use the HTTP client with futures, the `HttpClientResponse()` method starts emitting buffers as soon as it receives a response. To avoid this, ensure that the future composition occurs either on the event-loop (as shown in the example) or it should pause and resume the response.
+
+== Sending requests
+
+In {VertX} {3x} releases, you can use the `end()` method to send requests.
+
+----
+request.end();
+----
+
+You can also send a body in the request.
+
+----
+request.end(Buffer.buffer("hello world));
+----
+
+Since `HttpClientRequest` is a `Writestream<Buffer>`, you can also use a pipe to stream the request.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+writeStream.pipeTo(request, ar -> {
+  if (ar.succeeded()) {
+    // Sent the stream
+  }
+});
+----
+
+In {VertX} {4}, you can perform all the operations shown in the examples using the `get()` method. Additionally, you can also use the new `send()` method to perform these operations. You can pass a buffer, a string or a `ReadStream` as input to the `send()` method. The method returns an `HttpClientResponse` instance.
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+// Send a request and process the response
+request.onComplete(ar -> {
+  if (ar.succeeded()) {
+    HttpClientResponse response = ar.result();
+    // Handle the response
+  }
+})
+request.end();
+
+// The new send method combines the above in a single operation
+request.send(ar -> {
+  if (ar.succeeded()) {
+    HttpClientResponse response = ar.result();
+    // Handle the response
+  }
+}));
+----
+
+== Handling responses
+
+The `HttpClientResponse` interface has been updated and improved with following methods:
+
+`body()` method::
+The `body()` method returns an asynchronous buffer. Use the `body()` method instead of `bodyHandler()`.
++
+The following example shows how to use `bodyHandler()` method to get the request body.
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+response.bodyHandler(body -> {
+  // Process the body
+});
+response.exceptionHandler(err -> {
+  // Could not get a body
+});
+----
++
+The following example shows how to use `body()` method to get the request body.
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+response.body(ar -> {
+  if (ar.succeeded()) {
+    // Process the body
+  } else {
+    // Could not get a body
+  }
+});
+----
+
+`end()` method:: The `end()` method returns a future when a response is fully received successfully or failed. The method removes the response body. Use this method instead of `endHandler()` method.
++
+The following example shows how to use `endHandler()` method.
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+response.endHandler(v -> {
+  // Response ended
+});
+response.exceptionHandler(err -> {
+  // Response failedxxx, something went wrong
+});
+----
++
+The following example shows how to use `end()` method.
++
+[source,java,options="nowrap",subs="attributes+"]
+----
+response.end(ar -> {
+  if (ar.succeeded()) {
+    // Response ended
+  } else {
+    // Response failedxxx, something went wrong
+  }
+});
+----

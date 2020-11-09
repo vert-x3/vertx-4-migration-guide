@@ -1,0 +1,52 @@
+[id="deprecated-and-removed-authentication-and-authorization-methods_{context}"]
+= Deprecated and removed authentication and authorization methods
+
+The following sections list methods deprecated and removed for authentication and authorization.
+
+== List of removed authentication and authorization methods
+
+The following methods have been removed:
+
+[options="header"]
+|===
+|Removed methods|Replacing methods
+|`OAuth2Auth.createKeycloak()`| `KeycloakAuth.create(vertx, JsonObject) ()`
+|`OAuth2Auth.create(Vertx, OAuth2FlowType, OAuth2ClientOptions)()`| `OAuth2Auth.create(vertx, new OAuth2ClientOptions().setFlow(YOUR_DESIRED_FLOW))`
+|`OAuth2Auth.create(Vertx, OAuth2FlowType)`| `OAuth2Auth.create(vertx, new OAuth2ClientOptions().setFlow(YOUR_DESIRED_FLOW))`
+|`User.isAuthorised()`|`User.isAuthorized()`
+|`User.setAuthProvider()`|No replacing method
+|`AccessToken.refreshToken()`|`AccessToken.opaqueRefreshToken()`
+|`io.vertx.ext.auth.jwt.JWTOptions` data object|`io.vertx.ext.jwt.JWTOptions` data object
+|`Oauth2ClientOptions.isUseAuthorizationHeader()`|No replacing method
+|`Oauth2ClientOptions.scopeSeparator()`|No replacing method
+|===
+
+== List of deprecated authentication and authorization methods
+
+The following methods have been deprecated:
+
+[options="header"]
+|===
+|Deprecated methods|Replacing methods
+|`OAuth2Auth.decodeToken()`|`AuthProvider.authenticate()`
+|`OAuth2Auth.introspectToken()`|`AuthProvider.authenticate()`
+|`OAuth2Auth.getFlowType()`| No replacing method
+|`OAuth2Auth.loadJWK()`|`OAuth2Auth.jwkSet()`
+|`Oauth2ClientOptions.isUseAuthorizationHeader()`|No replacing method
+|===
+
+== List of deprecated authentication and authorization classes
+
+The following classes have been deprecated:
+
+[options="header"]
+|===
+|Deprecated class|Replacing class
+|`AbstractUser`|Create user objects using the ` User.create(JsonObject)` method.
+|`AuthOptions`|No replacing class
+|`JDBCAuthOptions`|`JDBCAuthenticationOptions` for authentication and `JDBCAuthorizationOptions` for authorization
+|`JDBCHashStrategy`|No replacing class
+|`OAuth2RBAC`|`AuthorizationProvider`
+|`Oauth2Response`|Recommended to use `WebClient` class
+|`KeycloakHelper`|No replacing class
+|===

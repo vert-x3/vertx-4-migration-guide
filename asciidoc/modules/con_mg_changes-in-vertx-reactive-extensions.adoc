@@ -1,0 +1,36 @@
+[id="changes-in-vertx-reactive-extensions_{context}"]
+= Changes in {VertX} Reactive Extensions (Rx)
+
+This section describes the changes in Reactive Extensions (Rx) in {VertX}.
+{VertX} uses the RxJava library.
+
+== Removed `WriteStreamSubscriber.onComplete()` callback from `WriteStream`
+
+The `WriteStreamSubscriber.onComplete()` callback has been removed. This callback was invoked if `WriteStream` had pending streams of data to be written.
+
+In {VertX} {4}, use the callbacks `WriteStreamSubscriber.onWriteStreamEnd()` and `WriteStreamSubscriber.onWriteStreamError()` instead. These callbacks are called after `WriteStream.end()` is complete.
+
+----
+WriteStreamSubscriber<Buffer> subscriber = writeStream.toSubscriber();
+----
+
+The following example shows how to create the adapter from a `WriteStream` in  {VertX} {3x} releases:
+
+----
+subscriber.onComplete(() -> {
+    // Called after writeStream.end() is invoked, even if operation has not completed
+});
+----
+
+The following examples show how to create the adapter from a WriteStream using the new callback methods in {VertX} {4} release:
+
+----
+subscriber.onWriteStreamEnd(() -> {
+    // Called after writeStream.end() is invoked and completes successfully
+});
+----
+----
+subscriber.onWriteStreamError(() -> {
+    // Called after writeStream.end() is invoked and fails
+});
+----

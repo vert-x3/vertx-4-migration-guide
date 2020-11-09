@@ -1,0 +1,60 @@
+[id="miscellaneous-changes-in-vertx_{context}"]
+= Miscellaneous changes in {VertX}
+
+The following section describes miscellaneous changes in {VertX} {4}.
+
+== Removed the `Starter` class
+
+The `Starter` class has been removed. Use the `Launcher` class instead to start your {VertX} applications without the `main()` method.
+
+== Isolated deployment for Java 8
+
+{VertX} {4} supports Java 11. This Java version does not support isolated class loading.
+In {VertX} {4}, isolated class loading will be supported for Java 8. However, the results may not be as expected.
+
+== Removed hook methods from context
+
+The methods `Context.addCloseHook()` and `Context.removeCloseHook()` methods have been removed from the `Context` class.
+
+== Removed the clone methods from options
+
+The methods `KeyCertOptions.clone()`, `TrustOptions.clone()`, and `SSLEngineOptions.clone()` have been removed. Use the methods `KeyCertOptions.copy()`, `TrustOptions.copy()`, and `SSLEngineOptions.copy()` instead.
+
+== Removed equals and hashcode methods from options
+
+The `VertxOptions.equals()` and `VertxOptions.hashCode()` methods have been removed.
+
+== New method to check file caching
+
+The `VertxOptions.fileResolverCachingEnabled()` method has been removed. Use `FileSystemOptions.isFileCachingEnabled()` method instead to check if file caching has been enabled to resolve classpaths.
+
+== Service Provider Interface (SPI) metrics
+
+The `Metrics.isEnabled()` method has been removed. The Service Provider Interface (SPI) metrics will return a null object to indicate that metrics are not enabled.
+
+== Removed the pooled buffer methods`
+
+The pooled buffer methods `TCPSSLOptions.isUsePooledBuffers()` and `TCPSSLOptions.setUsePooledBuffers()` have been removed.
+
+== Clustered flag removed from options classes
+
+The methods and boolean value that were used to specify, get, and set clustering in {VertX} applications have been removed from `VertxOptions` and `EventBusOptions` classes.
+
+== Methods to create clients that have no shared data sources
+
+Use the following new methods to create clients that do not have shared data sources with other clients. These methods maintain their own data sources.
+
+[options="header"]
+|===
+|Deprecated Methods|New Methods
+|`MongoClient.createNonShared()`|`MongoClient.create()`
+|`JDBCClient.createNonShared()`|`wJDBCClient.create()`
+|`CassandraClient.createNonShared()`|`CassandraClient.create()`
+|`MailClient.createNonShared()`|`MailClient.create()`
+|===
+
+include::con_mg_changes-in-vertx-junit5.adoc[leveloffset=+1]
+
+include::con_mg_changes-in-infinispan-cluster-manager.adoc[leveloffset=+1]
+
+include::con_mg_changes-in-vertx-web-graphql.adoc[leveloffset=+1]

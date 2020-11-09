@@ -1,0 +1,8 @@
+[id="changes-in-vertx-jdbc-client_{context}"]
+= Changes in {VertX} JDBC client
+
+The following section describes the changes in {VertX} JDBC client.
+
+== Merged Vert.x SQL common module in JDBC client module
+
+The `io.vertx:vertx-sql-common` module has been merged in `io.vertx:vertx-jdbc-client` module.

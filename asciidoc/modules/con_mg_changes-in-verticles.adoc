@@ -1,0 +1,38 @@
+[id="changes-in-verticles_{context}"]
+= Changes in verticles
+
+This section explains the changes in the verticles.
+
+== Updates in the `VerticleFactory.createVerticle()` method
+
+In earlier releases of {VertX}, `VerticleFactory.createVerticle()` method synchronously instantiated a verticle. From {VertX} {4} onward, the method asynchronously instantiates the verticle and returns the callback `Callable<Verticle>` instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.
+
+The following code shows you how verticles were instantiated in {VertX} {3x} releases:
+----
+Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception;
+----
+
+The following code shows you how verticles are instantiated in {VertX} {4}:
+----
+void createVerticle(String verticleName, ClassLoader classLoader, Promise<Callable<Verticle>> promise);
+----
+
+For existing factories, you can update the code to use a callable when a promise completes or fails. The callable can be called several times.
+
+The following code example shows you existing factories in {VertX} {3x} releases:
+----
+return new MyVerticle();
+----
+
+The following code example shows you how to update existing factories to use promise in {VertX} {4}:
+----
+promise.complete(() -> new MyVerticle());
+----
+
+Use the `Vertx.executeBlocking()` method, if you want the factory to block code. When the factory receives the blocking code, it should resolve the promise and get the verticle instances from the promise.
+
+The `VerticleFactory` class has been simplified. The class does not require initial resolution of an identifier because the factory can instead use nested deployment to deploy the verticle.
+
+== Removed the multithreaded worker verticles
+
+Multi-threaded worker verticles have been removed. The verticle has been removed because many {VertX} features do not support multi-threaded worker verticles.

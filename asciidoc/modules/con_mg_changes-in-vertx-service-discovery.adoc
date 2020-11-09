@@ -1,0 +1,19 @@
+[id="changes-in-vertx-service-discovery_{context}"]
+= Changes in {VertX} service discovery
+
+The following section describes the changes in {VertX} service discovery.
+
+== Removed create methods that contain `ServiceDiscovery` argument from service discovery
+
+The following create methods in service discovery that have `Handler<AmqpMessage>` as an argument have been removed. These methods cannot be used with futures.
+
+[options="header"]
+|===
+|Removed methods|Replacing methods
+|`ServiceDiscovery.create(..., Handler<ServiceDiscovery> completionHandler)`|`ServiceDiscovery.create(Vertx)`
+|`ServiceDiscovery.create(..., Handler<ServiceDiscovery> completionHandler)`|`ServiceDiscovery.create(Vertx, ServiceDiscoveryOptions)`
+|===
+
+== Service importer and exporter methods are no longer fluent
+
+The `ServiceDiscovery.registerServiceImporter()` and `ServiceDiscovery.registerServiceExporter()` methods are no longer fluent. The methods return `Future<Void>`.

@@ -1,0 +1,26 @@
+ifdef::context[:parent-context-of-changes-in-http-client: {context}]
+
+[id="changes-in-http-client_{context}"]
+= Changes in HTTP client
+:context: changes-in-http-client
+
+This section describes the changes in HTTP client.
+
+The following types of {VertX} clients are available:
+
+{VertX} web client::
+Use the {VertX} web client when your applications are HTTP oriented. For example, REST, encoding and decoding HTTP payloads, interpreting the HTTP status response code, and so on.
+
+{VertX} HTTP client::
+Use the {VertX} HTTP client when your applications are used as HTTP proxy. For example, as an API gateway. The HTTP client has been updated and improved in {VertX} {4}.
+
+NOTE: {VertX} web client is based on {VertX} HTTP client.
+
+include::../modules/con_mg_migrating-applications-to-vertx-web-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_migrating-applications-to-vertx-http-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_improvements-in-vertx-http-client.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-changes-in-http-client[:context: {parent-context-of-changes-in-http-client}]
+ifndef::parent-context-of-changes-in-http-client[:!context:]

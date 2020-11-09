@@ -1,0 +1,12 @@
+[id="changes-in-vertx-mail-client_{context}"]
+= Changes in {VertX} mail client
+
+The following section describes the changes in {VertX} mail client.
+
+== `MailAttachment` is available as an interface
+
+From {VertX} {4} onwards, `MailAttachment` is available as an interface. It enables you to use the mail attachment functionality in a stream. In earlier releases of {VertX}, `MailAttachment` was available as a class and attachment for mails was represented as a data object.
+
+== Mail configuration interface extends the net client options
+
+`MailConfig` interface extends the `NetClientOptions` interface. Due to this extension, mail configuration also supports the proxy setting of the `NetClient`XXX.

@@ -1,0 +1,15 @@
+[id="changes-in-vertx-circuit-breaker_{context}"]
+= Changes in {VertX} circuit breaker
+
+The following section describes the changes in {VertX} circuit breaker.
+
+== Removed execute command methods in circuit breaker
+
+The following methods are deprecated in `CircuitBreaker` class because they cannot be used with futures.
+
+[options="header"]
+|===
+|Removed methods|Replacing methods
+|`CircuitBreaker.executeCommand`| `CircuitBreaker.execute`
+|`CircuitBreaker.executeCommandWithFallback`| `CircuitBreaker.executeWithFallback`
+|===

@@ -1,0 +1,12 @@
+[id="changes-in-vertx-kafka-client_{context}"]
+= Changes in {VertX} Kafka client
+
+The following section describes the changes in {VertX} Kafka client.
+
+== AdminUtils Class is no longer available
+
+The `AdminUtils` class is no longer available. Use the new `KafkaAdminClient` class instead to perform administrative operations on a Kafka cluster.
+
+== Flush methods use asynchronous handler
+
+The flush methods in `KafkaProducer` class use `Handler<AsyncResult<Void>>` instead of `Handler<Void>`.
