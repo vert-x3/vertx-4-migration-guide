@@ -25,3 +25,5 @@ If you have the custom configurations from Vertx. 3.x, update the following para
     <distributed-cache-configuration name="__vertx.distributed.cache.configuration"/>
   </cache-container>
 ----
+
+If you run a {VertX} cluster on Openshift, the `infinispan-cloud` JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the `infinispan-core` JAR. XXX

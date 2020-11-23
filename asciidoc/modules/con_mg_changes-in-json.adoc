@@ -78,3 +78,7 @@ Use the following example code to convert a Base64URL to Base64 encoder.
 String base64url = someJsonObject.getString("base64encodedElement")
 String base64 = Json.toBase64(base64url);
 ----
+
+== Removed the JSON converter method from trust options
+
+The `TrustOptions.toJSON` method has been removed.XXX

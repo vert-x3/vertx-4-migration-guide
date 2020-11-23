@@ -18,6 +18,37 @@ The following cookie interfaces have been removed:
 
 Use the `io.vertx.core.http.Cookie` interface instead.
 
+== Favicon and error handlers use `Vertx` file system
+
+The create methods in `FaviconHandler` and `ErrorHandler` have been updated. You must pass a `Vertx` instance object in the create methods. These methods access file system. Passing the `Vertx` object ensures consistent access to files using the 'Vertx' file system.
+
+The following example shows how create methods were used in {VertX} {3x} releases:
+
+----
+FaviconHandler.create();
+ErrorHandler.create();
+----
+
+The following example shows how create methods should be used in {VertX} {4}:
+
+----
+FaviconHandler.create(vertx);
+ErrorHandler.create(vertx);
+----
+
+== Accessing the template engine
+
+Use the method `TemplateEngine.unwrap()` to access the template engine. You can then apply customizations and configurations to the template.
+
+The following methods that are used to get and set the engine configurations have been deprecated. Use the `TemplateEngine.unwrap()` method instead.
+
+* `HandlebarsTemplateEngine.getHandlebars()`
+* `HandlebarsTemplateEngine.getResolvers()`
+* `HandlebarsTemplateEngine.setResolvers()`
+* `JadeTemplateEngine.getJadeConfiguration()`
+* `ThymeleafTemplateEngine.getThymeleafTemplateEngine()`
+* `ThymeleafTemplateEngine.setMode()`
+
 == Removed the locale interface
 
 The `io.vertx.ext.web.Locale` interface has been removed. Use the `io.vertx.ext.web.LanguageHeader` interface instead.

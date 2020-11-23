@@ -1,7 +1,9 @@
 [id="migrating-authorization-applications_{context}"]
 = Migrating the authorization applications
 
-Authorization is a new feature in {VertX} {4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the `User` object. This meant that the provider was responsible for both authentication and authorization of the user. In {VertX} {4}, the user does not know who is the provider, so it can be used on different providers.
+Authorization is a new feature in {VertX} {4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the `User` object. This meant that the provider was responsible for both authentication and authorization of the user.
+
+In {VertX} {4}, the `User` object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.
 
 The following example shows how an application checks if a user can use Printer #1234 in {VertX} {3x} releases.
 

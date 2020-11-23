@@ -21,3 +21,21 @@ The following example shows the use of `publish()` method in {VertX} {4} release
 client.publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false);
 client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);
 ----
+
+== Mqtt will message returns a buffer
+
+The `MqttWill` data object gets and sets a string message as a buffer instead of a byte array. XXX
+
+== Removed the deprecated will and authorization methods from MQTT
+
+The following MQTT methods have been removed:
+
+|===
+|Removed methods|Replacing methods
+|`MqttWill.willMessage()`| `MqttWill.getWillMessage()`
+|`MqttWill.willTopic()`| `MqttWill.getWillTopic()   `
+|`MqttWill.willQos()`|`MqttWill.getWillQos()`
+|`MqttAuth.username()`|`MqttAuth.getUsername()`
+|`MqttAuth.password()`|`MqttAuth.getPassword()`
+|`MqttClientOptions.setKeepAliveTimeSeconds()`|`MqttClientOptions.setKeepAliveInterval()`XXX
+|===

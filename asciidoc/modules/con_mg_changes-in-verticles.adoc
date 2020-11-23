@@ -35,4 +35,6 @@ The `VerticleFactory` class has been simplified. The class does not require init
 
 == Removed the multithreaded worker verticles
 
-Multi-threaded worker verticles have been removed. The verticle has been removed because many {VertX} features do not support multi-threaded worker verticles.
+Multi-threaded worker verticle deployment option has been removed. This feature could only be used with {VertX} event-bus. Other {VertX} components such as HTTP did not support the feature.
+
+Use the unordered Vertx.executeBlocking()` method to achieve the same functionality as multi-threaded worker deployment.

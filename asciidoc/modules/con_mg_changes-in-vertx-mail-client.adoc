@@ -9,4 +9,4 @@ From {VertX} {4} onwards, `MailAttachment` is available as an interface. It enab
 
 == Mail configuration interface extends the net client options
 
-`MailConfig` interface extends the `NetClientOptions` interface. Due to this extension, mail configuration also supports the proxy setting of the `NetClient`XXX.
+`MailConfig` interface extends the `NetClientOptions` interface. Due to this extension, mail configuration also supports the proxy setting of the `NetClient`.

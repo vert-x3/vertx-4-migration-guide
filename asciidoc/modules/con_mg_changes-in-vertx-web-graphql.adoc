@@ -20,3 +20,7 @@ The following methods have been updated and are now supported on polyglot enviro
 * `VertxDataFetcher` is now a factory, use the method `io.vertx.ext.web.handler.graphql.schema.VertxDataFetcher.create()` instead.
 
 * `VertxPropertyDataFetcher` is now a factory, use the method  `io.vertx.ext.web.handler.graphql.schema.VertxPropertyDataFetcher.create()` instead.
+
+== Handling of Post data in GraphQL
+
+In prior releases, Graphql used to handle limited post data. From {VertX} {4} onward, GraphQL handles its own data during redirect and multipart upload operations.XXX

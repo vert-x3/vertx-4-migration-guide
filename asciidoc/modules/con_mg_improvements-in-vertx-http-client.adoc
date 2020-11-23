@@ -117,7 +117,7 @@ client.request(HttpMethod.CONNECT, uri, ar -> {
 
 == New `send()` method in `HttpClient` class
 
-A new `send()` method is available in the `HttpClient` class. This method enables you to send requests in a generic way.
+A new `send()` method is available in the `HttpClient` class.
 
 The following code shows how to send a request in {VertX} {4}.
 
