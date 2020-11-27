@@ -5,4 +5,4 @@ The following section describes the changes in {VertX} JDBC client.
 
 == Merged Vert.x SQL common module in JDBC client module
 
-The `io.vertx:vertx-sql-common` module has been merged in `io.vertx:vertx-jdbc-client` module.
+The `io.vertx:vertx-sql-common` module has been merged in `io.vertx:vertx-jdbc-client` module. You will have to remove the `io.vertx:vertx-sql-common` dependency file because `io.vertx:vertx-jdbc-client` will include it.

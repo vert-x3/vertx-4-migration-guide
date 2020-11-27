@@ -1,0 +1,76 @@
+[id="changes-in-micrometer-metrics_{context}"]
+= Changes in Micrometer metrics
+
+The following section describes the changes in Micrometer metrics.
+
+== TCP sent and received bytes are recorded as counters with equivalent HTTP request and response summaries
+
+In prior releases, the following metrics were recorded as distribution summaries for sockets. From {VertX} {4} onward, these metrics are logged as counter, which report the amount of data exchanged.
+
+* Net client
++
+** `vertx_net_client_bytesReceived`
+** `vertx_net_client_bytesSent`
+
+* Net server
++
+** `vertx_net_server_bytesReceived`
+** `vertx_net_server_bytesSent`
+
+For these counters, equivalent distribution summaries have been introduced for HTTP. These summaries are used to account for request and response sizes.
+
+* HTTP client
++
+** `vertx_http_client_request_bytes`
+** `vertx_http_client_response_bytes`
+
+* HTTP server
++
+** `vertx_http_server_request_bytes`
+** `vertx_http_server_response_bytes`
+
+== Renamed the metrics
+
+The following metrics have been renamed.
+
+[options=header]
+|===
+|Old metrics name|New metrics name|Updated in components
+|`*_connections`|`*_active_connections`|Net client and server
+
+HTTP client and server
+|`*_bytesReceived`|`*_bytes_read`|Datagram
+
+Net client and server
+
+HTTP client and server
+|`*_bytesSent`|`*_bytes_written`|Datagram
+
+Net client and server
+
+HTTP client and server
+|`*_requests`|`*_active_requests`|HTTP client
+
+HTTP server
+|`*_requestCount_total`|`*_requests_total`|HTTP client
+
+HTTP server
+|`*_responseTime_seconds`|`*_response_time_seconds`|HTTP client
+
+HTTP server
+|`*_responseCount_total`|`*_responses_total`|HTTP client
+
+HTTP server
+|`*_wsConnections`|`*_active_ws_connections`|HTTP client
+
+HTTP server
+|`vertx_http_client_queue_delay_seconds`|`vertx_http_client_queue_time_seconds`|
+|`vertx_http_client_queue_size`|`vertx_http_client_queue_pending`|
+|`vertx_http_server_requestResetCount_total`|`vertx_http_server_request_resets_total`|
+|`vertx_eventbus_bytesWritten`|`vertx_eventbus_bytes_written`|
+|`vertx_eventbus_bytesRead`|`vertx_eventbus_bytes_read`|
+|`vertx_eventbus_replyFailures`|`vertx_eventbus_reply_failures`|
+|`vertx_pool_queue_delay_seconds`|`vertx_pool_queue_time_seconds`|
+|`vertx_pool_queue_size`|`vertx_pool_queue_pending`|
+|`vertx_pool_inUse`|`vertx_pool_in_use`|
+|===

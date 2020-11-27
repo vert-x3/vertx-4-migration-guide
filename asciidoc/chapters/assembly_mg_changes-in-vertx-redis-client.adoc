@@ -1,0 +1,25 @@
+ifdef::context[:parent-context-of-changes-in-vertx-redis-client: {context}]
+
+[id="changes-in-vertx-redis-client_{context}"]
+= Changes in {VertX} Redis client
+:context: changes-in-vertx-redis-client
+
+In {VertX} {4}, use the `Redis` class to work with Redis client. The class `RedisClient` is no longer available.
+
+NOTE:: To help you migrate your applications from `RedisClient` to `Redis` class, a helper class `RedisAPI` is available. `RedisAPI` enables you to replicate the functionality similar to `RedisClient` class.
+
+The new class contains all the enhancements in protocols and Redis server features. Use the new class to:
+
+* Work with all Redis commands
+* Connect to single servers
+* Connect to high availability servers where Redis Sentinel is enabled
+* Connect to cluster configurations of Redis
+* Execute requests in Redis extensions
+* Communicate with both RESP2 and RESP3 server protocol servers
+
+include::../modules/con_mg_migrating-applications-to-new-redis-client.adoc[leveloffset=+1]
+
+include::../modules/con_mg_changes-in-vertx-redis-client.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-changes-in-vertx-redis-client[:context: {parent-context-of-changes-in-vertx-redis-client}]
+ifndef::parent-context-of-changes-in-vertx-redis-client[:!context:]

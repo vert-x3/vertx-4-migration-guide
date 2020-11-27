@@ -81,4 +81,4 @@ String base64 = Json.toBase64(base64url);
 
 == Removed the JSON converter method from trust options
 
-The `TrustOptions.toJSON` method has been removed.XXX
+The `TrustOptions.toJSON` method has been removed.

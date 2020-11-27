@@ -185,7 +185,7 @@ response.endHandler(v -> {
   // Response ended
 });
 response.exceptionHandler(err -> {
-  // Response failedxxx, something went wrong
+  // Response failed, something went wrong
 });
 ----
 +
@@ -197,7 +197,7 @@ response.end(ar -> {
   if (ar.succeeded()) {
     // Response ended
   } else {
-    // Response failedxxx, something went wrong
+    // Response failed, something went wrong
   }
 });
 ----

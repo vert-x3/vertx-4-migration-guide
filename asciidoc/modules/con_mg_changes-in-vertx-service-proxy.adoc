@@ -1,0 +1,26 @@
+[id="changes-in-vertx-service-proxy_{context}"]
+= Changes in {VertX} Service Proxy
+
+The following section describes the changes in service proxy.
+
+== Using service proxy code generator
+
+The `ServiceProxyProcessor` class has been removed.
+
+To use the service proxy code generator, you must import `vertx-codegen` with processor classifier in your classpath:
+
+----
+<dependencies>
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-codegen</artifactId>
+    <classifier>processor</classifier>
+  </dependency>
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-service-proxy</artifactId>
+  </dependency>
+</dependencies>
+----
+
+Service proxy reuses `io.vertx.codegen.CodeGenProcessor` from `vertx-codegen` to start the code generation of service proxy and handler.

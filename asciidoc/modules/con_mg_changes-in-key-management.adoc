@@ -61,8 +61,7 @@ new PubSecKeyOptions()
       .replaceAll("-----END PUBLIC KEY----"));
 ----
 
-In {VertX} {4}, the configuration uses a single key, so a key-pair should be 2 key (the public
-the secret)XXX.
+In {VertX} {4}, you must specify both the public and private key.
 
 The following example shows how to configure key pair in {VertX} {4}.
 
@@ -92,6 +91,10 @@ PubSecKeyOptions x509Certificate =
 == Changes in keystore management
 
 In {VertX} {3x}, `KeyStoreOptions` assumes that the keystore format is `jceks`, and the stored password is the same as the password of the key. As `jceks` is a proprietary format, it is recommended to use a standard format, such as JDK, instead.
+
+When you use `KeyStoreOptions` in {VertX} {4}, you can specify a store type. For example, store types such as PKCS11, PKCS12, and so on can be set. The default store type is `jceks`.
+
+In {VertX} {3x}, all keystore entries would share the same password, that is, the keystore password. In {VertX} {4}, each keystore entry can have a dedicated password. If you do not want to set password for each keystore entry, you can configure the keystore password as the default password for all entries.
 
 The following example shows how to load a `jceks` keystore in {VertX} {3x}.
 

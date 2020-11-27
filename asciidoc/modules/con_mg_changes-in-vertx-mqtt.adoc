@@ -24,7 +24,7 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
 
 == Mqtt will message returns a buffer
 
-The `MqttWill` data object gets and sets a string message as a buffer instead of a byte array. XXX
+The `MqttWill` data object wraps a string message as an {VertX} buffer instead of a byte array.
 
 == Removed the deprecated will and authorization methods from MQTT
 
@@ -33,9 +33,9 @@ The following MQTT methods have been removed:
 |===
 |Removed methods|Replacing methods
 |`MqttWill.willMessage()`| `MqttWill.getWillMessage()`
-|`MqttWill.willTopic()`| `MqttWill.getWillTopic()   `
+|`MqttWill.willTopic()`|`MqttWill.getWillTopic()`
 |`MqttWill.willQos()`|`MqttWill.getWillQos()`
 |`MqttAuth.username()`|`MqttAuth.getUsername()`
 |`MqttAuth.password()`|`MqttAuth.getPassword()`
-|`MqttClientOptions.setKeepAliveTimeSeconds()`|`MqttClientOptions.setKeepAliveInterval()`XXX
+|`MqttClientOptions.setKeepAliveTimeSeconds()`|`MqttClientOptions.setKeepAliveInterval()`
 |===

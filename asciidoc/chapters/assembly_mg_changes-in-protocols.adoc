@@ -10,5 +10,7 @@ include::../modules/con_mg_changes-in-vertx-grpc.adoc[leveloffset=+1]
 
 include::../modules/con_mg_changes-in-vertx-mqtt.adoc[leveloffset=+1]
 
+include::../modules/con_mg_changes-in-vertx-service-proxy.adoc[leveloffset=+1]
+
 ifdef::parent-context-of-changes-in-protocols[:context: {parent-context-of-changes-in-protocols}]
 ifndef::parent-context-of-changes-in-protocols[:!context:]

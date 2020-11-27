@@ -10,11 +10,11 @@ The `Starter` class has been removed. Use the `Launcher` class instead to start 
 == Isolated deployment for Java 8
 
 {VertX} {4} supports Java 11. This Java version does not support isolated class loading.
-In {VertX} {4}, isolated class loading will be supported for Java 8. However, the results may not be as expected.
+In {VertX} {4}, isolated class loading will be supported for Java 8.
 
-== Removed hook methods from context
+== Removed hook methods from {VertX} context
 
-The methods `Context.addCloseHook()` and `Context.removeCloseHook()` methods have been removed from the `Context` class.
+The methods `Context.addCloseHook()` and `Context.removeCloseHook()` methods have been removed from the `Context` class. These methods have been moved to the internal interface `InternalContext`.
 
 == Removed the clone methods from options
 

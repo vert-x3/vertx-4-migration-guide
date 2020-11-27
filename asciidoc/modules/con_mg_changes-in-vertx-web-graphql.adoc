@@ -21,6 +21,8 @@ The following methods have been updated and are now supported on polyglot enviro
 
 * `VertxPropertyDataFetcher` is now a factory, use the method  `io.vertx.ext.web.handler.graphql.schema.VertxPropertyDataFetcher.create()` instead.
 
-== Handling of Post data in GraphQL
+== Handling POST requests in {VertX} Web GraphQL
 
-In prior releases, Graphql used to handle limited post data. From {VertX} {4} onward, GraphQL handles its own data during redirect and multipart upload operations.XXX
+In prior releases, the {VertX} Web GraphQL handler could process its own POST requests. It did not need {VertX} Web `BodyHandler` to process the requests. However, this implementation was susceptible to DDoS attacks.
+
+From {VertX} {4} onward, to process POST requests `BodyHandler` is required. You must install `BodyHandler` before installing {VertX} Web GraphQL handler.

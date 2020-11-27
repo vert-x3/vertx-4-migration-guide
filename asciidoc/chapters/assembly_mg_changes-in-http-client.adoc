@@ -9,7 +9,7 @@ This section describes the changes in HTTP client.
 The following types of {VertX} clients are available:
 
 {VertX} web client::
-Use the {VertX} web client when your applications are HTTP oriented. For example, REST, encoding and decoding HTTP payloads, interpreting the HTTP status response code, and so on.
+Use the {VertX} web client when your applications are web oriented. For example, REST, encoding and decoding HTTP payloads, interpreting the HTTP status response code, and so on.
 
 {VertX} HTTP client::
 Use the {VertX} HTTP client when your applications are used as HTTP proxy. For example, as an API gateway. The HTTP client has been updated and improved in {VertX} {4}.

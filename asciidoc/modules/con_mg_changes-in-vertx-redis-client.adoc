@@ -1,0 +1,48 @@
+[id="updates-in-vertx-redis-client_{context}"]
+= Updates in {VertX} Redis client
+
+This section describes changes in Redis client.
+
+== Removed deprecated term "slave" from Redis roles and node options
+
+The deprecated term "slave" has been replaced with "replica" in Redis roles and node options.
+
+Roles:: The following example shows you usage of `SLAVE` role in {VertX} {3x} releases.
+
+----
+// Before (3.x)
+Redis.createClient(
+      rule.vertx(),
+      new RedisOptions()
+        .setType(RedisClientType.SENTINEL)
+        .addConnectionString("redis://localhost:5000")
+        .setMasterName("sentinel7000")
+        .setRole(RedisRole.SLAVE));
+----
+
+The following example shows you usage of `REPLICA` role in {VertX} {4}.
+
+----
+// After (4.0)
+Redis.createClient(
+      rule.vertx(),
+      new RedisOptions()
+        .setType(RedisClientType.SENTINEL)
+        .addConnectionString("redis://localhost:5000")
+        .setMasterName("sentinel7000")
+        .setRole(RedisRole.REPLICA));
+----
+
+Node options:: The following example shows you usage of node type `RedisSlaves` in {VertX} {3x} releases.
+
+----
+// Before (3.9)
+options.setUseSlaves(RedisSlaves);
+----
+
+The following example shows you usage of node type `RedisReplicas` in {VertX} {4}.
+
+----
+// After (4.0)
+options.setUseReplicas(RedisReplicas);
+----
