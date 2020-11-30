@@ -9,15 +9,15 @@ In prior releases, the following metrics were recorded as distribution summaries
 
 * Net client
 +
-** `vertx_net_client_bytesReceived`
-** `vertx_net_client_bytesSent`
+** `vertx_net_client_bytes_read`
+** `vertx_net_client_bytes_written`
 
 * Net server
 +
-** `vertx_net_server_bytesReceived`
-** `vertx_net_server_bytesSent`
+** `vertx_net_server_bytes_read`
+** `vertx_net_server_bytes_written`
 
-For these counters, equivalent distribution summaries have been introduced for HTTP. These summaries are used to account for request and response sizes.
+For these counters, equivalent distribution summaries have been introduced for HTTP. These summaries are used to collect information about the request and response sizes.
 
 * HTTP client
 +

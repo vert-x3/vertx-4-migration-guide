@@ -33,7 +33,7 @@ redis[s]://[[user]:password@]server[:port]/[database]
 
 == Migrating applications to `RedisAPI`
 
-Using the 'ResdisAPI` you can now decide how to manage the connection:
+Using the 'RedisAPI` you can now decide how to manage the connection:
 
 * You can let the client manage the connection for you using a pool.
 
