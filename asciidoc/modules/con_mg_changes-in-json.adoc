@@ -56,6 +56,41 @@ Json.mapper = someMapper;
 
 ** From {VertX} {4} onward, you cannot write a mapper instance. You should use your own static mapper or configure the `Databind.mapper()` instance.
 
+== Object mapping
+
+In earlier releases, the Jackson core and Jackson databind dependencies were required at runtime.
+
+From {VertX} {4} onward, only the Jackson core dependency is required.
+
+You will require the Jackson databind dependency only if you are object mapping JSON. In this case, you must explicitly add the dependency in your project descriptor in the `com.fasterxml.jackson.core:jackson-databind` jar.
+
+The following methods are supported for the mentioned types.
+
+* *Methods*
+
+** `JsonObject.mapFrom(Object)`
+** `JsonObject.mapTo(Class)`
+** `Json.decodeValue(Buffer, Class)`
+** `Json.decodeValue(String, Class)`
+** `Json.encode(Object)`
+** `Json.encodePrettily(Object)`
+** `Json.encodeToBuffer(Object)`
+
+* *Type*
+
+** `JsonObject` and `JsonArray`
+** `Map` and `List`
+** `Number`
+** `Boolean`
+** `Enum`
+** `byte[]` and `Buffer`
+** `Instant`
+
+The following methods are supported only with Jackson bind:
+
+* `JsonObject.mapTo(Object)`
+* `JsonObject.mapFrom(Object)`
+
 == Base64 encoder updated to Base64URL for JSON objects and arrays
 
 The {VertX} JSON types implement RFC-7493. In earlier releases of {VertX}, the implementation incorrectly used Base64 encoder instead of Base64URL. This has been fixed in {VertX} {4}, and Base64URL encoder is used in the JSON types.
