@@ -22,3 +22,10 @@ jobs:
           java-version: ${{ matrix.jdk }}
       - name: Render asciidoc
         run: mvn generate-resources
+      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: target/docs/vertx-4-migration-guide
+          CLEAN: true
