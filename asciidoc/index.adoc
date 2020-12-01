@@ -2,7 +2,7 @@ ECLIPSE VERT.X 4 MIGRATION GUIDE
 
 This guide describes the updates in {VertX} {4} release. Use the information to upgrade your {VertX} {3x} applications to {VertX} {4}.
 
-include::../modules/con_mg-about-vertx.adoc[leveloffset=+1]
+include::modules/con_mg-about-vertx.adoc[leveloffset=+1]
 
 include::../modules/proc_configuring-your-application-to-use-vertx.adoc[leveloffset=+1]
 
@@ -18,4 +18,4 @@ include::chapters/assembly_mg_changes-in-protocols.adoc[leveloffset=+1]
 
 include::chapters/assembly_mg_changes-in-client-components.adoc[leveloffset=+1]
 
-include::../modules/con_mg_miscellaneous-changes-in-vertx.adoc[leveloffset=+1]
+include::modules/con_mg_miscellaneous-changes-in-vertx.adoc[leveloffset=+1]

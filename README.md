@@ -1,5 +1,11 @@
 # Vertx 4 Migration Guide
 
+## Building HTML
+
+```
+> mvn generate-resources
+```
+
 ## Goals
 
 - Vert.x 3 users should be guided about how to migrate their applications from Vert.x 3 to Vert.x 4
