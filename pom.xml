@@ -51,6 +51,7 @@
             <VertX>Vert.x</VertX>
             <v3x>3.x</v3x>
             <v4>4</v4>
+            <toc>auto</toc>
           </attributes>
         </configuration>
         <executions>
