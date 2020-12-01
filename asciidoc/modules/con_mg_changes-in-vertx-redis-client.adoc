@@ -7,7 +7,7 @@ This section describes changes in Redis client.
 
 The deprecated term "slave" has been replaced with "replica" in Redis roles and node options.
 
-Roles:: The following example shows you usage of `SLAVE` role in {VertX} {3x} releases.
+Roles:: The following example shows you usage of `SLAVE` role in {VertX} {v3x} releases.
 
 ----
 // Before (3.x)
@@ -20,7 +20,7 @@ Redis.createClient(
         .setRole(RedisRole.SLAVE));
 ----
 
-The following example shows you usage of `REPLICA` role in {VertX} {4}.
+The following example shows you usage of `REPLICA` role in {VertX} {v4}.
 
 ----
 // After (4.0)
@@ -33,14 +33,14 @@ Redis.createClient(
         .setRole(RedisRole.REPLICA));
 ----
 
-Node options:: The following example shows you usage of node type `RedisSlaves` in {VertX} {3x} releases.
+Node options:: The following example shows you usage of node type `RedisSlaves` in {VertX} {v3x} releases.
 
 ----
 // Before (3.9)
 options.setUseSlaves(RedisSlaves);
 ----
 
-The following example shows you usage of node type `RedisReplicas` in {VertX} {4}.
+The following example shows you usage of node type `RedisReplicas` in {VertX} {v4}.
 
 ----
 // After (4.0)

@@ -12,17 +12,17 @@ The following example shows you how to use a switch statement to check if authen
 ----
 switch (options.getClientAuth()) {
 case REQUIRED:
-// ... behavior same as in releases prior to {VertX} {4}
+// ... behavior same as in releases prior to {VertX} {v4}
 break;
 default:
 // fallback statement...
 }
 ----
 
-The following example shows you how to use the check if authentication of the client is required in {Vertx} {4}.
+The following example shows you how to use the check if authentication of the client is required in {Vertx} {v4}.
 ----
 if (options.getClientAuth() == ClientAuth.REQUIRED) {
-// behavior in releases prior to {VertX} {4}
+// behavior in releases prior to {VertX} {v4}
 ----
 
 == Upgrade SSL method uses asynchronous handler

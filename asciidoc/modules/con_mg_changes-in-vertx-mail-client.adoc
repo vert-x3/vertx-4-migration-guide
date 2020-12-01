@@ -5,7 +5,7 @@ The following section describes the changes in {VertX} mail client.
 
 == `MailAttachment` is available as an interface
 
-From {VertX} {4} onwards, `MailAttachment` is available as an interface. It enables you to use the mail attachment functionality in a stream. In earlier releases of {VertX}, `MailAttachment` was available as a class and attachment for mails was represented as a data object.
+From {VertX} {v4} onwards, `MailAttachment` is available as an interface. It enables you to use the mail attachment functionality in a stream. In earlier releases of {VertX}, `MailAttachment` was available as a class and attachment for mails was represented as a data object.
 
 == Mail configuration interface extends the net client options
 

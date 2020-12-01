@@ -4,7 +4,7 @@ ifdef::context[:parent-context-of-changes-in-vertx-redis-client: {context}]
 = Changes in {VertX} Redis client
 :context: changes-in-vertx-redis-client
 
-In {VertX} {4}, use the `Redis` class to work with Redis client. The class `RedisClient` is no longer available.
+In {VertX} {v4}, use the `Redis` class to work with Redis client. The class `RedisClient` is no longer available.
 
 NOTE:: To help you migrate your applications from `RedisClient` to `Redis` class, a helper class `RedisAPI` is available. `RedisAPI` enables you to replicate the functionality similar to `RedisClient` class.
 

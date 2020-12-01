@@ -12,7 +12,7 @@ The following types of {VertX} clients are available:
 Use the {VertX} web client when your applications are web oriented. For example, REST, encoding and decoding HTTP payloads, interpreting the HTTP status response code, and so on.
 
 {VertX} HTTP client::
-Use the {VertX} HTTP client when your applications are used as HTTP proxy. For example, as an API gateway. The HTTP client has been updated and improved in {VertX} {4}.
+Use the {VertX} HTTP client when your applications are used as HTTP proxy. For example, as an API gateway. The HTTP client has been updated and improved in {VertX} {v4}.
 
 NOTE: {VertX} web client is based on {VertX} HTTP client.
 

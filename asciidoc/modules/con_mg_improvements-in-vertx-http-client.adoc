@@ -7,9 +7,9 @@ This section describes the improvements in HTTP client.
 
 The `HttpClient` and `HttpClientRequest` methods have been updated to use asynchronous handlers. The methods take `Handler<AsyncResult<HttpClientResponse>>` as input instead of `Handler<HttpClientResponse>`.
 
-In earlier releases of {VertX}, the `HttpClient` methods `getNow()`, `optionsNow()` and `headNow()` used to return `HttpClientRequest`, that you had to further send to perform a request. The `getNow()`, `optionsNow()` and `headNow()` methods have been removed. In {VertX} {4}, you can directly send a request with the required information using `Handler<AsyncResult<HttpClientResponse>>`.
+In earlier releases of {VertX}, the `HttpClient` methods `getNow()`, `optionsNow()` and `headNow()` used to return `HttpClientRequest`, that you had to further send to perform a request. The `getNow()`, `optionsNow()` and `headNow()` methods have been removed. In {VertX} {v4}, you can directly send a request with the required information using `Handler<AsyncResult<HttpClientResponse>>`.
 
-The following examples show how to send a request in {VertX} {4}:
+The following examples show how to send a request in {VertX} {v4}:
 
 * To perform a GET operation:
 +
@@ -63,7 +63,7 @@ client.request(HttpMethod.GET, 8080, "example.com", "/resource", ar -> {
 
 The `HttpClientRequest.connectionHandler()` method has been removed. Use `HttpClient.connectionHandler()` method instead to call connection handlers for client requests in your application.
 
-The following example shows how the `HttpClientRequest.connectionHandler()` method was used in {VertX} {3x} releases.
+The following example shows how the `HttpClientRequest.connectionHandler()` method was used in {VertX} {v3x} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -83,11 +83,11 @@ client.connectionHandler(conn -> {
 
 == HTTP client tunneling using the net socket method
 
-HTTP tunnels can be created using the `HttpClientResponse.netSocket()` method. In {VertX} {4} this method has been updated.
+HTTP tunnels can be created using the `HttpClientResponse.netSocket()` method. In {VertX} {v4} this method has been updated.
 
 To get a net socket for the connection of the request, send a socket handler in the request. The handler is called when the HTTP response header is received. The socket is ready for tunneling and can send and receive buffers.
 
-The following example shows how to get net socket for a connection in {VertX} {3x} releases.
+The following example shows how to get net socket for a connection in {VertX} {v3x} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -101,7 +101,7 @@ client.request(HttpMethod.CONNECT, uri, ar -> {
 }).end();
 ----
 
-The following example shows how to get net socket for a connection in {VertX} {4}:
+The following example shows how to get net socket for a connection in {VertX} {v4}:
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -119,7 +119,7 @@ client.request(HttpMethod.CONNECT, uri, ar -> {
 
 A new `send()` method is available in the `HttpClient` class.
 
-The following code shows how to send a request in {VertX} {4}.
+The following code shows how to send a request in {VertX} {v4}.
 
 ----
 Future<HttpClientResponse> f1 = client.send(HttpMethod.GET, 8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"));
@@ -127,7 +127,7 @@ Future<HttpClientResponse> f1 = client.send(HttpMethod.GET, 8080, "localhost", "
 
 == HttpHeaders is an interface and contains `MultiMap` methods
 
-In {VertX} {4}, `HttpHeaders` is an interface. In earlier releases of {VertX},  `HttpHeaders` was a class.
+In {VertX} {v4}, `HttpHeaders` is an interface. In earlier releases of {VertX},  `HttpHeaders` was a class.
 
 The following new `MultiMap` methods have been added in the `HttpHeaders` interface. Use these methods to create `MultiMap` instances.
 
@@ -135,13 +135,13 @@ The following new `MultiMap` methods have been added in the `HttpHeaders` interf
 * `MultiMap.set(CharSequence name, CharSequence value)`
 * `MultiMap.set(String name, String value)`
 
-The following example shows how `MultiMap` instances were created in {VertX} {3x} releases.
+The following example shows how `MultiMap` instances were created in {VertX} {v3x} releases.
 
 ----
 MultiMap headers = MultiMap.caseInsensitiveMultiMap();
 ----
 
-The following examples show how to create `MultiMap` instances in {VertX} {4}.
+The following examples show how to create `MultiMap` instances in {VertX} {v4}.
 
 ----
 MultiMap headers = HttpHeaders.headers();
@@ -154,13 +154,13 @@ MultiMap headers = HttpHeaders.set("content-type", "application.data");
 
 The `CaseInsensitiveHeaders` class is no longer public. Use the `MultiMap.caseInsensitiveMultiMap()` method to create a multi-map implementation with case insensitive keys.
 
-The following example shows how `CaseInsensitiveHeaders` method was used in {VertX} {3x} releases.
+The following example shows how `CaseInsensitiveHeaders` method was used in {VertX} {v3x} releases.
 
 ----
 CaseInsensitiveHeaders headers = new CaseInsensitiveHeaders();
 ----
 
-The following examples show how `MultiMap` method is used in {VertX} {4}.
+The following examples show how `MultiMap` method is used in {VertX} {v4}.
 
 ----
 MultiMap multiMap = MultiMap#caseInsensitiveMultiMap();
@@ -174,11 +174,11 @@ MultiMap headers = HttpHeaders.headers();
 
 In earlier releases of {VertX}, the version of HTTP running on a server was checked only if the application explicitly called the `HttpServerRequest.version()` method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.
 
-From {VertX} {4} onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the `HttpServerRequest.version()` method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.
+From {VertX} {v4} onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the `HttpServerRequest.version()` method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.
 
 == New methods in request options
 
-In {VertX} {4}, the following new methods are available in the `RequestOptions` class:
+In {VertX} {v4}, the following new methods are available in the `RequestOptions` class:
 
 * Header
 * FollowRedirects

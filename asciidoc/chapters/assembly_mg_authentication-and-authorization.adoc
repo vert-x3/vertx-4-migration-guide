@@ -6,7 +6,7 @@ ifdef::context[:parent-context-of-authentication-and-authorization: {context}]
 
 The following sections describe the changes in {VertX} authentication and authorization.
 
-The {VertX} authentication module has major updates in {VertX} {4}. The `io.vertx.ext.auth.AuthProvider` interface has been split into two new interfaces:
+The {VertX} authentication module has major updates in {VertX} {v4}. The `io.vertx.ext.auth.AuthProvider` interface has been split into two new interfaces:
 
 * `io.vertx.ext.auth.authentication.AuthenticationProvider`
 

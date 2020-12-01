@@ -5,7 +5,7 @@ This section explains the changes in the threads.
 
 == Context affinity for non {VertX} thread
 
-The `Vertx.getOrCreateContext()` creates a single context for each non {VertX} thread. In releases prior to {VertX} {4}, a new context was created each time the method was called from a non {VertX} thread.
+The `Vertx.getOrCreateContext()` creates a single context for each non {VertX} thread. In releases prior to {VertX} {v4}, a new context was created each time the method was called from a non {VertX} thread.
 The non {VertX} threads are associated with a context the first time a context is created.
 ----
 new Thread(() -> {
@@ -22,7 +22,7 @@ for (int i = 0;i < n;i++) {
 }
 ----
 
-To get the same results in {VertX} {4}, you must update the code:
+To get the same results in {VertX} {v4}, you must update the code:
 ----
 for (int i = 0;i < n;i++) {
   vertx.executeBlocking(block, false, handler);

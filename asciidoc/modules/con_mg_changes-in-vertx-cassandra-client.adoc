@@ -7,9 +7,9 @@ The following section describes the changes in {VertX} Cassandra client.
 
 == Changes in driver versions
 
-In {VertX} {4}, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your {VertX} {3x} applications to {VertX} {4}. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.
+In {VertX} {v4}, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your {VertX} {v3x} applications to {VertX} {v4}. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.
 
-The following example shows Datastax Java driver classes and create statements in {VertX} {3x} releases.
+The following example shows Datastax Java driver classes and create statements in {VertX} {v3x} releases.
 
 ----
 import com.datastax.driver.core.ResultSet;
@@ -26,7 +26,7 @@ cassandraClient.execute(statement, done -> {
 });
 ----
 
-The following example shows Datastax Java driver classes and create statements in {VertX} {4}.
+The following example shows Datastax Java driver classes and create statements in {VertX} {v4}.
 
 ----
 import com.datastax.oss.driver.api.core.cql.ResultSet;
@@ -47,7 +47,7 @@ cassandraClient.execute(statement, done -> {
 
 Object mappers are no longer supported because of changes in Datastax Java driver 4.x.
 
-The following mapping construction is not supported in {VertX} {4} release:
+The following mapping construction is not supported in {VertX} {v4} release:
 
 ----
 @Table(keyspace = "test", name = "names")
@@ -62,7 +62,7 @@ public class MappedClass {
 
 The `CassandraClientOptions.setPort()`, `CassandraClientOptions.getContactPoints()`, and `CassandraClientOptions.setContactPoints()` methods have been removed. Use the `CassandraClientOptions.addContactPoint()` method instead.
 
-The following example shows the use of older methods in {VertX} {3x} releases.
+The following example shows the use of older methods in {VertX} {v3x} releases.
 
 ----
 import io.vertx.cassandra.CassandraClient;
@@ -74,7 +74,7 @@ CassandraClientOptions options = new CassandraClientOptions()
 CassandraClient client = CassandraClient.create(vertx, options);
 ----
 
-The following example shows how to use `CassandraClientOptions.addContactPoint()`method in {VertX} {4}.
+The following example shows how to use `CassandraClientOptions.addContactPoint()`method in {VertX} {v4}.
 
 ----
 import io.vertx.cassandra.CassandraClient;

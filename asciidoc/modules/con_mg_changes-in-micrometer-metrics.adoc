@@ -5,7 +5,7 @@ The following section describes the changes in Micrometer metrics.
 
 == TCP sent and received bytes are recorded as counters with equivalent HTTP request and response summaries
 
-In prior releases, the following metrics were recorded as distribution summaries for sockets. From {VertX} {4} onward, these metrics are logged as counter, which report the amount of data exchanged.
+In prior releases, the following metrics were recorded as distribution summaries for sockets. From {VertX} {v4} onward, these metrics are logged as counter, which report the amount of data exchanged.
 
 * Net client
 +
