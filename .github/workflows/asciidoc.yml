@@ -2,7 +2,7 @@ name: asciidoc
 on:
   push:
     branches:
-      - Migration_guide_files
+      - master
   schedule:
     - cron:  '0 4 * * *'
 jobs:
