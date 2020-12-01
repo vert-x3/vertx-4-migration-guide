@@ -518,6 +518,86 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="book">
 <div id="header">
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#about-vertx_{context}">About Vert.x</a></li>
+<li><a href="#what-is-new-and-different-in-vertx-4_{context}">Review What&#8217;s New and Changed in Vert.x 4</a>
+<ul class="sectlevel2">
+<li><a href="#use-future-methods-instead-of-callback-for-asynchronous-operations_what-is-new-and-different-in-vertx-4">Use future methods for asynchronous operations</a></li>
+<li><a href="#no_dependency_on_the_jackson_databind_library_what-is-new-and-different-in-vertx-4">No dependency on the Jackson Databind library</a></li>
+<li><a href="#handling_deprecations_and_removals_what-is-new-and-different-in-vertx-4">Handling deprecations and removals</a></li>
+</ul>
+</li>
+<li><a href="#changes-in-common-components_{context}">Changes in common components</a>
+<ul class="sectlevel2">
+<li><a href="#changes-in-messaging_changes-in-common-components">Changes in messaging</a></li>
+<li><a href="#changes-in-eventbus_changes-in-common-components">Changes in EventBus</a></li>
+<li><a href="#changes-in-handlers_changes-in-common-components">Changes in Future</a></li>
+<li><a href="#changes-in-verticles_changes-in-common-components">Changes in verticles</a></li>
+<li><a href="#changes-in-threads_changes-in-common-components">Changes in threads</a></li>
+<li><a href="#changes-in-http_changes-in-common-components">Changes in HTTP</a></li>
+<li><a href="#changes-in-connection_changes-in-common-components">Changes in connection methods</a></li>
+<li><a href="#changes-in-logging_changes-in-common-components">Changes in logging</a></li>
+<li><a href="#changes-in-vertx-reactive-extensions_changes-in-common-components">Changes in Vert.x Reactive Extensions (Rx)</a></li>
+<li><a href="#changes-in-vertx-config_changes-in-common-components">Changes in Vert.x configuration</a></li>
+<li><a href="#changes-in-json_changes-in-common-components">Changes in JSON</a></li>
+<li><a href="#changes-in-vertx-webchanges-in-common-components">Changes in Vert.x web</a></li>
+<li><a href="#changes-in-micrometer-metrics_changes-in-common-components">Changes in Micrometer metrics</a></li>
+<li><a href="#changes-in-vertx-openapi_changes-in-common-components">Changes in Vert.x OpenAPI</a></li>
+</ul>
+</li>
+<li><a href="#changes-in-microservices-patterns_{context}">Changes in microservices patterns</a>
+<ul class="sectlevel2">
+<li><a href="#changes-in-vertx-circuit-breaker_changes-in-microservices-patterns">Changes in Vert.x circuit breaker</a></li>
+<li><a href="#changes-in-vertx-service-discovery_changes-in-microservices-patterns">Changes in Vert.x service discovery</a></li>
+</ul>
+</li>
+<li><a href="#authentication-and-authorization_{context}">Changes in Vert.x authentication and authorization</a>
+<ul class="sectlevel2">
+<li><a href="#migrating-authentication-applications_authentication-and-authorization">Migrating the authentication applications</a></li>
+<li><a href="#migrating-authorization-applications_authentication-and-authorization">Migrating the authorization applications</a></li>
+<li><a href="#changes-in-key-management_authentication-and-authorization">Changes in key management</a></li>
+<li><a href="#deprecated-and-removed-authentication-and-authorization-methods_authentication-and-authorization">Deprecated and removed authentication and authorization methods</a></li>
+</ul>
+</li>
+<li><a href="#changes-in-protocols_{context}">Changes in protocols</a>
+<ul class="sectlevel2">
+<li><a href="#changes-in-vertx-grpc_changes-in-protocols">Changes in Vert.x gRPC</a></li>
+<li><a href="#changes-in-vertx-mqtt_changes-in-protocols">Changes in Vert.x MQTT</a></li>
+<li><a href="#changes-in-vertx-service-proxy_changes-in-protocols">Changes in Vert.x Service Proxy</a></li>
+</ul>
+</li>
+<li><a href="#changes-in-client-components_{context}">Changes in client components</a>
+<ul class="sectlevel2">
+<li><a href="#changes-in-vertx-kafka-client_changes-in-client-components">Changes in Vert.x Kafka client</a></li>
+<li><a href="#changes-in-vertx-jdbc-client_changes-in-client-components">Changes in Vert.x JDBC client</a></li>
+<li><a href="#changes-in-vertx-mail-client_changes-in-client-components">Changes in Vert.x mail client</a></li>
+<li><a href="#changes-in-vertx-cassandra-client_changes-in-client-components">Changes in Vert.x Cassandra client</a></li>
+<li><a href="#changes-in-vertx-amqp-client_changes-in-client-components">Changes in Vert.x AMQP client</a></li>
+<li><a href="#changes-in-vertx-mongodb-client_changes-in-client-components">Changes in Vert.x MongoDB client</a></li>
+<li><a href="#changes-in-vertx-redis-client_changes-in-client-components">Changes in Vert.x Redis client</a></li>
+</ul>
+</li>
+<li><a href="#miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</a>
+<ul class="sectlevel2">
+<li><a href="#_removed_the_code_starter_code_class">Removed the <code>Starter</code> class</a></li>
+<li><a href="#_isolated_deployment_for_java_8">Isolated deployment for Java 8</a></li>
+<li><a href="#_removed_hook_methods_from_vert_x_context">Removed hook methods from Vert.x context</a></li>
+<li><a href="#_removed_the_clone_methods_from_options">Removed the clone methods from options</a></li>
+<li><a href="#_removed_equals_and_hashcode_methods_from_options">Removed equals and hashcode methods from options</a></li>
+<li><a href="#_new_method_to_check_file_caching">New method to check file caching</a></li>
+<li><a href="#_service_provider_interface_spi_metrics">Service Provider Interface (SPI) metrics</a></li>
+<li><a href="#_removed_the_pooled_buffer_methods">Removed the pooled buffer methods`</a></li>
+<li><a href="#_clustered_flag_removed_from_options_classes">Clustered flag removed from options classes</a></li>
+<li><a href="#_methods_to_create_clients_that_have_no_shared_data_sources">Methods to create clients that have no shared data sources</a></li>
+<li><a href="#changes-in-vertx-junit5_{context}">Changes in Vert.x JUnit5</a></li>
+<li><a href="#changes-in-infinispan-cluster-manager_{context}">Changes in Infinispan cluster manager</a></li>
+<li><a href="#changes-in-vertx-web-graphql_{context}">Changes in Vert.x Web GraphQL</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -526,7 +606,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>ECLIPSE VERT.X 4 MIGRATION GUIDE</p>
 </div>
 <div class="paragraph">
-<p>This guide describes the updates in Vert.x {4} release. Use the information to upgrade your Vert.x {3x} applications to Vert.x {4}.</p>
+<p>This guide describes the updates in Vert.x 4 release. Use the information to upgrade your Vert.x 3.x applications to Vert.x 4.</p>
 </div>
 </div>
 </div>
@@ -545,18 +625,18 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="what-is-new-and-different-in-vertx-4_{context}">Review What&#8217;s New and Changed in Vert.x {4}</h2>
+<h2 id="what-is-new-and-different-in-vertx-4_{context}">Review What&#8217;s New and Changed in Vert.x 4</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section explains the major updates in Vert.x {4} release.</p>
+<p>This section explains the major updates in Vert.x 4 release.</p>
 </div>
 <div class="sect2">
 <h3 id="use-future-methods-instead-of-callback-for-asynchronous-operations_what-is-new-and-different-in-vertx-4">Use future methods for asynchronous operations</h3>
 <div class="paragraph">
-<p>Vert.x {4} uses futures for asynchronous operations. Every callback method has a corresponding future method. You can use a combination of callback and future methods to migrate callback-based applications to Vert.x {4}. However, you can also continue using callbacks for asynchronous operations.</p>
+<p>Vert.x 4 uses futures for asynchronous operations. Every callback method has a corresponding future method. You can use a combination of callback and future methods to migrate callback-based applications to Vert.x 4. However, you can also continue using callbacks for asynchronous operations.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how a callback was used for asynchronous operations in Vert.x {3x} releases.</p>
+<p>The following example shows you how a callback was used for asynchronous operations in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -572,7 +652,7 @@ request.send(ar -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use callback and future methods together for asynchronous operations in Vert.x {4}.</p>
+<p>The following example shows you how to use callback and future methods together for asynchronous operations in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -615,7 +695,7 @@ response.onComplete(ar -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how callbacks and futures can be used to compose two asynchronous operations in Vert.x {4}. The error is handled only once in the end.</p>
+<p>The following example shows you how callbacks and futures can be used to compose two asynchronous operations in Vert.x 4. The error is handled only once in the end.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -639,7 +719,7 @@ fut2.onComplete(ar -&gt; {
 <p>The JSON features in Vert.x depend on Jackson library. Jackson Databind library enables object mapping of JSON.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, Jackson Databind is an optional Maven dependency. If you want to use this dependency, you must explicitly add it in the classpath.</p>
+<p>In Vert.x 4, Jackson Databind is an optional Maven dependency. If you want to use this dependency, you must explicitly add it in the classpath.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -670,15 +750,15 @@ fut2.onComplete(ar -&gt; {
 <div class="sect2">
 <h3 id="handling_deprecations_and_removals_what-is-new-and-different-in-vertx-4">Handling deprecations and removals</h3>
 <div class="paragraph">
-<p>Some features and functions might have been deprecated or removed in Vert.x {4}. Before you migrate your applications to Vert.x {4}, check for deprecations and removals.</p>
+<p>Some features and functions might have been deprecated or removed in Vert.x 4. Before you migrate your applications to Vert.x 4, check for deprecations and removals.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>APIs were deprecated in a Vert.x {3x} release and new equivalent APIs were provided in that release.</p>
+<p>APIs were deprecated in a Vert.x 3.x release and new equivalent APIs were provided in that release.</p>
 </li>
 <li>
-<p>Deprecated APIs have been removed in Vert.x {4}.</p>
+<p>Deprecated APIs have been removed in Vert.x 4.</p>
 </li>
 </ul>
 </div>
@@ -686,10 +766,10 @@ fut2.onComplete(ar -&gt; {
 <p>If your application uses a deprecated API, you should update your application to use the new API. This helps in migrating applications to the latest version of the product.</p>
 </div>
 <div class="paragraph">
-<p>The Java compiler generates warnings when deprecated APIs are used. You can use the compiler to check for deprecated methods while migrating applications to Vert.x {4}.</p>
+<p>The Java compiler generates warnings when deprecated APIs are used. You can use the compiler to check for deprecated methods while migrating applications to Vert.x 4.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you an EventBus method that was deprecated in a Vert.x {3x} release.</p>
+<p>The following example shows you an EventBus method that was deprecated in a Vert.x 3.x release.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -700,7 +780,7 @@ vertx.eventBus().send("some-address", "hello world", ar -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The method <code>send(String,String,Handler&lt;AsyncResult&lt;Message&gt;&gt;)</code> has been replaced in Vert.x {4} with the method <code>request(String,String,Handler&lt;AsyncResult&lt;Message&gt;&gt;</code>).</p>
+<p>The method <code>send(String,String,Handler&lt;AsyncResult&lt;Message&gt;&gt;)</code> has been replaced in Vert.x 4 with the method <code>request(String,String,Handler&lt;AsyncResult&lt;Message&gt;&gt;</code>).</p>
 </div>
 <div class="paragraph">
 <p>The following example shows you how to update your application to use the new method.</p>
@@ -776,13 +856,13 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 <div class="sect3">
 <h4 id="_removed_the_request_response_send_methods_in_code_eventbus_code">Removed the request-response send methods in <code>EventBus</code></h4>
 <div class="paragraph">
-<p>The <code>EventBus.send(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> and <code>Message.reply(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> methods have been removed. These methods would have caused overloading issues in Vert.x {4}. The version of the method returning <code>Future&lt;Message&lt;T&gt;&gt;</code> would collide with the fire and forget version.</p>
+<p>The <code>EventBus.send(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> and <code>Message.reply(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> methods have been removed. These methods would have caused overloading issues in Vert.x 4. The version of the method returning <code>Future&lt;Message&lt;T&gt;&gt;</code> would collide with the fire and forget version.</p>
 </div>
 <div class="paragraph">
 <p>The request-response messaging pattern should use the new <code>request</code> and <code>replyAndRequest</code> methods. Use the method <code>EventBus.request(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> instead of <code>EventBus.send(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> to send a message. Use the method <code>Message.replyAndRequest(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> instead of <code>Message.reply(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> to reply to the message.</p>
 </div>
 <div class="paragraph">
-<p>The following is an example of request and reply to a message in Vert.x {3x} releases:</p>
+<p>The following is an example of request and reply to a message in Vert.x 3.x releases:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -811,7 +891,7 @@ eventBus.consumer("the-address", message -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following is an example of request and reply to a message in Vert.x {4}:</p>
+<p>The following is an example of request and reply to a message in Vert.x 4:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -837,10 +917,10 @@ eventBus.consumer("the-address", message -&gt; {
 <div class="sect3">
 <h4 id="_support_for_multiple_handlers_for_futures">Support for multiple handlers for futures</h4>
 <div class="paragraph">
-<p>From Vert.x {4} onward, multiple handlers are supported for a future. The <code>Future&lt;T&gt;.setHandler()</code> used to set a single handler and has been removed. Use <code>Future&lt;T&gt;.onComplete()</code>, <code>Future&lt;T&gt;.onSuccess()</code>, and <code>Future&lt;T&gt;.onFailure()</code> methods instead to call handlers on completion, success, and failure results of an action.</p>
+<p>From Vert.x 4 onward, multiple handlers are supported for a future. The <code>Future&lt;T&gt;.setHandler()</code> used to set a single handler and has been removed. Use <code>Future&lt;T&gt;.onComplete()</code>, <code>Future&lt;T&gt;.onSuccess()</code>, and <code>Future&lt;T&gt;.onFailure()</code> methods instead to call handlers on completion, success, and failure results of an action.</p>
 </div>
 <div class="paragraph">
-<p>The following is an example of how to call a handler in Vert.x {3x} release.</p>
+<p>The following is an example of how to call a handler in Vert.x 3.x release.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -849,7 +929,7 @@ fut.setHandler(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following is an example of how to call the new <code>Future&lt;T&gt;.onComplete()</code> method in Vert.x {4}:</p>
+<p>The following is an example of how to call the new <code>Future&lt;T&gt;.onComplete()</code> method in Vert.x 4:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -864,7 +944,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 <p>In the earlier releases, you would use the <code>Future.completer()</code> method to access <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>, which was associated with the <code>Future</code>.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, the <code>Future&lt;T&gt;.completer()</code> method has been removed. <code>Future&lt;T&gt;</code> directly extends <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>. You can access any of the handler methods using the <code>Future</code> object. The <code>Future</code> object is also a handler.</p>
+<p>In Vert.x 4, the <code>Future&lt;T&gt;.completer()</code> method has been removed. <code>Future&lt;T&gt;</code> directly extends <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>. You can access any of the handler methods using the <code>Future</code> object. The <code>Future</code> object is also a handler.</p>
 </div>
 </div>
 <div class="sect3">
@@ -873,7 +953,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 <p>The <code>HttpClientRequest.connectionHandler()</code> method has been removed. Use <code>HttpClient.connectionHandler()</code> method instead to call connection handlers for client requests in your application.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how the <code>HttpClientRequest.connectionHandler()</code> method was used in Vert.x {3x} releases.</p>
+<p>The following example shows you how the <code>HttpClientRequest.connectionHandler()</code> method was used in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -883,7 +963,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use the new <code>HttpClient.connectionHandler()</code> method in Vert.x {4}.</p>
+<p>The following example shows you how to use the new <code>HttpClient.connectionHandler()</code> method in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -899,7 +979,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 <p>In earlier releases of Vert.x, the version of HTTP running on a server was checked only if the application explicitly called the <code>HttpServerRequest.version()</code> method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.</p>
 </div>
 <div class="paragraph">
-<p>From Vert.x {4} onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the <code>HttpServerRequest.version()</code> method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.</p>
+<p>From Vert.x 4 onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the <code>HttpServerRequest.version()</code> method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.</p>
 </div>
 </div>
 </div>
@@ -911,10 +991,10 @@ fut.onComplete(ar -&gt; ...);</pre>
 <div class="sect3">
 <h4 id="_updates_in_the_code_verticlefactory_createverticle_code_method">Updates in the <code>VerticleFactory.createVerticle()</code> method</h4>
 <div class="paragraph">
-<p>In earlier releases of Vert.x, <code>VerticleFactory.createVerticle()</code> method synchronously instantiated a verticle. From Vert.x {4} onward, the method asynchronously instantiates the verticle and returns the callback <code>Callable&lt;Verticle&gt;</code> instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.</p>
+<p>In earlier releases of Vert.x, <code>VerticleFactory.createVerticle()</code> method synchronously instantiated a verticle. From Vert.x 4 onward, the method asynchronously instantiates the verticle and returns the callback <code>Callable&lt;Verticle&gt;</code> instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.</p>
 </div>
 <div class="paragraph">
-<p>The following code shows you how verticles were instantiated in Vert.x {3x} releases:</p>
+<p>The following code shows you how verticles were instantiated in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -922,7 +1002,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following code shows you how verticles are instantiated in Vert.x {4}:</p>
+<p>The following code shows you how verticles are instantiated in Vert.x 4:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -933,7 +1013,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 <p>For existing factories, you can update the code to use a callable when a promise completes or fails. The callable can be called several times.</p>
 </div>
 <div class="paragraph">
-<p>The following code example shows you existing factories in Vert.x {3x} releases:</p>
+<p>The following code example shows you existing factories in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -941,7 +1021,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following code example shows you how to update existing factories to use promise in Vert.x {4}:</p>
+<p>The following code example shows you how to update existing factories to use promise in Vert.x 4:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -973,7 +1053,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 <div class="sect3">
 <h4 id="_context_affinity_for_non_vert_x_thread">Context affinity for non Vert.x thread</h4>
 <div class="paragraph">
-<p>The <code>Vertx.getOrCreateContext()</code> creates a single context for each non Vert.x thread. In releases prior to Vert.x {4}, a new context was created each time the method was called from a non Vert.x thread.
+<p>The <code>Vertx.getOrCreateContext()</code> creates a single context for each non Vert.x thread. In releases prior to Vert.x 4, a new context was created each time the method was called from a non Vert.x thread.
 The non Vert.x threads are associated with a context the first time a context is created.</p>
 </div>
 <div class="listingblock">
@@ -997,7 +1077,7 @@ The non Vert.x threads are associated with a context the first time a context is
 </div>
 </div>
 <div class="paragraph">
-<p>To get the same results in Vert.x {4}, you must update the code:</p>
+<p>To get the same results in Vert.x 4, you must update the code:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1212,10 +1292,10 @@ The non Vert.x threads are associated with a context the first time a context is
 <p><code>HttpMethod</code> is a new interface. In earlier releases of Vert.x, <code>HttpMethod</code> was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You would have to use the  <code>HttpMethod.OTHER</code> value along with the <code>rawMethod</code> attribute during server and client HTTP requests.</p>
 </div>
 <div class="paragraph">
-<p>If you are using <code>HttpMethod</code> enumerated data type in a switch block, you can use the following code to migrate your application to Vert.x {4}.</p>
+<p>If you are using <code>HttpMethod</code> enumerated data type in a switch block, you can use the following code to migrate your application to Vert.x 4.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows a switch block in Vert.x {3x} releases.</p>
+<p>The following example shows a switch block in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1232,7 +1312,7 @@ The non Vert.x threads are associated with a context the first time a context is
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows a switch block in Vert.x {4}.</p>
+<p>The following example shows a switch block in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1247,7 +1327,7 @@ The non Vert.x threads are associated with a context the first time a context is
 </div>
 </div>
 <div class="paragraph">
-<p>You can also use the following code in Vert.x {4}.</p>
+<p>You can also use the following code in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1263,10 +1343,10 @@ if (method == HttpMethod.GET) {
 </div>
 </div>
 <div class="paragraph">
-<p>If you are using <code>HttpMethod.OTHER</code> value in your applications, use the following code to migrate the application to Vert.x {4}.</p>
+<p>If you are using <code>HttpMethod.OTHER</code> value in your applications, use the following code to migrate the application to Vert.x 4.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you the code in Vert.x {3x} releases.</p>
+<p>The following example shows you the code in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1274,7 +1354,7 @@ if (method == HttpMethod.GET) {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you the code in Vert.x {4}.</p>
+<p>The following example shows you the code in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1299,7 +1379,7 @@ if (method == HttpMethod.GET) {
 </dd>
 <dt class="hdlist1">Vert.x HTTP client</dt>
 <dd>
-<p>Use the Vert.x HTTP client when your applications are used as HTTP proxy. For example, as an API gateway. The HTTP client has been updated and improved in Vert.x {4}.</p>
+<p>Use the Vert.x HTTP client when your applications are used as HTTP proxy. For example, as an API gateway. The HTTP client has been updated and improved in Vert.x 4.</p>
 </dd>
 </dl>
 </div>
@@ -1318,13 +1398,13 @@ Vert.x web client is based on Vert.x HTTP client.
 <div class="sect4">
 <h5 id="migrating-applications-to-vertx-web-client_changes-in-http-client">Migrating applications to Vert.x web client</h5>
 <div class="paragraph">
-<p>The web client was available from Vert.x 3.4.0 release. There is no change in the web client in Vert.x {4}.</p>
+<p>The web client was available from Vert.x 3.4.0 release. There is no change in the web client in Vert.x 4.</p>
 </div>
 <div class="paragraph">
 <p>The client provides simplified HTTP interactions and some additional features, such as HTTP session, JSON encoding and decoding, response predicates, which are not available in the Vert.x HTTP Client.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to use HTTP client in Vert.x {3x} releases:</p>
+<p>The following example shows how to use HTTP client in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1344,7 +1424,7 @@ request.end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to migrate an application to web client in Vert.x {3x} and Vert.x {4} releases:</p>
+<p>The following example shows how to migrate an application to web client in Vert.x 3.x and Vert.x 4 releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1366,7 +1446,7 @@ request.end();</code></pre>
 <p>The HTTP client has fine grained control over HTTP interactions and focuses on the HTTP protocol.</p>
 </div>
 <div class="paragraph">
-<p>The HTTP client has been updated and improved in Vert.x {4}:</p>
+<p>The HTTP client has been updated and improved in Vert.x 4:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1397,7 +1477,7 @@ request.end();</code></pre>
 <div class="sect5">
 <h6 id="_sending_a_simple_request">Sending a simple request</h6>
 <div class="paragraph">
-<p>The following example shows how to send a GET request in Vert.x {3x} releases:</p>
+<p>The following example shows how to send a GET request in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1417,7 +1497,7 @@ request.end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to send a GET request in Vert.x {4} release:</p>
+<p>The following example shows how to send a GET request in Vert.x 4 release:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1450,7 +1530,7 @@ request.end();</code></pre>
 <p>You can see that error handling is better in the new HTTP client.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use future composition in GET operation in Vert.x {4}:</p>
+<p>The following example shows you how to use future composition in GET operation in Vert.x 4:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1493,7 +1573,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 <div class="sect5">
 <h6 id="_sending_requests">Sending requests</h6>
 <div class="paragraph">
-<p>In Vert.x {3x} releases, you can use the <code>end()</code> method to send requests.</p>
+<p>In Vert.x 3.x releases, you can use the <code>end()</code> method to send requests.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1521,7 +1601,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, you can perform all the operations shown in the examples using the <code>get()</code> method. Additionally, you can also use the new <code>send()</code> method to perform these operations. You can pass a buffer, a string or a <code>ReadStream</code> as input to the <code>send()</code> method. The method returns an <code>HttpClientResponse</code> instance.</p>
+<p>In Vert.x 4, you can perform all the operations shown in the examples using the <code>get()</code> method. Additionally, you can also use the new <code>send()</code> method to perform these operations. You can pass a buffer, a string or a <code>ReadStream</code> as input to the <code>send()</code> method. The method returns an <code>HttpClientResponse</code> instance.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1628,10 +1708,10 @@ response.exceptionHandler(err -&gt; {
 <p>The <code>HttpClient</code> and <code>HttpClientRequest</code> methods have been updated to use asynchronous handlers. The methods take <code>Handler&lt;AsyncResult&lt;HttpClientResponse&gt;&gt;</code> as input instead of <code>Handler&lt;HttpClientResponse&gt;</code>.</p>
 </div>
 <div class="paragraph">
-<p>In earlier releases of Vert.x, the <code>HttpClient</code> methods <code>getNow()</code>, <code>optionsNow()</code> and <code>headNow()</code> used to return <code>HttpClientRequest</code>, that you had to further send to perform a request. The <code>getNow()</code>, <code>optionsNow()</code> and <code>headNow()</code> methods have been removed. In Vert.x {4}, you can directly send a request with the required information using <code>Handler&lt;AsyncResult&lt;HttpClientResponse&gt;&gt;</code>.</p>
+<p>In earlier releases of Vert.x, the <code>HttpClient</code> methods <code>getNow()</code>, <code>optionsNow()</code> and <code>headNow()</code> used to return <code>HttpClientRequest</code>, that you had to further send to perform a request. The <code>getNow()</code>, <code>optionsNow()</code> and <code>headNow()</code> methods have been removed. In Vert.x 4, you can directly send a request with the required information using <code>Handler&lt;AsyncResult&lt;HttpClientResponse&gt;&gt;</code>.</p>
 </div>
 <div class="paragraph">
-<p>The following examples show how to send a request in Vert.x {4}:</p>
+<p>The following examples show how to send a request in Vert.x 4:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1712,7 +1792,7 @@ response.exceptionHandler(err -&gt; {
 <p>The <code>HttpClientRequest.connectionHandler()</code> method has been removed. Use <code>HttpClient.connectionHandler()</code> method instead to call connection handlers for client requests in your application.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how the <code>HttpClientRequest.connectionHandler()</code> method was used in Vert.x {3x} releases.</p>
+<p>The following example shows how the <code>HttpClientRequest.connectionHandler()</code> method was used in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1735,13 +1815,13 @@ response.exceptionHandler(err -&gt; {
 <div class="sect5">
 <h6 id="_http_client_tunneling_using_the_net_socket_method">HTTP client tunneling using the net socket method</h6>
 <div class="paragraph">
-<p>HTTP tunnels can be created using the <code>HttpClientResponse.netSocket()</code> method. In Vert.x {4} this method has been updated.</p>
+<p>HTTP tunnels can be created using the <code>HttpClientResponse.netSocket()</code> method. In Vert.x 4 this method has been updated.</p>
 </div>
 <div class="paragraph">
 <p>To get a net socket for the connection of the request, send a socket handler in the request. The handler is called when the HTTP response header is received. The socket is ready for tunneling and can send and receive buffers.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to get net socket for a connection in Vert.x {3x} releases.</p>
+<p>The following example shows how to get net socket for a connection in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1756,7 +1836,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to get net socket for a connection in Vert.x {4}:</p>
+<p>The following example shows how to get net socket for a connection in Vert.x 4:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1777,7 +1857,7 @@ response.exceptionHandler(err -&gt; {
 <p>A new <code>send()</code> method is available in the <code>HttpClient</code> class.</p>
 </div>
 <div class="paragraph">
-<p>The following code shows how to send a request in Vert.x {4}.</p>
+<p>The following code shows how to send a request in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1788,7 +1868,7 @@ response.exceptionHandler(err -&gt; {
 <div class="sect5">
 <h6 id="_httpheaders_is_an_interface_and_contains_code_multimap_code_methods">HttpHeaders is an interface and contains <code>MultiMap</code> methods</h6>
 <div class="paragraph">
-<p>In Vert.x {4}, <code>HttpHeaders</code> is an interface. In earlier releases of Vert.x,  <code>HttpHeaders</code> was a class.</p>
+<p>In Vert.x 4, <code>HttpHeaders</code> is an interface. In earlier releases of Vert.x,  <code>HttpHeaders</code> was a class.</p>
 </div>
 <div class="paragraph">
 <p>The following new <code>MultiMap</code> methods have been added in the <code>HttpHeaders</code> interface. Use these methods to create <code>MultiMap</code> instances.</p>
@@ -1807,7 +1887,7 @@ response.exceptionHandler(err -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>The following example shows how <code>MultiMap</code> instances were created in Vert.x {3x} releases.</p>
+<p>The following example shows how <code>MultiMap</code> instances were created in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1815,7 +1895,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following examples show how to create <code>MultiMap</code> instances in Vert.x {4}.</p>
+<p>The following examples show how to create <code>MultiMap</code> instances in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1834,7 +1914,7 @@ response.exceptionHandler(err -&gt; {
 <p>The <code>CaseInsensitiveHeaders</code> class is no longer public. Use the <code>MultiMap.caseInsensitiveMultiMap()</code> method to create a multi-map implementation with case insensitive keys.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how <code>CaseInsensitiveHeaders</code> method was used in Vert.x {3x} releases.</p>
+<p>The following example shows how <code>CaseInsensitiveHeaders</code> method was used in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1842,7 +1922,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following examples show how <code>MultiMap</code> method is used in Vert.x {4}.</p>
+<p>The following examples show how <code>MultiMap</code> method is used in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1864,13 +1944,13 @@ response.exceptionHandler(err -&gt; {
 <p>In earlier releases of Vert.x, the version of HTTP running on a server was checked only if the application explicitly called the <code>HttpServerRequest.version()</code> method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.</p>
 </div>
 <div class="paragraph">
-<p>From Vert.x {4} onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the <code>HttpServerRequest.version()</code> method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.</p>
+<p>From Vert.x 4 onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the <code>HttpServerRequest.version()</code> method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="_new_methods_in_request_options">New methods in request options</h6>
 <div class="paragraph">
-<p>In Vert.x {4}, the following new methods are available in the <code>RequestOptions</code> class:</p>
+<p>In Vert.x 4, the following new methods are available in the <code>RequestOptions</code> class:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1925,7 +2005,7 @@ response.exceptionHandler(err -&gt; {
 <div class="content">
 <pre>switch (options.getClientAuth()) {
 case REQUIRED:
-// ... behavior same as in releases prior to {VertX} {4}
+// ... behavior same as in releases prior to {VertX} {v4}
 break;
 default:
 // fallback statement...
@@ -1933,12 +2013,12 @@ default:
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use the check if authentication of the client is required in Vert.x {4}.</p>
+<p>The following example shows you how to use the check if authentication of the client is required in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>if (options.getClientAuth() == ClientAuth.REQUIRED) {
-// behavior in releases prior to {VertX} {4}</pre>
+// behavior in releases prior to {VertX} {v4}</pre>
 </div>
 </div>
 </div>
@@ -1979,7 +2059,7 @@ Vert.x uses the RxJava library.</p>
 <p>The <code>WriteStreamSubscriber.onComplete()</code> callback has been removed. This callback was invoked if <code>WriteStream</code> had pending streams of data to be written.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, use the callbacks <code>WriteStreamSubscriber.onWriteStreamEnd()</code> and <code>WriteStreamSubscriber.onWriteStreamError()</code> instead. These callbacks are called after <code>WriteStream.end()</code> is complete.</p>
+<p>In Vert.x 4, use the callbacks <code>WriteStreamSubscriber.onWriteStreamEnd()</code> and <code>WriteStreamSubscriber.onWriteStreamError()</code> instead. These callbacks are called after <code>WriteStream.end()</code> is complete.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1987,7 +2067,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to create the adapter from a <code>WriteStream</code> in  Vert.x {3x} releases:</p>
+<p>The following example shows how to create the adapter from a <code>WriteStream</code> in  Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1997,7 +2077,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The following examples show how to create the adapter from a WriteStream using the new callback methods in Vert.x {4} release:</p>
+<p>The following examples show how to create the adapter from a WriteStream using the new callback methods in Vert.x 4 release:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2026,7 +2106,7 @@ Vert.x uses the RxJava library.</p>
 <p>The method <code>ConfigRetriever.getConfigAsFuture()</code> has been removed. Use the method <code>retriever.getConfig()</code> instead.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how configuration was retrieved in Vert.x {3x} releases.</p>
+<p>The following example shows how configuration was retrieved in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2034,7 +2114,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to retrieve configuration in Vert.x {4}.</p>
+<p>The following example shows how to retrieve configuration in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2093,7 +2173,7 @@ Vert.x uses the RxJava library.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>In Vert.x {3x} releases:</p>
+<p>In Vert.x 3.x releases:</p>
 <div class="listingblock">
 <div class="content">
 <pre>List&lt;Foo&gt; foo1 = Json.decodeValue(json, new TypeReference&lt;List&lt;Foo&gt;&gt;() {});</pre>
@@ -2101,7 +2181,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 </li>
 <li>
-<p>In Vert.x {4} release:</p>
+<p>In Vert.x 4 release:</p>
 <div class="listingblock">
 <div class="content">
 <pre>List&lt;Foo&gt; foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, new TypeReference&lt;List&lt;Foo&gt;&gt;() {});</pre>
@@ -2116,7 +2196,7 @@ Vert.x uses the RxJava library.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>In Vert.x {3x} releases:</p>
+<p>In Vert.x 3.x releases:</p>
 <div class="listingblock">
 <div class="content">
 <pre>ObjectMapper mapper = Json.mapper;</pre>
@@ -2124,7 +2204,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 </li>
 <li>
-<p>In Vert.x {4} release:</p>
+<p>In Vert.x 4 release:</p>
 <div class="listingblock">
 <div class="content">
 <pre>mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();</pre>
@@ -2139,7 +2219,7 @@ Vert.x uses the RxJava library.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>In Vert.x {3x} releases:</p>
+<p>In Vert.x 3.x releases:</p>
 <div class="listingblock">
 <div class="content">
 <pre>Json.mapper = someMapper;</pre>
@@ -2147,7 +2227,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 </li>
 <li>
-<p>From Vert.x {4} onward, you cannot write a mapper instance. You should use your own static mapper or configure the <code>Databind.mapper()</code> instance.</p>
+<p>From Vert.x 4 onward, you cannot write a mapper instance. You should use your own static mapper or configure the <code>Databind.mapper()</code> instance.</p>
 </li>
 </ul>
 </div>
@@ -2161,7 +2241,7 @@ Vert.x uses the RxJava library.</p>
 <p>In earlier releases, the Jackson core and Jackson databind dependencies were required at runtime.</p>
 </div>
 <div class="paragraph">
-<p>From Vert.x {4} onward, only the Jackson core dependency is required.</p>
+<p>From Vert.x 4 onward, only the Jackson core dependency is required.</p>
 </div>
 <div class="paragraph">
 <p>You will require the Jackson databind dependency only if you are object mapping JSON. In this case, you must explicitly add the dependency in your project descriptor in the <code>com.fasterxml.jackson.core:jackson-databind</code> jar.</p>
@@ -2246,10 +2326,10 @@ Vert.x uses the RxJava library.</p>
 <div class="sect3">
 <h4 id="_base64_encoder_updated_to_base64url_for_json_objects_and_arrays">Base64 encoder updated to Base64URL for JSON objects and arrays</h4>
 <div class="paragraph">
-<p>The Vert.x JSON types implement RFC-7493. In earlier releases of Vert.x, the implementation incorrectly used Base64 encoder instead of Base64URL. This has been fixed in Vert.x {4}, and Base64URL encoder is used in the JSON types.</p>
+<p>The Vert.x JSON types implement RFC-7493. In earlier releases of Vert.x, the implementation incorrectly used Base64 encoder instead of Base64URL. This has been fixed in Vert.x 4, and Base64URL encoder is used in the JSON types.</p>
 </div>
 <div class="paragraph">
-<p>If you want to continue using the Base64 encoder in Vert.x {4}, you can use the configuration flag <code>legacy</code>. The following example shows how to set the configuration flag in Vert.x {4}.</p>
+<p>If you want to continue using the Base64 encoder in Vert.x 4, you can use the configuration flag <code>legacy</code>. The following example shows how to set the configuration flag in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2262,7 +2342,7 @@ Vert.x uses the RxJava library.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Handling integration while migrating from Vert.x {3x} releases to Vert.x {4}.</p>
+<p>Handling integration while migrating from Vert.x 3.x releases to Vert.x 4.</p>
 </li>
 <li>
 <p>Handling interoperability with other systems that use Base64 strings.</p>
@@ -2297,7 +2377,7 @@ String base64 = Json.toBase64(base64url);</pre>
 <p>In earlier releases of Vert.x, you had to specify both the <code>UserSessionHandler</code> and <code>SessionHandler</code> handlers when working in a session.</p>
 </div>
 <div class="paragraph">
-<p>To simplify the process, in Vert.x {4},  the <code>UserSessionHandler</code> class has been removed and its functionality has been added in the <code>SessionHandler</code> class. In Vert.x {4}, to work with sessions you must specify only one handler.</p>
+<p>To simplify the process, in Vert.x 4,  the <code>UserSessionHandler</code> class has been removed and its functionality has been added in the <code>SessionHandler</code> class. In Vert.x 4, to work with sessions you must specify only one handler.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2325,7 +2405,7 @@ String base64 = Json.toBase64(base64url);</pre>
 <p>The create methods in <code>FaviconHandler</code> and <code>ErrorHandler</code> have been updated. You must pass a <code>Vertx</code> instance object in the create methods. These methods access file system. Passing the <code>Vertx</code> object ensures consistent access to files using the 'Vertx' file system.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how create methods were used in Vert.x {3x} releases:</p>
+<p>The following example shows how create methods were used in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2334,7 +2414,7 @@ ErrorHandler.create();</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how create methods should be used in Vert.x {4}:</p>
+<p>The following example shows how create methods should be used in Vert.x 4:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2398,7 +2478,7 @@ ErrorHandler.create(vertx);</pre>
 <p>The <code>JWTAuthHandler.create(JWTAuth authProvider, String skip)</code> method has been removed. Use the <code>JWTAuthHandler.create(JWTAuth authProvider)</code> method instead.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how JWT authentication handler was created in Vert.x {3x} releases:</p>
+<p>The following example shows how JWT authentication handler was created in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2408,7 +2488,7 @@ ErrorHandler.create(vertx);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>TThe following example shows how JWT authentication handler was created in Vert.x {4}.</p>
+<p>TThe following example shows how JWT authentication handler was created in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2422,10 +2502,10 @@ ErrorHandler.create(vertx);</pre>
 <div class="sect3">
 <h4 id="_removed_the_create_handler_method_that_was_used_in_osgi_environments">Removed the create handler method that was used in OSGi environments</h4>
 <div class="paragraph">
-<p>In Vert.x {4}, OSGi environment is no longer supported. The <code>StaticHandler.create(String, ClassLoader)</code> method has been removed because the method was used in the OSGi environment.</p>
+<p>In Vert.x 4, OSGi environment is no longer supported. The <code>StaticHandler.create(String, ClassLoader)</code> method has been removed because the method was used in the OSGi environment.</p>
 </div>
 <div class="paragraph">
-<p>If you have used this method in your applications, then in Vert.x {4} you can either add the resources to the application classpath or serve resources from the file system.</p>
+<p>If you have used this method in your applications, then in Vert.x 4 you can either add the resources to the application classpath or serve resources from the file system.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2477,7 +2557,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="sect3">
 <h4 id="_oauth2_authentication_provider_create_methods_require_code_vertx_code_as_constructor_argument">OAuth2 authentication provider create methods require <code>vertx</code> as constructor argument</h4>
 <div class="paragraph">
-<p>From Vert.x {4}, <code>OAuth2Auth.create(Vertx vertx)</code> method requires <code>vertx</code> as a constructor argument. The <code>vertx</code> argument uses a secure non-blocking random number generator to generate nonce which ensures better security for applications.</p>
+<p>From Vert.x 4, <code>OAuth2Auth.create(Vertx vertx)</code> method requires <code>vertx</code> as a constructor argument. The <code>vertx</code> argument uses a secure non-blocking random number generator to generate nonce which ensures better security for applications.</p>
 </div>
 </div>
 </div>
@@ -2489,7 +2569,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="sect3">
 <h4 id="_tcp_sent_and_received_bytes_are_recorded_as_counters_with_equivalent_http_request_and_response_summaries">TCP sent and received bytes are recorded as counters with equivalent HTTP request and response summaries</h4>
 <div class="paragraph">
-<p>In prior releases, the following metrics were recorded as distribution summaries for sockets. From Vert.x {4} onward, these metrics are logged as counter, which report the amount of data exchanged.</p>
+<p>In prior releases, the following metrics were recorded as distribution summaries for sockets. From Vert.x 4 onward, these metrics are logged as counter, which report the amount of data exchanged.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2673,6 +2753,237 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="changes-in-vertx-openapi_changes-in-common-components">Changes in Vert.x OpenAPI</h3>
+<div class="paragraph">
+<p>In Vert.x 4, a new module <code>vertx-web-openapi</code> is available. Use his module alone with <code>vertx-web</code> to develop contract-driven applications.</p>
+</div>
+<div class="paragraph">
+<p>The new module works well with Vert.x Web <code>Router</code>. The new module requires the following Vert.x dependencies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>vertx-json-schema</code></p>
+</li>
+<li>
+<p><code>vertx-web-validation</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The new module is available in the package <code>io.vertx.ext.web.openapi</code>.</p>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, the older OpenAPI module <code>vertx-web-api-contract</code> is supported to facilitate the migration to the new module. It is recommended that you move to the new module <code>vertx-web-openapi</code> to take advantage of the new functionality.</p>
+</div>
+<div class="sect3">
+<h4 id="_new_module_uses_router_builder">New module uses router builder</h4>
+<div class="paragraph">
+<p>The <code>vertx-web-openapi</code> module uses <code>RouterBuilder</code> to build the Vert.x Web router. This router builder is similar to the router builer <code>OpenAPI3RouterFactory</code> in <code>vertx-web-api-contract</code> module.</p>
+</div>
+<div class="paragraph">
+<p>To start working with the <code>vertx-web-openapi</code> module, instantiate the <code>RouterBuilder</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>RouterBuilder.create(vertx, "petstore.yaml").onComplete(ar -&gt; {
+  if (ar.succeeded()) {
+    // Spec loaded with success
+    RouterBuilder routerBuilder = ar.result();
+  } else {
+    // Something went wrong during router builder initialization
+    Throwable exception = ar.cause();
+  }
+});</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also instantiate the <code>RouterBuilder</code> using futures:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>RouterBuilder.create(vertx, "petstore.yaml")
+  .onSuccess(routerBuilder -&gt; {
+    // Spec loaded with success
+  })
+  .onFailure(exception -&gt; {
+    // Something went wrong during router builder initialization
+  });</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The vertx-web-openapi` module uses the Vert.x file system APIs to load the files. Therefore, you do not have to specify <code>/</code> for the classpath resources. For example, you can specify <code>petstore.yaml</code> in your application. The <code>RouterBuilder</code> can identify the contract from your classpath resources.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_new_router_builder_methods">New router builder methods</h4>
+<div class="paragraph">
+<p>In most cases, you can search and replace usages of old <code>OpenAPI3RouterFactory</code> methods with the new <code>RouterBuilder</code> methods. The following table lists a few examples of old and new methods.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Old <code>OpenAPI3RouterFactory</code> methods</th>
+<th class="tableblock halign-left valign-top">New <code>RouterBuilder</code> methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.addHandlerByOperationId("getPets", handler)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.operation("getPets").handler(handler)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.addFailureHandlerByOperationId("getPets", handler)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.operation("getPets").failureHandler(handler)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.mountOperationToEventBus("getPets", "getpets.myapplication")</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.operation("getPets").routeToEventBus("getpets.myapplication")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.addGlobalHandler(handler)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.rootHandler(handler)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.addBodyHandler(handler)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.bodyHandler(handler)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.getRouter()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.createRouter()</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Use the following syntax to access the parsed request parameters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>RequestParameters parameters = routingContext.get(io.vertx.ext.web.validation.ValidationHandler.REQUEST_CONTEXT_KEY);
+int aParam = parameters.queryParameter("aParam").getInteger();</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handling_security">Handling security</h4>
+<div class="paragraph">
+<p>In Vert.x 4, the
+methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()</code> are no longer available.XXX</p>
+</div>
+<div class="paragraph">
+<p>Use the <code>RouterBuilder.securityHandler()</code> method instead. This method accepts <code>io.vertx.ext.web.handler.AuthenticationHandler</code> as an handler. The method also automatically recognizes <code>OAuth2Handler</code> and sets up the security schema.</p>
+</div>
+<div class="paragraph">
+<p>The new security handlers also implement the operations defined in the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md#operationObject">OpenAPI specification</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handling_common_failures">Handling common failures</h4>
+<div class="paragraph">
+<p>In <code>vertx-web-openapi</code> module, the following  failure handlers are not available. You must set up failure handlers using the <code>Router.errorHandler(int, Handler)</code> method.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Old methods in`vertx-web-api-contract` module</th>
+<th class="tableblock halign-left valign-top">New methods in <code>vertx-web-openapi</code> module</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerFactory.setValidationFailureHandler(handler)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>router.errorHandler(400, handler)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routerBuilder.setNotImplementedFailureHandler(handler)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>router.errorHandler(501, handler)</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_accessing_the_openapi_contract_model">Accessing the OpenAPI contract model</h4>
+<div class="paragraph">
+<p>In Vert.x 4, the OpenAPI contract is not mapped to plain old Java object (POJO). So, the additional swagger-parser dependency is no longer required. You can use the getters and resolvers to retrieve specific components of the contract.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows you how to retrieve a specific component using a single operation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>JsonObject model = routerBuilder.operation("getPets").getOperationModel();</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows you how to retrieve the full contract.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>JsonObject contract = routerBuilder.getOpenAPI().getOpenAPI();</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows you how to resolve parts of the contract.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>JsonObject petModel = routerBuilder.getOpenAPI().getCached(JsonPointer.from("/components/schemas/Pet"));</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validating_web_requests_without_openapi">Validating web requests without OpenAPI</h4>
+<div class="paragraph">
+<p>In the <code>vertx-web-api-contract</code> module, you could validate HTTP requests using <code>HTTPRequestValidationHandler</code>. You did not have to use OpenAPI for validations.</p>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, to validate HTTP requests use <code>vertx-web-validation</code> module. You can import this module and validate requests without using OpenAPI. Use <code>ValidationHandler</code> to validate requests.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updates_in_the_vert_x_web_api_service">Updates in the Vert.x web API service</h4>
+<div class="paragraph">
+<p>The <code>vertx-web-api-service</code> module has been updated and can be used with the <code>vertx-web-validation</code> module. If you are working with <code>vertx-web-openapi</code> module, there is no change in the web service functionality.</p>
+</div>
+<div class="paragraph">
+<p>However, if you do not use OpenAPI, then to use the web service module with <code>vertx-web-validation</code> module you must use the <code>RouteToEBServiceHandler</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>router.get("/api/transactions")
+  .handler(
+    ValidationHandlerBuilder.create(schemaParser)
+      .queryParameter(optionalParam("from", stringSchema()))
+      .queryParameter(optionalParam("to", stringSchema()))
+      .build()
+  ).handler(
+    RouteToEBServiceHandler.build(eventBus, "transactions.myapplication", "getTransactionsList")
+  );</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>vertx-web-api-service</code> module does not support <code>vertx-web-api-contract</code>. So, when you upgrade to Vert.x 4, you must migrate your Vert.x OpenAPI applications to <code>vertx-web-openapi</code> module.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2764,7 +3075,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <p>The following sections describe the changes in Vert.x authentication and authorization.</p>
 </div>
 <div class="paragraph">
-<p>The Vert.x authentication module has major updates in Vert.x {4}. The <code>io.vertx.ext.auth.AuthProvider</code> interface has been split into two new interfaces:</p>
+<p>The Vert.x authentication module has major updates in Vert.x 4. The <code>io.vertx.ext.auth.AuthProvider</code> interface has been split into two new interfaces:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2782,10 +3093,10 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="sect2">
 <h3 id="migrating-authentication-applications_authentication-and-authorization">Migrating the authentication applications</h3>
 <div class="paragraph">
-<p>The authentication mechanism has changed at the result level. In earlier releases, the result was a <code>User</code> object, which was provider specific. In Vert.x {4}, the result is a common implementation of <code>io.vertx.ext.auth.User</code>.</p>
+<p>The authentication mechanism has changed at the result level. In earlier releases, the result was a <code>User</code> object, which was provider specific. In Vert.x 4, the result is a common implementation of <code>io.vertx.ext.auth.User</code>.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how a user was authenticated in Vert.x {3x} releases.</p>
+<p>The following example shows how a user was authenticated in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2803,7 +3114,7 @@ provider.authenticate(authInfo, res -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to authenticate a user in Vert.x {4}.</p>
+<p>The following example shows how to authenticate a user in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2824,13 +3135,13 @@ provider.authenticate(authInfo, res -&gt; {
 <div class="sect2">
 <h3 id="migrating-authorization-applications_authentication-and-authorization">Migrating the authorization applications</h3>
 <div class="paragraph">
-<p>Authorization is a new feature in Vert.x {4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the <code>User</code> object. This meant that the provider was responsible for both authentication and authorization of the user.</p>
+<p>Authorization is a new feature in Vert.x 4. In earlier releases, you could only check if a user was authorized to perform the tasks on the <code>User</code> object. This meant that the provider was responsible for both authentication and authorization of the user.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, the <code>User</code> object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.</p>
+<p>In Vert.x 4, the <code>User</code> object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how an application checks if a user can use Printer #1234 in Vert.x {3x} releases.</p>
+<p>The following example shows how an application checks if a user can use Printer #1234 in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2848,7 +3159,7 @@ user.isAuthorized(<span class="string"><span class="delimiter">&quot;</span><spa
 </div>
 </div>
 <div class="paragraph">
-<p>This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From Vert.x {4}, it is possible to perform such authorization by using different providers.</p>
+<p>This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From Vert.x 4, it is possible to perform such authorization by using different providers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2871,7 +3182,7 @@ provider.getAuthorizations(user, res -&gt; {
 <div class="sect2">
 <h3 id="changes-in-key-management_authentication-and-authorization">Changes in key management</h3>
 <div class="paragraph">
-<p>In Vert.x {4}, there are major updates in handling keys. The most important change is that when a key loads, there is no distinction between public buffer and private buffer.</p>
+<p>In Vert.x 4, there are major updates in handling keys. The most important change is that when a key loads, there is no distinction between public buffer and private buffer.</p>
 </div>
 <div class="paragraph">
 <p>The following classes have been updated:</p>
@@ -2898,7 +3209,7 @@ provider.getAuthorizations(user, res -&gt; {
 <p>The <code>SecretOptions</code> class is no longer available. Use the new <code>PubSecKeyOptions</code> class instead to work with a cryptographic key.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how methods of <code>SecretOptions</code> class were used in Vert.x {3x} releases.</p>
+<p>The following example shows how methods of <code>SecretOptions</code> class were used in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2908,7 +3219,7 @@ provider.getAuthorizations(user, res -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how methods of <code>PubSecKeyOptions</code> class should be used in Vert.x {4}.</p>
+<p>The following example shows how methods of <code>PubSecKeyOptions</code> class should be used in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2921,7 +3232,7 @@ provider.getAuthorizations(user, res -&gt; {
 <div class="sect3">
 <h4 id="_updates_in_public_secret_keys_management">Updates in public secret keys management</h4>
 <div class="paragraph">
-<p>In Vert.x {3x}, the configuration object in public secret key management assumed that:</p>
+<p>In Vert.x 3.x, the configuration object in public secret key management assumed that:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2934,7 +3245,7 @@ provider.getAuthorizations(user, res -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>The following example shows how to configure key pair in Vert.x {3x}.</p>
+<p>The following example shows how to configure key pair in Vert.x 3.x.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2956,10 +3267,10 @@ provider.getAuthorizations(user, res -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, you must specify both the public and private key.</p>
+<p>In Vert.x 4, you must specify both the public and private key.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to configure key pair in Vert.x {4}.</p>
+<p>The following example shows how to configure key pair in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2989,16 +3300,16 @@ PubSecKeyOptions secKey =
 <div class="sect3">
 <h4 id="_changes_in_keystore_management">Changes in keystore management</h4>
 <div class="paragraph">
-<p>In Vert.x {3x}, <code>KeyStoreOptions</code> assumes that the keystore format is <code>jceks</code>, and the stored password is the same as the password of the key. As <code>jceks</code> is a proprietary format, it is recommended to use a standard format, such as JDK, instead.</p>
+<p>In Vert.x 3.x, <code>KeyStoreOptions</code> assumes that the keystore format is <code>jceks</code>, and the stored password is the same as the password of the key. As <code>jceks</code> is a proprietary format, it is recommended to use a standard format, such as JDK, instead.</p>
 </div>
 <div class="paragraph">
-<p>When you use <code>KeyStoreOptions</code> in Vert.x {4}, you can specify a store type. For example, store types such as PKCS11, PKCS12, and so on can be set. The default store type is <code>jceks</code>.</p>
+<p>When you use <code>KeyStoreOptions</code> in Vert.x 4, you can specify a store type. For example, store types such as PKCS11, PKCS12, and so on can be set. The default store type is <code>jceks</code>.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x {3x}, all keystore entries would share the same password, that is, the keystore password. In Vert.x {4}, each keystore entry can have a dedicated password. If you do not want to set password for each keystore entry, you can configure the keystore password as the default password for all entries.</p>
+<p>In Vert.x 3.x, all keystore entries would share the same password, that is, the keystore password. In Vert.x 4, each keystore entry can have a dedicated password. If you do not want to set password for each keystore entry, you can configure the keystore password as the default password for all entries.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to load a <code>jceks</code> keystore in Vert.x {3x}.</p>
+<p>The following example shows how to load a <code>jceks</code> keystore in Vert.x 3.x.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3008,10 +3319,10 @@ PubSecKeyOptions secKey =
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, the default format is assumed to be the default format configured by JDK. The format is <code>PKCS12</code> in Java 9 and above.</p>
+<p>In Vert.x 4, the default format is assumed to be the default format configured by JDK. The format is <code>PKCS12</code> in Java 9 and above.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to load a <code>jceks</code> keystore in Vert.x {4}.</p>
+<p>The following example shows how to load a <code>jceks</code> keystore in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3214,7 +3525,7 @@ PubSecKeyOptions secKey =
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to <code>pom.xml</code> file.</p>
+<p>In Vert.x 4, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to <code>pom.xml</code> file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3249,10 +3560,10 @@ PubSecKeyOptions secKey =
 <div class="sect3">
 <h4 id="_some_fluent_methods_in_mqtt_clients_return_future">Some fluent methods in MQTT clients return future</h4>
 <div class="paragraph">
-<p>Some fluent methods in <code>MqttClient</code> class return <code>Future</code> instead of being fluent. For example, methods such as, <code>MqttClient.connect()</code>, <code>MqttClient.disconnect()</code>, <code>MqttClient.publish()</code> return future in Vert.x {4}.</p>
+<p>Some fluent methods in <code>MqttClient</code> class return <code>Future</code> instead of being fluent. For example, methods such as, <code>MqttClient.connect()</code>, <code>MqttClient.disconnect()</code>, <code>MqttClient.publish()</code> return future in Vert.x 4.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows the use of <code>publish()</code> method in Vert.x {3x} releases:</p>
+<p>The following example shows the use of <code>publish()</code> method in Vert.x 3.x releases:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3262,7 +3573,7 @@ PubSecKeyOptions secKey =
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows the use of <code>publish()</code> method in Vert.x {4} release:</p>
+<p>The following example shows the use of <code>publish()</code> method in Vert.x 4 release:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3399,7 +3710,7 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
 <div class="sect3">
 <h4 id="_code_mailattachment_code_is_available_as_an_interface"><code>MailAttachment</code> is available as an interface</h4>
 <div class="paragraph">
-<p>From Vert.x {4} onwards, <code>MailAttachment</code> is available as an interface. It enables you to use the mail attachment functionality in a stream. In earlier releases of Vert.x, <code>MailAttachment</code> was available as a class and attachment for mails was represented as a data object.</p>
+<p>From Vert.x 4 onwards, <code>MailAttachment</code> is available as an interface. It enables you to use the mail attachment functionality in a stream. In earlier releases of Vert.x, <code>MailAttachment</code> was available as a class and attachment for mails was represented as a data object.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3420,10 +3731,10 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
 <div class="sect3">
 <h4 id="_changes_in_driver_versions">Changes in driver versions</h4>
 <div class="paragraph">
-<p>In Vert.x {4}, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your Vert.x {3x} applications to Vert.x {4}. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.</p>
+<p>In Vert.x 4, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your Vert.x 3.x applications to Vert.x 4. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows Datastax Java driver classes and create statements in Vert.x {3x} releases.</p>
+<p>The following example shows Datastax Java driver classes and create statements in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3442,7 +3753,7 @@ cassandraClient.execute(statement, done -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows Datastax Java driver classes and create statements in Vert.x {4}.</p>
+<p>The following example shows Datastax Java driver classes and create statements in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3467,7 +3778,7 @@ cassandraClient.execute(statement, done -&gt; {
 <p>Object mappers are no longer supported because of changes in Datastax Java driver 4.x.</p>
 </div>
 <div class="paragraph">
-<p>The following mapping construction is not supported in Vert.x {4} release:</p>
+<p>The following mapping construction is not supported in Vert.x 4 release:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3486,7 +3797,7 @@ public class MappedClass {
 <p>The <code>CassandraClientOptions.setPort()</code>, <code>CassandraClientOptions.getContactPoints()</code>, and <code>CassandraClientOptions.setContactPoints()</code> methods have been removed. Use the <code>CassandraClientOptions.addContactPoint()</code> method instead.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows the use of older methods in Vert.x {3x} releases.</p>
+<p>The following example shows the use of older methods in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3500,7 +3811,7 @@ CassandraClient client = CassandraClient.create(vertx, options);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to use `CassandraClientOptions.addContactPoint()`method in Vert.x {4}.</p>
+<p>The following example shows how to use `CassandraClientOptions.addContactPoint()`method in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3613,7 +3924,7 @@ CassandraClient client = CassandraClient.create(vertx, options);</pre>
 <div class="sect2">
 <h3 id="changes-in-vertx-redis-client_changes-in-client-components">Changes in Vert.x Redis client</h3>
 <div class="paragraph">
-<p>In Vert.x {4}, use the <code>Redis</code> class to work with Redis client. The class <code>RedisClient</code> is no longer available.</p>
+<p>In Vert.x 4, use the <code>Redis</code> class to work with Redis client. The class <code>RedisClient</code> is no longer available.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -3659,7 +3970,7 @@ CassandraClient client = CassandraClient.create(vertx, options);</pre>
 <div class="sect4">
 <h5 id="_creating_the_client">Creating the client</h5>
 <div class="paragraph">
-<p>The following example shows how a Redis client was created in Vert.x {3x} releases.</p>
+<p>The following example shows how a Redis client was created in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3669,7 +3980,7 @@ RedisClient client = RedisClient
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to create a Redis client in Vert.x {4}.</p>
+<p>The following example shows how to create a Redis client in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3681,7 +3992,7 @@ Redis client = Redis
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, the client uses the following standard connection string syntax:</p>
+<p>In Vert.x 4, the client uses the following standard connection string syntax:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3715,7 +4026,7 @@ Redis client = Redis
 <p>You must create the client and then update the applications to handle requests.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to handle requests after creating the client in Vert.x {3x} releases.</p>
+<p>The following example shows you how to handle requests after creating the client in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3734,7 +4045,7 @@ client.set("key", "value", s -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to handle requests after creating the client in Vert.x {4}. The example uses a list
+<p>The following example shows you how to handle requests after creating the client in Vert.x 4. The example uses a list
 to set XXX instead of hard coding options. See <a href="https://redis.io/commands/set">Redis SET command</a> for more information on arguments available for the command.</p>
 </div>
 <div class="listingblock">
@@ -3782,7 +4093,7 @@ api.set(
 <p>You must create the client and then update the applications to handle requests.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to set and get requests after creating the client in Vert.x {3x} releases.</p>
+<p>The following example shows you how to set and get requests after creating the client in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3801,7 +4112,7 @@ client.set("key", "value", s -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to handle requests after creating the client in Vert.x {4}.</p>
+<p>The following example shows you how to handle requests after creating the client in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3824,13 +4135,13 @@ client.send(cmd(SET).arg("key").arg("value"), s -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, all the interactions use the <code>send(Request)</code> method.</p>
+<p>In Vert.x 4, all the interactions use the <code>send(Request)</code> method.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_migrating_responses">Migrating responses</h5>
 <div class="paragraph">
-<p>In Vert.x {3x}, the client used to hardcode all known commands till Redis 5, and the responses were also typed according to the command.</p>
+<p>In Vert.x 3.x, the client used to hardcode all known commands till Redis 5, and the responses were also typed according to the command.</p>
 </div>
 <div class="paragraph">
 <p>In the new client, the commands are not hardcoded. The responses are of the type <code>Response</code>. The new wire protocol has more range of types.</p>
@@ -3929,7 +4240,7 @@ client.send(cmd(MGET).arg("key1").arg("key2").arg("key3"), mget -&gt; {
 <dl>
 <dt class="hdlist1">Roles</dt>
 <dd>
-<p>The following example shows you usage of <code>SLAVE</code> role in Vert.x {3x} releases.</p>
+<p>The following example shows you usage of <code>SLAVE</code> role in Vert.x 3.x releases.</p>
 </dd>
 </dl>
 </div>
@@ -3946,7 +4257,7 @@ Redis.createClient(
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you usage of <code>REPLICA</code> role in Vert.x {4}.</p>
+<p>The following example shows you usage of <code>REPLICA</code> role in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3964,7 +4275,7 @@ Redis.createClient(
 <dl>
 <dt class="hdlist1">Node options</dt>
 <dd>
-<p>The following example shows you usage of node type <code>RedisSlaves</code> in Vert.x {3x} releases.</p>
+<p>The following example shows you usage of node type <code>RedisSlaves</code> in Vert.x 3.x releases.</p>
 </dd>
 </dl>
 </div>
@@ -3975,7 +4286,7 @@ options.setUseSlaves(RedisSlaves);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you usage of node type <code>RedisReplicas</code> in Vert.x {4}.</p>
+<p>The following example shows you usage of node type <code>RedisReplicas</code> in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3992,7 +4303,7 @@ options.setUseReplicas(RedisReplicas);</pre>
 <h2 id="miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following section describes miscellaneous changes in Vert.x {4}.</p>
+<p>The following section describes miscellaneous changes in Vert.x 4.</p>
 </div>
 <div class="sect2">
 <h3 id="_removed_the_code_starter_code_class">Removed the <code>Starter</code> class</h3>
@@ -4003,8 +4314,8 @@ options.setUseReplicas(RedisReplicas);</pre>
 <div class="sect2">
 <h3 id="_isolated_deployment_for_java_8">Isolated deployment for Java 8</h3>
 <div class="paragraph">
-<p>Vert.x {4} supports Java 11. This Java version does not support isolated class loading.
-In Vert.x {4}, isolated class loading will be supported for Java 8.</p>
+<p>Vert.x 4 supports Java 11. This Java version does not support isolated class loading.
+In Vert.x 4, isolated class loading will be supported for Java 8.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4131,13 +4442,13 @@ This change resulted in following updates in JUnit5:</p>
 <p>The Infinispan cluster manager is based on Infinispan 11.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x {4}, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, Vert.x {3x} nodes and Vert.x {4} nodes cannot be added together in the same Infinispan cluster.</p>
+<p>In Vert.x 4, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, Vert.x 3.x nodes and Vert.x 4 nodes cannot be added together in the same Infinispan cluster.</p>
 </div>
 <div class="paragraph">
 <p>The Vert.x applications are not impacted by this change as the EventBus and SharedData APIs remain the same.</p>
 </div>
 <div class="paragraph">
-<p>If you had a custom Infinispan configuration file in your Vert.x {3x} application:</p>
+<p>If you had a custom Infinispan configuration file in your Vert.x 3.x application:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4213,7 +4524,7 @@ This change resulted in following updates in JUnit5:</p>
 <p>In prior releases, the Vert.x Web GraphQL handler could process its own POST requests. It did not need Vert.x Web <code>BodyHandler</code> to process the requests. However, this implementation was susceptible to DDoS attacks.</p>
 </div>
 <div class="paragraph">
-<p>From Vert.x {4} onward, to process POST requests <code>BodyHandler</code> is required. You must install <code>BodyHandler</code> before installing Vert.x Web GraphQL handler.</p>
+<p>From Vert.x 4 onward, to process POST requests <code>BodyHandler</code> is required. You must install <code>BodyHandler</code> before installing Vert.x Web GraphQL handler.</p>
 </div>
 </div>
 </div>
@@ -4222,7 +4533,7 @@ This change resulted in following updates in JUnit5:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-01 14:48:06 UTC
+Last updated 2020-12-01 21:17:16 UTC
 </div>
 </div>
 </body>
