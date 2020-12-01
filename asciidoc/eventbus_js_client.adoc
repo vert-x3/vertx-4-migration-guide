@@ -1,0 +1,64 @@
+=== EventBus JS Client
+
+Users that create interactive web applications and use the eventbus javascript client library to connect to the vert.x
+eventbus from a web page will need to update their build systems.
+
+Although this is the most notorious change, this guide does not replace the full detailed list of breaking changes
+listed on the https://github.com/vert-x3/wiki/wiki/4.0.0-Deprecations-and-breaking-changes#vertx-auth-1[Vert.x WIKI].
+
+In Vert.x 3.x the eventbus javascript client was available in several places:
+
+* https://repo1.maven.org/maven2/io/vertx/vertx-web/3.9.4/vertx-web-3.9.4-client.js[Maven Central]
+* https://www.npmjs.com/package/vertx3-eventbus-client[NPM]
+* https://bower.io/search/?q=vertx3-eventbus-client[Bower.io]
+* https://cdnjs.com/libraries/vertx[CDNJS]
+* https://www.webjars.org[webjars]
+
+And the list goes even further with releases related to the vert.x stack... All these options were present because when
+Vert.x 3 was released there was no clear common practice on how to consume javascript modules, so we had to make a
+complex deployment script to deploy to all these places.
+
+With Vert.x 4.0 we can agree that Client side Javascript means **npm** and modern build tools know how to consume the
+artifacts from it.
+
+This means that the module should only be accessible from:
+
+* https://www.npmjs.com/package/@vertx/eventbus-bridge-client.js
+
+In your build scripts refer to it as:
+
+[source,json]
+----
+{
+  "devDependencies": {
+    "@vertx/eventbus-bridge-client.js": "1.0.0-1"
+  }
+}
+----
+
+[source,xml]
+----
+<dependency>
+    <groupId>org.webjars.npm</groupId>
+    <artifactId>vertx__eventbus-bridge-client.js</artifactId>
+    <version>1.0.0-1</version>
+</dependency>
+----
+
+
+[source,groovy]
+----
+compile 'org.webjars.npm:vertx__eventbus-bridge-client.js:1.0.0-1'
+----
+
+Or directly from a CDN:
+
+https://unpkg.io/@vertx/eventbus-bridge-client.js@1.0.0-1/vertx-eventbus.js
+
+
+==== Versioning
+
+Until Vert.x 3, each vert.x release also included a new release of the javascript client. In vert.x 4, as we have
+decoupled the client from the main release it means that only bug fixes or protocol changes will force a new
+version to be deployed to npm. This means that there is no need to keep updating client application if the client
+doesn't change versions.
