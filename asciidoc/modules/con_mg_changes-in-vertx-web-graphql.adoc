@@ -25,4 +25,4 @@ The following methods have been updated and are now supported on polyglot enviro
 
 In prior releases, the {VertX} Web GraphQL handler could process its own POST requests. It did not need {VertX} Web `BodyHandler` to process the requests. However, this implementation was susceptible to DDoS attacks.
 
-From {VertX} {4} onward, to process POST requests `BodyHandler` is required. You must install `BodyHandler` before installing {VertX} Web GraphQL handler.
+From {VertX} {v4} onward, to process POST requests `BodyHandler` is required. You must install `BodyHandler` before installing {VertX} Web GraphQL handler.

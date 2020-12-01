@@ -1,0 +1,135 @@
+[id="changes-in-vertx-openapi_{context}"]
+= Changes in {VertX} OpenAPI
+
+In {VertX} {v4}, a new module `vertx-web-openapi` is available. Use his module alone with `vertx-web` to develop contract-driven applications.
+
+The new module works well with {VertX} Web `Router`. The new module requires the following {VertX} dependencies:
+
+* `vertx-json-schema`
+* `vertx-web-validation`
+
+The new module is available in the package `io.vertx.ext.web.openapi`.
+
+In {VertX} {v4}, the older OpenAPI module `vertx-web-api-contract` is supported to facilitate the migration to the new module. It is recommended that you move to the new module `vertx-web-openapi` to take advantage of the new functionality.
+
+== New module uses router builder
+
+The `vertx-web-openapi` module uses `RouterBuilder` to build the {VertX} Web router. This router builder is similar to the router builer `OpenAPI3RouterFactory` in `vertx-web-api-contract` module.
+
+To start working with the `vertx-web-openapi` module, instantiate the `RouterBuilder`.
+
+----
+RouterBuilder.create(vertx, "petstore.yaml").onComplete(ar -> {
+  if (ar.succeeded()) {
+    // Spec loaded with success
+    RouterBuilder routerBuilder = ar.result();
+  } else {
+    // Something went wrong during router builder initialization
+    Throwable exception = ar.cause();
+  }
+});
+----
+
+You can also instantiate the `RouterBuilder` using futures:
+
+----
+RouterBuilder.create(vertx, "petstore.yaml")
+  .onSuccess(routerBuilder -> {
+    // Spec loaded with success
+  })
+  .onFailure(exception -> {
+    // Something went wrong during router builder initialization
+  });
+----
+
+NOTE: The vertx-web-openapi` module uses the {VertX} file system APIs to load the files. Therefore, you do not have to specify `/` for the classpath resources. For example, you can specify `petstore.yaml` in your application. The `RouterBuilder` can identify the contract from your classpath resources.
+
+== New router builder methods
+
+In most cases, you can search and replace usages of old `OpenAPI3RouterFactory` methods with the new `RouterBuilder` methods. The following table lists a few examples of old and new methods.
+
+[options=header]
+|===
+|Old `OpenAPI3RouterFactory` methods| New `RouterBuilder` methods
+|`routerFactory.addHandlerByOperationId("getPets", handler)`|`routerBuilder.operation("getPets").handler(handler)`
+|`routerFactory.addFailureHandlerByOperationId("getPets", handler)`| `routerBuilder.operation("getPets").failureHandler(handler)`
+|`routerFactory.mountOperationToEventBus("getPets", "getpets.myapplication")`| `routerBuilder.operation("getPets").routeToEventBus("getpets.myapplication")`
+|`routerFactory.addGlobalHandler(handler)`|`routerBuilder.rootHandler(handler)`
+|`routerFactory.addBodyHandler(handler)`|`routerBuilder.bodyHandler(handler)`
+|`routerFactory.getRouter()`|`routerBuilder.createRouter()`
+|===
+
+Use the following syntax to access the parsed request parameters:
+
+----
+RequestParameters parameters = routingContext.get(io.vertx.ext.web.validation.ValidationHandler.REQUEST_CONTEXT_KEY);
+int aParam = parameters.queryParameter("aParam").getInteger();
+----
+
+== Handling security
+
+In {VertX} {v4}, the
+methods `RouterFactory.addSecurityHandler()` and `OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()` are no longer available.XXX
+
+Use the `RouterBuilder.securityHandler()` method instead. This method accepts `io.vertx.ext.web.handler.AuthenticationHandler` as an handler. The method also automatically recognizes `OAuth2Handler` and sets up the security schema.
+
+The new security handlers also implement the operations defined in the link:https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md#operationObject[OpenAPI specification].
+
+== Handling common failures
+
+In `vertx-web-openapi` module, the following  failure handlers are not available. You must set up failure handlers using the `Router.errorHandler(int, Handler)` method.
+
+[options=header]
+|===
+|Old methods in`vertx-web-api-contract` module| New methods in `vertx-web-openapi` module
+|`routerFactory.setValidationFailureHandler(handler)`| `router.errorHandler(400, handler)`
+|`routerBuilder.setNotImplementedFailureHandler(handler)`| `router.errorHandler(501, handler)`|
+|===
+
+== Accessing the OpenAPI contract model
+
+In {VertX} {v4}, the OpenAPI contract is not mapped to plain old Java object (POJO). So, the additional swagger-parser dependency is no longer required. You can use the getters and resolvers to retrieve specific components of the contract.
+
+The following example shows you how to retrieve a specific component using a single operation.
+
+----
+JsonObject model = routerBuilder.operation("getPets").getOperationModel();
+----
+
+The following example shows you how to retrieve the full contract.
+
+----
+JsonObject contract = routerBuilder.getOpenAPI().getOpenAPI();
+----
+
+The following example shows you how to resolve parts of the contract.
+
+----
+JsonObject petModel = routerBuilder.getOpenAPI().getCached(JsonPointer.from("/components/schemas/Pet"));
+----
+
+== Validating web requests without OpenAPI
+
+In the `vertx-web-api-contract` module, you could validate HTTP requests using `HTTPRequestValidationHandler`. You did not have to use OpenAPI for validations.
+
+In {VertX} {v4}, to validate HTTP requests use `vertx-web-validation` module. You can import this module and validate requests without using OpenAPI. Use `ValidationHandler` to validate requests.
+
+== Updates in the {VertX} web API service
+
+The `vertx-web-api-service` module has been updated and can be used with the `vertx-web-validation` module. If you are working with `vertx-web-openapi` module, there is no change in the web service functionality.
+
+However, if you do not use OpenAPI, then to use the web service module with `vertx-web-validation` module you must use the `RouteToEBServiceHandler` class.
+
+----
+router.get("/api/transactions")
+  .handler(
+    ValidationHandlerBuilder.create(schemaParser)
+      .queryParameter(optionalParam("from", stringSchema()))
+      .queryParameter(optionalParam("to", stringSchema()))
+      .build()
+  ).handler(
+    RouteToEBServiceHandler.build(eventBus, "transactions.myapplication", "getTransactionsList")
+  );
+----
+
+The `vertx-web-api-service` module does not support `vertx-web-api-contract`. So, when you upgrade to {VertX} {v4}, you must migrate your {VertX} OpenAPI applications to `vertx-web-openapi` module.

@@ -1,7 +1,7 @@
 [id="miscellaneous-changes-in-vertx_{context}"]
 = Miscellaneous changes in {VertX}
 
-The following section describes miscellaneous changes in {VertX} {4}.
+The following section describes miscellaneous changes in {VertX} {v4}.
 
 == Removed the `Starter` class
 
@@ -9,8 +9,8 @@ The `Starter` class has been removed. Use the `Launcher` class instead to start 
 
 == Isolated deployment for Java 8
 
-{VertX} {4} supports Java 11. This Java version does not support isolated class loading.
-In {VertX} {4}, isolated class loading will be supported for Java 8.
+{VertX} {v4} supports Java 11. This Java version does not support isolated class loading.
+In {VertX} {v4}, isolated class loading will be supported for Java 8.
 
 == Removed hook methods from {VertX} context
 

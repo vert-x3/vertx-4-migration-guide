@@ -21,7 +21,7 @@ In previous releases, to work with gRPC, the following details were added to `po
       </plugin>
 ----
 
-In {VertX} {4}, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to `pom.xml` file.
+In {VertX} {v4}, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to `pom.xml` file.
 
 ----
       <plugin>

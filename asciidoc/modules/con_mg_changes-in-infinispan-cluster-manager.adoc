@@ -7,11 +7,11 @@ The following section describes the changes in the Infinispan cluster manager.
 
 The Infinispan cluster manager is based on Infinispan 11.
 
-In {VertX} {4}, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, {VertX} {3x} nodes and {VertX} {4} nodes cannot be added together in the same Infinispan cluster.
+In {VertX} {v4}, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, {VertX} {v3x} nodes and {VertX} {v4} nodes cannot be added together in the same Infinispan cluster.
 
 The {VertX} applications are not impacted by this change as the EventBus and SharedData APIs remain the same.
 
-If you had a custom Infinispan configuration file in your {VertX} {3x} application:
+If you had a custom Infinispan configuration file in your {VertX} {v3x} application:
 
 * Change the `__vertx.subs` cache type to replicated instead of distributed.
 * Add the replicated cache `__vertx.nodeInfo`.

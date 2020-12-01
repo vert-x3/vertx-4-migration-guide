@@ -5,26 +5,26 @@ This section explains the changes in the verticles.
 
 == Updates in the `VerticleFactory.createVerticle()` method
 
-In earlier releases of {VertX}, `VerticleFactory.createVerticle()` method synchronously instantiated a verticle. From {VertX} {4} onward, the method asynchronously instantiates the verticle and returns the callback `Callable<Verticle>` instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.
+In earlier releases of {VertX}, `VerticleFactory.createVerticle()` method synchronously instantiated a verticle. From {VertX} {v4} onward, the method asynchronously instantiates the verticle and returns the callback `Callable<Verticle>` instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.
 
-The following code shows you how verticles were instantiated in {VertX} {3x} releases:
+The following code shows you how verticles were instantiated in {VertX} {v3x} releases:
 ----
 Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception;
 ----
 
-The following code shows you how verticles are instantiated in {VertX} {4}:
+The following code shows you how verticles are instantiated in {VertX} {v4}:
 ----
 void createVerticle(String verticleName, ClassLoader classLoader, Promise<Callable<Verticle>> promise);
 ----
 
 For existing factories, you can update the code to use a callable when a promise completes or fails. The callable can be called several times.
 
-The following code example shows you existing factories in {VertX} {3x} releases:
+The following code example shows you existing factories in {VertX} {v3x} releases:
 ----
 return new MyVerticle();
 ----
 
-The following code example shows you how to update existing factories to use promise in {VertX} {4}:
+The following code example shows you how to update existing factories to use promise in {VertX} {v4}:
 ----
 promise.complete(() -> new MyVerticle());
 ----

@@ -1,6 +1,6 @@
 ECLIPSE VERT.X 4 MIGRATION GUIDE
 
-This guide describes the updates in {VertX} {4} release. Use the information to upgrade your {VertX} {3x} applications to {VertX} {4}.
+This guide describes the updates in {VertX} {v4} release. Use the information to upgrade your {VertX} {v3x} applications to {VertX} {v4}.
 
 include::modules/con_mg-about-vertx.adoc[leveloffset=+1]
 

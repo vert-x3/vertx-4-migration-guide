@@ -1,11 +1,11 @@
 [id="migrating-authorization-applications_{context}"]
 = Migrating the authorization applications
 
-Authorization is a new feature in {VertX} {4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the `User` object. This meant that the provider was responsible for both authentication and authorization of the user.
+Authorization is a new feature in {VertX} {v4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the `User` object. This meant that the provider was responsible for both authentication and authorization of the user.
 
-In {VertX} {4}, the `User` object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.
+In {VertX} {v4}, the `User` object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.
 
-The following example shows how an application checks if a user can use Printer #1234 in {VertX} {3x} releases.
+The following example shows how an application checks if a user can use Printer #1234 in {VertX} {v3x} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -22,7 +22,7 @@ user.isAuthorized("printers:printer1234", res -> {
 });
 ----
 
-This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From {VertX} {4}, it is possible to perform such authorization by using different providers.
+This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From {VertX} {v4}, it is possible to perform such authorization by using different providers.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----

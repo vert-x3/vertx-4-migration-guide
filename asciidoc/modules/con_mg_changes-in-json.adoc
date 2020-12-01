@@ -20,13 +20,13 @@ All the methods in the JSON class that implement Jackson types have been removed
 For example, use the following code:
 
 * When using Jackson `TypeReference`:
-** In {VertX} {3x} releases:
+** In {VertX} {v3x} releases:
 +
 ----
 List<Foo> foo1 = Json.decodeValue(json, new TypeReference<List<Foo>>() {});
 ----
 
-** In {VertX} {4} release:
+** In {VertX} {v4} release:
 +
 ----
 List<Foo> foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, new TypeReference<List<Foo>>() {});
@@ -34,13 +34,13 @@ List<Foo> foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, new T
 
 * Referencing an `ObjectMapper`:
 
-** In {VertX} {3x} releases:
+** In {VertX} {v3x} releases:
 +
 ----
 ObjectMapper mapper = Json.mapper;
 ----
 
-** In {VertX} {4} release:
+** In {VertX} {v4} release:
 +
 ----
 mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();
@@ -48,19 +48,19 @@ mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();
 
 * Setting an `ObjectMapper`:
 
-** In {VertX} {3x} releases:
+** In {VertX} {v3x} releases:
 +
 ----
 Json.mapper = someMapper;
 ----
 
-** From {VertX} {4} onward, you cannot write a mapper instance. You should use your own static mapper or configure the `Databind.mapper()` instance.
+** From {VertX} {v4} onward, you cannot write a mapper instance. You should use your own static mapper or configure the `Databind.mapper()` instance.
 
 == Object mapping
 
 In earlier releases, the Jackson core and Jackson databind dependencies were required at runtime.
 
-From {VertX} {4} onward, only the Jackson core dependency is required.
+From {VertX} {v4} onward, only the Jackson core dependency is required.
 
 You will require the Jackson databind dependency only if you are object mapping JSON. In this case, you must explicitly add the dependency in your project descriptor in the `com.fasterxml.jackson.core:jackson-databind` jar.
 
@@ -93,9 +93,9 @@ The following methods are supported only with Jackson bind:
 
 == Base64 encoder updated to Base64URL for JSON objects and arrays
 
-The {VertX} JSON types implement RFC-7493. In earlier releases of {VertX}, the implementation incorrectly used Base64 encoder instead of Base64URL. This has been fixed in {VertX} {4}, and Base64URL encoder is used in the JSON types.
+The {VertX} JSON types implement RFC-7493. In earlier releases of {VertX}, the implementation incorrectly used Base64 encoder instead of Base64URL. This has been fixed in {VertX} {v4}, and Base64URL encoder is used in the JSON types.
 
-If you want to continue using the Base64 encoder in {VertX} {4}, you can use the configuration flag `legacy`. The following example shows how to set the configuration flag in {VertX} {4}.
+If you want to continue using the Base64 encoder in {VertX} {v4}, you can use the configuration flag `legacy`. The following example shows how to set the configuration flag in {VertX} {v4}.
 
 ----
 java -Dvertx.json.base64=legacy ...
@@ -103,7 +103,7 @@ java -Dvertx.json.base64=legacy ...
 
 A new utility method `Json.toBase64()` converts the Base64URL string to Base64. This utility can be for:
 
-* Handling integration while migrating from {VertX} {3x} releases to {VertX} {4}.
+* Handling integration while migrating from {VertX} {v3x} releases to {VertX} {v4}.
 
 * Handling interoperability with other systems that use Base64 strings.
 
