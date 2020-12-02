@@ -4,8 +4,6 @@ This guide describes the updates in {VertX} {v4} release. Use the information to
 
 include::modules/con_mg-about-vertx.adoc[leveloffset=+1]
 
-include::../modules/proc_configuring-your-application-to-use-vertx.adoc[leveloffset=+1]
-
 include::chapters/assembly_mg_what-is-new-and-different-in-vertx-4.adoc[leveloffset=+1]
 
 include::chapters/assembly_mg_changes-in-common-components.adoc[leveloffset=+1]

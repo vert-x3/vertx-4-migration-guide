@@ -5,42 +5,123 @@ The following section describes the changes in {VertX} gRPC.
 
 == New gRPC compiler plugin
 
-In earlier releases of {VertX}, to compile a gRPC `.proto` descriptor, you had to work with fork of the official gRPC compiler. This fork is maintained by the Eclipse project. Working with the fork was complex.
+In {VertX} {v4}, the module `protoc-gen-grpc-java` is longer available. This module was a fork of the official gRPC compiler. In earlier releases of {VertX}, you had to work with this fork. This fork is maintained by the Eclipse project. Working with the fork was complex.
 
 In previous releases, to work with gRPC, the following details were added to `pom.xml` file.
 
+[source,java]
 ----
-   <plugin>
-        <groupId>org.xolstice.maven.plugins</groupId>
-        <artifactId>protobuf-maven-plugin</artifactId>
-        <configuration>
-          <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
-          <pluginId>grpc-java</pluginId>
-          <pluginArtifact>io.vertx:protoc-gen-grpc-java:1.25.0:exe:${os.detected.classifier}</pluginArtifact>
-        </configuration>
-      </plugin>
+  <!-- Vert.x 3.x -->
+<plugin>
+  <groupId>org.xolstice.maven.plugins</groupId>
+  <artifactId>protobuf-maven-plugin</artifactId>
+  <configuration>
+    <protocArtifact>com.google.protobuf:protoc:3.2.0:exe:${os.detected.classifier}</protocArtifact>
+    <pluginId>grpc-java</pluginId>
+    <!-- NOTE: the gav coordinates point to the 3.x only compiler fork -->
+    <pluginArtifact>io.vertx:protoc-gen-grpc-java:${vertx.grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+  </configuration>
+  ...
+</plugin>
 ----
 
 In {VertX} {v4}, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to `pom.xml` file.
 
+[source,java]
 ----
-      <plugin>
-        <groupId>org.xolstice.maven.plugins</groupId>
-        <artifactId>protobuf-maven-plugin</artifactId>
-        <version>0.6.1</version>
-        <configuration>
-          <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
-          <pluginId>grpc-java</pluginId>
-          <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-          <protocPlugins>
-            <protocPlugin>
-              <id>vertx-grpc-protoc-plugin</id>
-              <groupId>io.vertx</groupId>
-              <artifactId>vertx-grpc-protoc-plugin</artifactId>
-              <version>${vertx.version}</version>
-              <mainClass>io.vertx.grpc.protoc.plugin.VertxGrpcGenerator</mainClass>
-            </protocPlugin>
-          </protocPlugins>
-        </configuration>
-      </plugin>
+    <!-- Vert.x 4.0 -->
+<plugin>
+  <groupId>org.xolstice.maven.plugins</groupId>
+  <artifactId>protobuf-maven-plugin</artifactId>
+  <configuration>
+    <protocArtifact>com.google.protobuf:protoc:3.2.0:exe:${os.detected.classifier}</protocArtifact>
+    <pluginId>grpc-java</pluginId>
+    <!-- NOTE: the gav coordinates point to the official compiler -->
+    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${vertx.grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+    <protocPlugins>
+      <!-- NEW: a plugin is added to generate the Vert.x specific code -->
+      <protocPlugin>
+        <id>vertx-grpc-protoc-plugin</id>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-grpc-protoc-plugin</artifactId>
+        <version>${vertx.version}</version>
+        <mainClass>io.vertx.grpc.protoc.plugin.VertxGrpcGenerator</mainClass>
+      </protocPlugin>
+    </protocPlugins>
+  </configuration>
+  ...
+</plugin>
+----
+
+== Migrating the generated code
+
+In {VertX} {v4}, the new compiler is used. When the new gRPC plugin is used, the generated code is not written in the same source file. This is because the compiler does not allow custom code generation on its base class. The plugins must generate a new class with a different name to save the code.
+
+In earlier releases of {VertX}, the older gRPC plugin would write the generated code in the same source file.
+
+For example, if you have the following descriptor:
+
+[source,proto]
+----
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+----
+
+In {VertX} {v3x}, the code would be generated in the `GreeterGrpc` class.
+
+[source,java]
+----
+// 3.x
+GreeterGrpc.GreeterVertxImplBase service =
+  new GreeterGrpc.GreeterVertxImplBase() {
+      ...
+  }
+----
+
+In {VertX} {v4}, the code is generated in the `VertxGreeterGrpc` class.
+
+[source,java]
+----
+// 4.x
+VertxGreeterGrpc.GreeterVertxImplBase service =
+  new VertxGreeterGrpc.GreeterVertxImplBase() {
+      ...
+  }
+----
+
+== gRPC APIs support futures
+
+In {VertX} {v4}, the gRPC APIs support futures.  Using these APIs the gRPC plugin generates promisified applications. This makes it easier to reason about inputs and outputs.XXX
+
+The following example shows you XXX in {VertX} {v3x}.
+
+[source,java]
+----
+// 3.x
+GreeterGrpc.GreeterVertxImplBase service =
+  new GreeterGrpc.GreeterVertxImplBase() {
+        @Override
+        public void sayHello(HelloRequest request, Promise<HelloReply> future) {
+          future.complete(
+              HelloReply.newBuilder().setMessage(request.getName()).build());
+        }
+  }
+----
+
+The following example shows you XXX in {VertX} {v4}.
+
+[source,java]
+----
+// 4.x
+VertxGreeterGrpc.GreeterVertxImplBase service =
+  new VertxGreeterGrpc.GreeterVertxImplBase() {
+      @Override
+      public Future<HelloReply> sayHello(HelloRequest request) {
+        return Future.succeededFuture(
+          HelloReply.newBuilder()
+            .setMessage(request.getName())
+            .build());
+      }
+  }
 ----

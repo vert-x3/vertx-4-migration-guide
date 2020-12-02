@@ -1,8 +1,240 @@
 [id="changes-in-vertx-jdbc-client_{context}"]
 = Changes in {VertX} JDBC client
 
+From {VertX} {v4}, the JDBC client supports SQL client. The SQL common module has also been merged in JDBC client, that is, `io.vertx:vertx-sql-common` merged in `io.vertx:vertx-jdbc-client` module. You will have to remove the `io.vertx:vertx-sql-common` dependency file because `io.vertx:vertx-jdbc-client` will include it. With the merging of SQL common client, all the database APIs have been consolidated into the JDBC client.
+
+In {VertX} {v4}, the SQL client has been updated to include the following clients:XXX
+
+* Reactive PostgreSQL client. In earlier releases, it included a reactive PostgreSQL client.
+
+* Reactive MySQL client
+* Reactive DB2 client
+* Existing JDBC client that includes the JDBC client API and the SQL client API.
+
+The reactive implementations use the database network protocols. This makes them resource-efficient.
+
+JDBC calls to database are blocking calls. The JDBC client uses worker threads to make these calls non-blocking. XXX
+
 The following section describes the changes in {VertX} JDBC client.
 
-== Merged Vert.x SQL common module in JDBC client module
+== Creating a pool
 
-The `io.vertx:vertx-sql-common` module has been merged in `io.vertx:vertx-jdbc-client` module. You will have to remove the `io.vertx:vertx-sql-common` dependency file because `io.vertx:vertx-jdbc-client` will include it.
+In {VertX} {v4}, you can create a pool using the JDBC client APIs. In earlier releases, you could create only clients. You could not create pools.
+
+The following example shows how to create a client in {VertX} {v3x}.
+
+[source,java]
+----
+// 3.x
+SQLClient client = JDBCClient.create(vertx, jsonConfig);
+----
+
+The following example shows how to create a pool in {VertX} {v4}.
+
+[source,java]
+----
+// 4.x
+JDBCPool pool = JDBCPool.pool(vertx, jsonConfig);
+----
+
+NOTE: Though the {VertX} {v3x} APIs are supported in {VertX} {v4}, it is recommended that you use the new JDC client APIs in your applications.
+
+A pool enables you to perform simple queries. You do not need to manage connections for simple queries. However, for complex queries or multiple queries, you must manage your connections.
+
+The following example shows how to manage connections for queries in {VertX} {v3x}.
+
+[source,java]
+----
+// 3.x
+client.getConnection(res -> {
+  if (res.succeeded()) {
+    SQLConnection connection = res.result();
+    // very important! do not forget to return the connection
+    connection.close();
+  } else {
+    // Failed to get connection - deal with it
+  }
+});
+----
+
+The following example shows how to manage connections for queries in {VertX} {v4}.
+
+[source,java]
+----
+// 4.x
+pool
+  .getConnection()
+  .onFailure(e -> {
+    // failed to get a connection
+  })
+  .onSuccess(conn -> {
+    // very important! don't forget to return the connection
+    conn.close();
+  });
+----
+
+== Support for Typsesafe Config XXX
+
+You can use `jsonConfig` for configurations. However, using the `jsonConfig` may sometimes result in errors. To avoid these errors, the JDBC client introduces Typesafe Config.
+
+The following example shows the basic structure of a Typesafe Config.
+
+[source,java]
+----
+// 4.x ONLY!!!
+JDBCPool pool = JDBCPool.pool(
+      vertx,
+      // configure the connection
+      new JDBCConnectOptions()
+        // H2 connection string
+        .setJdbcUrl("jdbc:h2:~/test")
+        // username
+        .setUser("sa")
+        // password
+        .setPassword(""),
+      // configure the pool
+      new PoolOptions()
+        .setMaxSize(16)
+    );
+----
+
+NOTE: To use Typesafe Config, you need the `agroal` connection pool. The pool does not expose many configuration options and makes the configuration easy to use.XXX
+
+== Running SQL queries
+
+This section shows you how to run queries in the JDBC client.
+
+=== Running one shot queries
+
+The following example shows how to run queries without managing the connection in {VertX} {v3x}.
+
+[source,java]
+----
+// 3.x
+client.query("SELECT * FROM user WHERE emp_id > ?", new JsonArray().add(1000), res -> {
+  if (res.succeeded()) {
+    ResultSet rs = res2.result();
+    // Do something with results
+  }
+});
+----
+
+The following example shows how to run queries without managing the connection in {VertX} {v4}.
+
+[source,java]
+----
+// 4.x
+pool
+  .preparedQuery("SELECT * FROM user WHERE emp_id > ?")
+  // the emp id to look up
+  .execute(Tuple.of(1000))
+  .onSuccess(rows -> {
+    for (Row row : rows) {
+      System.out.println(row.getString("FIRST_NAME"));
+    }
+  });
+----
+
+=== Running queries on managed connections
+
+The following example shows how to run queries on managed connections in {VertX} {v4}.
+
+[source,java]
+----
+pool
+  .getConnection()
+  .onFailure(e -> {
+    // failed to get a connection
+  })
+  .onSuccess(conn -> {
+    conn
+      .query("SELECT * FROM user")
+      .execute()
+      .onFailure(e -> {
+        // handle the failure
+        // very important! don't forget to return the connection
+        conn.close();
+      })
+      .onSuccess(rows -> {
+        for (Row row : rows) {
+          System.out.println(row.getString("FIRST_NAME"));
+        }
+        // very important! don't forget to return the connection
+        conn.close();
+      });
+  });
+----
+
+== Support for stored procedures
+
+Stored procedures are supported in the JDBC client.
+
+The following example shows how to pass `IN` arguments in {VertX} {v3x}.
+
+[source,java]
+----
+// 3.x
+connection.callWithParams(
+  "{ call new_customer(?, ?) }",
+  new JsonArray().add("John").add("Doe"),
+  null,
+  res -> {
+    if (res.succeeded()) {
+      // Success!
+    } else {
+      // Failed!
+    }
+  });
+----
+
+The following example shows how to pass `IN` arguments in {VertX} {v4}.
+
+[source,java]
+----
+// 4.0
+client
+  .preparedQuery("{call new_customer(?, ?)}")
+  .execute(Tuple.of("Paulo", "Lopes"))
+  .onSuccess(rows -> {
+    ...
+  });
+----
+
+In {VertX} {v3x}, the support for combining  the `IN` and `OUT` arguments was very limited due to the available types. In {VertX} {v4}, the pool is type safe and can handle the combination of `IN` and `OUT` arguments. You can also use `INOUT` parameters in your applications.
+
+The following example shows handling of arguments in {VertX} {v3x}.
+
+[source,java]
+----
+// 3.x
+connection.callWithParams(
+  "{ call customer_lastname(?, ?) }",
+  new JsonArray().add("John"),
+  new JsonArray().addNull().add("VARCHAR"),
+  res -> {
+    if (res.succeeded()) {
+      ResultSet result = res.result();
+    } else {
+      // Failed!
+    }
+});
+----
+
+The following example shows handling of arguments in {VertX} {v4}.
+
+[source,java]
+----
+// 4.x
+client
+  .preparedQuery("{call customer_lastname(?, ?)}")
+  .execute(Tuple.of("John", SqlOutParam.OUT(JDBCType.VARCHAR)))
+  .onSuccess(rows -> {
+    ...
+  });
+----
+
+In the JDBC client, the data types have been updated.
+
+* For an argument is of type `OUT`, you can specify its return type. In the example, the `OUT` argument is specified as type `VARCHAR` which is a JDBC constant.
+
+* The types are not bound by JSON limitations. You can now use database specific types instead of text constants for the type name.
