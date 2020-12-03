@@ -3,7 +3,7 @@
 
 From {VertX} {v4}, the JDBC client supports SQL client. The SQL common module has also been merged in JDBC client, that is, `io.vertx:vertx-sql-common` merged in `io.vertx:vertx-jdbc-client` module. You will have to remove the `io.vertx:vertx-sql-common` dependency file because `io.vertx:vertx-jdbc-client` will include it. With the merging of SQL common client, all the database APIs have been consolidated into the JDBC client.
 
-In {VertX} {v4}, the SQL client has been updated to include the following clients:XXX
+In {VertX} {v4}, the SQL client has been updated to include the following clients:
 
 * Reactive PostgreSQL client. In earlier releases, it included a reactive PostgreSQL client.
 
@@ -13,7 +13,7 @@ In {VertX} {v4}, the SQL client has been updated to include the following client
 
 The reactive implementations use the database network protocols. This makes them resource-efficient.
 
-JDBC calls to database are blocking calls. The JDBC client uses worker threads to make these calls non-blocking. XXX
+JDBC calls to database are blocking calls. The JDBC client uses worker threads to make these calls non-blocking.
 
 The following section describes the changes in {VertX} JDBC client.
 
@@ -73,7 +73,7 @@ pool
   });
 ----
 
-== Support for Typsesafe Config XXX
+== Support for Typsesafe Config
 
 You can use `jsonConfig` for configurations. However, using the `jsonConfig` may sometimes result in errors. To avoid these errors, the JDBC client introduces Typesafe Config.
 
@@ -98,7 +98,7 @@ JDBCPool pool = JDBCPool.pool(
     );
 ----
 
-NOTE: To use Typesafe Config, you need the `agroal` connection pool. The pool does not expose many configuration options and makes the configuration easy to use.XXX
+NOTE: To use Typesafe Config, you must include the `agroal` connection pool in your project. The pool does not expose many configuration options and makes the configuration easy to use.
 
 == Running SQL queries
 

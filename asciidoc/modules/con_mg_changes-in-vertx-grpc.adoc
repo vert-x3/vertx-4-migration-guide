@@ -9,7 +9,7 @@ In {VertX} {v4}, the module `protoc-gen-grpc-java` is longer available. This mod
 
 In previous releases, to work with gRPC, the following details were added to `pom.xml` file.
 
-[source,java]
+[source,xml]
 ----
   <!-- Vert.x 3.x -->
 <plugin>
@@ -27,7 +27,7 @@ In previous releases, to work with gRPC, the following details were added to `po
 
 In {VertX} {v4}, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to `pom.xml` file.
 
-[source,java]
+[source,xml]
 ----
     <!-- Vert.x 4.0 -->
 <plugin>
@@ -92,9 +92,9 @@ VertxGreeterGrpc.GreeterVertxImplBase service =
 
 == gRPC APIs support futures
 
-In {VertX} {v4}, the gRPC APIs support futures.  Using these APIs the gRPC plugin generates promisified applications. This makes it easier to reason about inputs and outputs.XXX
+In {VertX} {v4}, the gRPC APIs support futures. The gRPC plugin generates promisified APIs. These APIs use the standard {VertX} input and output arguments, which makes it easier to create standard {VertX} applications.
 
-The following example shows you XXX in {VertX} {v3x}.
+The following example shows you use of promises in {VertX} {v3x}.
 
 [source,java]
 ----
@@ -109,7 +109,7 @@ GreeterGrpc.GreeterVertxImplBase service =
   }
 ----
 
-The following example shows you XXX in {VertX} {v4}.
+The following example shows use of futures in {VertX} {v4}.
 
 [source,java]
 ----

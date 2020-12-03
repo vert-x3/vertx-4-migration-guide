@@ -20,5 +20,7 @@ include::../modules/con_mg_changes-in-vertx-mongodb-client.adoc[leveloffset=+1]
 
 include::../chapters/assembly_mg_changes-in-vertx-redis-client.adoc[leveloffset=+1]
 
+include::../community_features/rabbitmq-client.adoc[leveloffset=+1]
+
 ifdef::parent-context-of-changes-in-client-components[:context: {parent-context-of-changes-in-client-components}]
 ifndef::parent-context-of-changes-in-client-components[:!context:]
