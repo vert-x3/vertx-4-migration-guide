@@ -544,6 +544,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-vertx-config_changes-in-common-components">Changes in Vert.x configuration</a></li>
 <li><a href="#changes-in-json_changes-in-common-components">Changes in JSON</a></li>
 <li><a href="#changes-in-vertx-webchanges-in-common-components">Changes in Vert.x web</a></li>
+<li><a href="#changes-in-vertx-web-graphql_changes-in-common-components">Changes in Vert.x Web GraphQL</a></li>
 <li><a href="#changes-in-micrometer-metrics_changes-in-common-components">Changes in Micrometer metrics</a></li>
 <li><a href="#changes-in-vertx-openapi_changes-in-common-components">Changes in Vert.x OpenAPI</a></li>
 </ul>
@@ -580,6 +581,12 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-vertx-redis-client_changes-in-client-components">Changes in Vert.x Redis client</a></li>
 </ul>
 </li>
+<li><a href="#changes-in-clustering_{context}">Changes in clustering</a>
+<ul class="sectlevel2">
+<li><a href="#changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</a></li>
+<li><a href="#clustered_flag_removed_from_option_classes_changes-in-clustering">Clustered flag removed from options classes</a></li>
+</ul>
+</li>
 <li><a href="#miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</a>
 <ul class="sectlevel2">
 <li><a href="#_removed_the_code_starter_code_class">Removed the <code>Starter</code> class</a></li>
@@ -590,7 +597,6 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_new_method_to_check_file_caching">New method to check file caching</a></li>
 <li><a href="#_service_provider_interface_spi_metrics">Service Provider Interface (SPI) metrics</a></li>
 <li><a href="#_removed_the_pooled_buffer_methods">Removed the pooled buffer methods</a></li>
-<li><a href="#_clustered_flag_removed_from_options_classes">Clustered flag removed from options classes</a></li>
 <li><a href="#_methods_to_create_clients_that_have_no_shared_data_sources">Methods to create clients that have no shared data sources</a></li>
 <li><a href="#changes-in-vertx-junit5_{context}">Changes in Vert.x JUnit5</a></li>
 </ul>
@@ -2559,8 +2565,57 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="paragraph">
 <p>From Vert.x 4, <code>OAuth2Auth.create(Vertx vertx)</code> method requires <code>vertx</code> as a constructor argument. The <code>vertx</code> argument uses a secure non-blocking random number generator to generate nonce which ensures better security for applications.</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="changes-in-vertx-web-graphql_changes-in-common-components">Changes in Vert.x Web GraphQL</h3>
 <div class="paragraph">
-<p>Unresolved directive in chapters/assembly_mg_changes-in-common-components.adoc - include::con_mg_changes-in-vertx-web-graphql.adoc[leveloffset=+1]</p>
+<p>The following section describes the changes in Vert.x Web GraphQL.</p>
+</div>
+<div class="sect3">
+<h4 id="_updated_methods_to_be_supported_on_multi_language_polyglot_environments">Updated methods to be supported on multi-language (polyglot) environments</h4>
+<div class="paragraph">
+<p>Vert.x Web GraphQL is available as Technology Preview.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For more information about the support scope of Red Hat Technology Preview features, see <a href="https://access.redhat.com/support/offerings/techpreview/">Technology Preview Features Support Scope</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following methods have been updated and are now supported on polyglot environments:
+* <code>UploadScalar</code> is now a factory, use the method  <code>UploadScalar.create()</code> instead.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>VertxBatchLoader</code> is now a factory, use the method <code>io.vertx.ext.web.handler.graphql.dataloader.VertxBatchLoader.create()</code> instead.</p>
+</li>
+<li>
+<p><code>VertxDataFetcher</code> is now a factory, use the method <code>io.vertx.ext.web.handler.graphql.schema.VertxDataFetcher.create()</code> instead.</p>
+</li>
+<li>
+<p><code>VertxPropertyDataFetcher</code> is now a factory, use the method  <code>io.vertx.ext.web.handler.graphql.schema.VertxPropertyDataFetcher.create()</code> instead.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handling_post_requests_in_vert_x_web_graphql">Handling POST requests in Vert.x Web GraphQL</h4>
+<div class="paragraph">
+<p>In prior releases, the Vert.x Web GraphQL handler could process its own POST requests. It did not need Vert.x Web <code>BodyHandler</code> to process the requests. However, this implementation was susceptible to DDoS attacks.</p>
+</div>
+<div class="paragraph">
+<p>From Vert.x 4 onward, to process POST requests <code>BodyHandler</code> is required. You must install <code>BodyHandler</code> before installing Vert.x Web GraphQL handler.</p>
 </div>
 </div>
 </div>
@@ -4712,6 +4767,217 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 </div>
 <div class="sect1">
+<h2 id="changes-in-clustering_{context}">Changes in clustering</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section explains the changes in clustering.</p>
+</div>
+<div class="sect2">
+<h3 id="changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</h3>
+<div class="paragraph">
+<p>The following section describes the changes in the Infinispan cluster manager.</p>
+</div>
+<div class="sect3">
+<h4 id="_updates_in_custom_configurations">Updates in custom configurations</h4>
+<div class="paragraph">
+<p>The Infinispan cluster manager is based on Infinispan 11.</p>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, Vert.x 3.x nodes and Vert.x 4 nodes cannot be added together in the same Infinispan cluster.</p>
+</div>
+<div class="paragraph">
+<p>The Vert.x applications are not impacted by this change as the EventBus and SharedData APIs remain the same.</p>
+</div>
+<div class="paragraph">
+<p>If you had a custom Infinispan configuration file in your Vert.x 3.x application:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the <code>__vertx.subs</code> cache type to replicated instead of distributed.</p>
+</li>
+<li>
+<p>Add the replicated cache <code>__vertx.nodeInfo</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre> &lt;cache-container default-cache="distributed-cache"&gt;
+    &lt;distributed-cache name="distributed-cache"/&gt;
+    &lt;replicated-cache name="__vertx.subs"/&gt;
+    &lt;replicated-cache name="__vertx.haInfo"/&gt;
+    &lt;replicated-cache name="__vertx.nodeInfo"/&gt;
+    &lt;distributed-cache-configuration name="__vertx.distributed.cache.configuration"/&gt;
+  &lt;/cache-container&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you run a Vert.x cluster on Openshift, the <code>infinispan-cloud</code> JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the <code>infinispan-core</code> JAR.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clustered_flag_removed_from_option_classes_changes-in-clustering">Clustered flag removed from options classes</h3>
+<div class="paragraph">
+<p>The methods and boolean value that were used to specify, get, and set clustering in Vert.x applications have been removed from <code>VertxOptions</code> and <code>EventBusOptions</code> classes.</p>
+</div>
+<div class="sect4">
+<h5 id="_apache_ignite_cluster_manager">Apache Ignite Cluster Manager</h5>
+<div class="paragraph">
+<p>The Vert.x Ignite cluster manager has been rewritten to support the new Clustering SPI in Vert.x 4. This should not have any notable difference for the developer.</p>
+</div>
+<div class="paragraph">
+<p>The second change was about the configuration. The reason for doing so was to reduce the transient dependencies introduced by the <code>ignite-spring</code> extension which was used to parse XML configurations.
+This change removes more than 10MB of assets from the dependencies.</p>
+</div>
+<div class="paragraph">
+<p>If the cluster manager is used without any configuration changes there is no migration required but if there was a custom <code>ignite.xml</code> used, it can be either switched to the new <code>ignite.json</code> format or the <code>ignite-spring</code> dependency can be added back to you classpath.</p>
+</div>
+<div class="sect5">
+<h6 id="_migrate_to_custom_ignite_json">Migrate to custom ignite.json</h6>
+<div class="paragraph">
+<p>To overide the <code>default-ignite.json</code> you can simply add <code>ignite.json</code> to your classpath. The json format supports customizing ignite options, cache options, discovery options and ssl options. For further customization you need to fall back to the old XML format.</p>
+</div>
+<div class="paragraph">
+<p>In the example below the default config is extended to activate TLS for cluster communication.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">cacheConfiguration</span><span class="delimiter">&quot;</span></span>: [{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.*</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">cacheMode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">REPLICATED</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">readFromBackup</span><span class="delimiter">&quot;</span></span>: <span class="value">false</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">atomicityMode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ATOMIC</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">writeSynchronizationMode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">FULL_SYNC</span><span class="delimiter">&quot;</span></span>
+  }, {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">cacheMode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">PARTITIONED</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">backups</span><span class="delimiter">&quot;</span></span>: <span class="integer">1</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">readFromBackup</span><span class="delimiter">&quot;</span></span>: <span class="value">false</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">atomicityMode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ATOMIC</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">writeSynchronizationMode</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">FULL_SYNC</span><span class="delimiter">&quot;</span></span>
+  }],
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">sslContextFactory</span><span class="delimiter">&quot;</span></span>: {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">protocol</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TLSv1.2</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">keyStoreFilePath</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">server.jks</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">keyStorePassword</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">changeme</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">trustStoreFilePath</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">server.jks</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">trustStorePassword</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">changeme</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">trustAll</span><span class="delimiter">&quot;</span></span>: <span class="value">false</span>
+  },
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">includeEventTypes</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">EVT_CACHE_OBJECT_PUT</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">EVT_CACHE_OBJECT_REMOVED</span><span class="delimiter">&quot;</span></span>],
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">metricsLogFrequency</span><span class="delimiter">&quot;</span></span>: <span class="integer">0</span>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_migrate_back_to_ignite_xml_with_ignite_spring">Migrate back to ignite.xml with ignite-spring</h6>
+<div class="paragraph">
+<p>Add the <code>ignite-spring</code> dependency and provide the <code>ignite.xml</code> configuration to your classpath.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Maven (in your <code>pom.xml</code>):</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+  <span class="tag">&lt;groupId&gt;</span>org.apache.ignite<span class="tag">&lt;/groupId&gt;</span>
+  <span class="tag">&lt;artifactId&gt;</span>ignite-spring<span class="tag">&lt;/artifactId&gt;</span>
+  <span class="tag">&lt;version&gt;</span>${ignite.version}<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gradle (in your <code>build.gradle</code> file):</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">compile <span class="string"><span class="delimiter">'</span><span class="content">org.apache.ignite:ignite-spring:${ignite.version}</span><span class="delimiter">'</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example from the original <code>default-ignite.xml</code> for this ClusterManager:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+
+<span class="tag">&lt;beans</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans</span><span class="delimiter">&quot;</span></span>
+       <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+       <span class="attribute-name">xmlns:util</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/util</span><span class="delimiter">&quot;</span></span>
+       <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans</span>
+                           <span class="content">http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+                           <span class="content">http://www.springframework.org/schema/util</span>
+                           <span class="content">http://www.springframework.org/schema/util/spring-util.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.configuration.IgniteConfiguration</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">discoverySpi</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ipFinder</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+          <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/property&gt;</span>
+      <span class="tag">&lt;/bean&gt;</span>
+    <span class="tag">&lt;/property&gt;</span>
+
+    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">cacheConfiguration</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="tag">&lt;list&gt;</span>
+        <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.configuration.CacheConfiguration</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">cacheMode</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">REPLICATED</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">readFromBackup</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">atomicityMode</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ATOMIC</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">writeSynchronizationMode</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">FULL_SYNC</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/bean&gt;</span>
+        <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.configuration.CacheConfiguration</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">cacheMode</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">PARTITIONED</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">backups</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">readFromBackup</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">false</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">atomicityMode</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ATOMIC</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">affinity</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.cache.affinity.rendezvous.RendezvousAffinityFunction</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+              <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">partitions</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">128</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+            <span class="tag">&lt;/bean&gt;</span>
+          <span class="tag">&lt;/property&gt;</span>
+          <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">writeSynchronizationMode</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">FULL_SYNC</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/bean&gt;</span>
+      <span class="tag">&lt;/list&gt;</span>
+    <span class="tag">&lt;/property&gt;</span>
+
+    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">includeEventTypes</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="tag">&lt;list&gt;</span>
+        <span class="tag">&lt;util:constant</span> <span class="attribute-name">static-field</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.events.EventType.EVT_CACHE_OBJECT_PUT</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;util:constant</span> <span class="attribute-name">static-field</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.apache.ignite.events.EventType.EVT_CACHE_OBJECT_REMOVED</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;/list&gt;</span>
+    <span class="tag">&lt;/property&gt;</span>
+
+    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">gridLogger</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">io.vertx.spi.cluster.ignite.impl.VertxLogger</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/property&gt;</span>
+
+    <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">metricsLogFrequency</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/bean&gt;</span>
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -4764,12 +5030,6 @@ In Vert.x 4, isolated class loading will be supported for Java 8.</p>
 <h3 id="_removed_the_pooled_buffer_methods">Removed the pooled buffer methods</h3>
 <div class="paragraph">
 <p>The pooled buffer methods <code>TCPSSLOptions.isUsePooledBuffers()</code> and <code>TCPSSLOptions.setUsePooledBuffers()</code> have been removed.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_clustered_flag_removed_from_options_classes">Clustered flag removed from options classes</h3>
-<div class="paragraph">
-<p>The methods and boolean value that were used to specify, get, and set clustering in Vert.x applications have been removed from <code>VertxOptions</code> and <code>EventBusOptions</code> classes.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4925,7 +5185,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-03 15:31:11 UTC
+Last updated 2020-12-03 16:44:24 UTC
 </div>
 </div>
 </body>
