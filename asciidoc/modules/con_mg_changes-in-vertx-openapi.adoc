@@ -69,7 +69,7 @@ int aParam = parameters.queryParameter("aParam").getInteger();
 == Handling security
 
 In {VertX} {v4}, the
-methods `RouterFactory.addSecurityHandler()` and `OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()` are no longer available.XXX
+methods `RouterFactory.addSecurityHandler()` and `OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()` are no longer available.
 
 Use the `RouterBuilder.securityHandler()` method instead. This method accepts `io.vertx.ext.web.handler.AuthenticationHandler` as an handler. The method also automatically recognizes `OAuth2Handler` and sets up the security schema.
 

@@ -30,6 +30,8 @@ include::../modules/con_mg_changes-in-json.adoc[leveloffset=+1]
 
 include::../modules/con_mg_changes-in-vertx-web.adoc[leveloffset=+1]
 
+include::con_mg_changes-in-vertx-web-graphql.adoc[leveloffset=+1]
+
 include::../modules/con_mg_changes-in-micrometer-metrics.adoc[leveloffset=+1]
 
 include::../modules/con_mg_changes-in-vertx-openapi.adoc[leveloffset=+1]

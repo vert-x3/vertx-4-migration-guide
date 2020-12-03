@@ -11,6 +11,8 @@ include::../modules/con_mg_use-future-methods-for-asynchronous-operations.adoc[l
 
 include::../modules/con_mg_no_dependency_on_the_jackson_databind_library.adoc[leveloffset=+1]
 
+include::../modules/con_mg_support_for_opentracing.adoc[leveloffset=+1]
+
 include::../modules/con_mg_handling_deprecations_and_removals.adoc[leveloffset=+1]
 
 ifdef::parent-context-of-what-is-new-and-different-in-vertx-4[:context: {parent-context-of-what-is-new-and-different-in-vertx-4}]

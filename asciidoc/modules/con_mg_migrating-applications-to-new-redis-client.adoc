@@ -59,8 +59,8 @@ client.set("key", "value", s -> {
 });
 ----
 
-The following example shows you how to handle requests after creating the client in {VertX} {v4}. The example uses a list
-to set XXX instead of hard coding options. See link:https://redis.io/commands/set[Redis SET command] for more information on arguments available for the command.
+The following example shows how to handle requests after creating the client in {VertX} {v4}. The example uses a list
+for setting the key-value pairs instead of hard coding options. See link:https://redis.io/commands/set[Redis SET command] for more information on arguments available for the command.
 
 ----
 // Using 4.x

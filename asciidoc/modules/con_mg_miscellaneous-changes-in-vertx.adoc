@@ -55,6 +55,6 @@ Use the following new methods to create clients that do not have shared data sou
 
 include::con_mg_changes-in-vertx-junit5.adoc[leveloffset=+1]
 
-include::con_mg_changes-in-infinispan-cluster-manager.adoc[leveloffset=+1]
+include::../community_features/kotlin.adoc[leveloffset=+1]
 
-include::con_mg_changes-in-vertx-web-graphql.adoc[leveloffset=+1]
+include::../community_features/wiremongo.adoc[leveloffset=+1]
