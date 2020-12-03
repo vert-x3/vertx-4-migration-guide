@@ -8,7 +8,7 @@ This section explains the changes in clustering.
 
 include::../modules/con_mg_changes-in-infinispan-cluster-manager.adoc[leveloffset=+1]
 
-include::../modules/con_mg_clustered_flag_removed_from_option_classes.adoc
+include::../modules/con_mg_clustered_flag_removed_from_option_classes.adoc[leveloffset=+1]
 
 include::../community_features/ignite.adoc[leveloffset=+1]
 
