@@ -36,10 +36,6 @@ The `Metrics.isEnabled()` method has been removed. The Service Provider Interfac
 
 The pooled buffer methods `TCPSSLOptions.isUsePooledBuffers()` and `TCPSSLOptions.setUsePooledBuffers()` have been removed.
 
-== Clustered flag removed from options classes
-
-The methods and boolean value that were used to specify, get, and set clustering in {VertX} applications have been removed from `VertxOptions` and `EventBusOptions` classes.
-
 == Methods to create clients that have no shared data sources
 
 Use the following new methods to create clients that do not have shared data sources with other clients. These methods maintain their own data sources.
