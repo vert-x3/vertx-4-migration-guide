@@ -526,6 +526,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#use-future-methods-instead-of-callback-for-asynchronous-operations_what-is-new-and-different-in-vertx-4">Use future methods for asynchronous operations</a></li>
 <li><a href="#no_dependency_on_the_jackson_databind_library_what-is-new-and-different-in-vertx-4">No dependency on the Jackson Databind library</a></li>
+<li><a href="#support_for_opentracing_what-is-new-and-different-in-vertx-4">Support for Opentracing</a></li>
 <li><a href="#handling_deprecations_and_removals_what-is-new-and-different-in-vertx-4">Handling deprecations and removals</a></li>
 </ul>
 </li>
@@ -592,8 +593,6 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_clustered_flag_removed_from_options_classes">Clustered flag removed from options classes</a></li>
 <li><a href="#_methods_to_create_clients_that_have_no_shared_data_sources">Methods to create clients that have no shared data sources</a></li>
 <li><a href="#changes-in-vertx-junit5_{context}">Changes in Vert.x JUnit5</a></li>
-<li><a href="#changes-in-infinispan-cluster-manager_{context}">Changes in Infinispan cluster manager</a></li>
-<li><a href="#changes-in-vertx-web-graphql_{context}">Changes in Vert.x Web GraphQL</a></li>
 </ul>
 </li>
 </ul>
@@ -618,9 +617,6 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="paragraph">
 <p>Since Vert.x supports asynchronous applications it can be used to create applications with high volume of messages, large event processing, HTTP interactions, and so on.</p>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::../modules/proc_configuring-your-application-to-use-vertx.adoc[leveloffset=+1]</p>
 </div>
 </div>
 </div>
@@ -746,6 +742,10 @@ fut2.onComplete(ar -&gt; {
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="support_for_opentracing_what-is-new-and-different-in-vertx-4">Support for Opentracing</h3>
+
 </div>
 <div class="sect2">
 <h3 id="handling_deprecations_and_removals_what-is-new-and-different-in-vertx-4">Handling deprecations and removals</h3>
@@ -2559,6 +2559,9 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="paragraph">
 <p>From Vert.x 4, <code>OAuth2Auth.create(Vertx vertx)</code> method requires <code>vertx</code> as a constructor argument. The <code>vertx</code> argument uses a secure non-blocking random number generator to generate nonce which ensures better security for applications.</p>
 </div>
+<div class="paragraph">
+<p>Unresolved directive in chapters/assembly_mg_changes-in-common-components.adoc - include::con_mg_changes-in-vertx-web-graphql.adoc[leveloffset=+1]</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -2882,7 +2885,7 @@ int aParam = parameters.queryParameter("aParam").getInteger();</pre>
 <h4 id="_handling_security">Handling security</h4>
 <div class="paragraph">
 <p>In Vert.x 4, the
-methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()</code> are no longer available.XXX</p>
+methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()</code> are no longer available.</p>
 </div>
 <div class="paragraph">
 <p>Use the <code>RouterBuilder.securityHandler()</code> method instead. This method accepts <code>io.vertx.ext.web.handler.AuthenticationHandler</code> as an handler. The method also automatically recognizes <code>OAuth2Handler</code> and sets up the security schema.</p>
@@ -3506,22 +3509,25 @@ PubSecKeyOptions secKey =
 <div class="sect3">
 <h4 id="_new_grpc_compiler_plugin">New gRPC compiler plugin</h4>
 <div class="paragraph">
-<p>In earlier releases of Vert.x, to compile a gRPC <code>.proto</code> descriptor, you had to work with fork of the official gRPC compiler. This fork is maintained by the Eclipse project. Working with the fork was complex.</p>
+<p>In Vert.x 4, the module <code>protoc-gen-grpc-java</code> is longer available. This module was a fork of the official gRPC compiler. In earlier releases of Vert.x, you had to work with this fork. This fork is maintained by the Eclipse project. Working with the fork was complex.</p>
 </div>
 <div class="paragraph">
 <p>In previous releases, to work with gRPC, the following details were added to <code>pom.xml</code> file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>   &lt;plugin&gt;
-        &lt;groupId&gt;org.xolstice.maven.plugins&lt;/groupId&gt;
-        &lt;artifactId&gt;protobuf-maven-plugin&lt;/artifactId&gt;
-        &lt;configuration&gt;
-          &lt;protocArtifact&gt;com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}&lt;/protocArtifact&gt;
-          &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
-          &lt;pluginArtifact&gt;io.vertx:protoc-gen-grpc-java:1.25.0:exe:${os.detected.classifier}&lt;/pluginArtifact&gt;
-        &lt;/configuration&gt;
-      &lt;/plugin&gt;</pre>
+<pre class="CodeRay highlight"><code data-lang="xml">  <span class="comment">&lt;!-- Vert.x 3.x --&gt;</span>
+<span class="tag">&lt;plugin&gt;</span>
+  <span class="tag">&lt;groupId&gt;</span>org.xolstice.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
+  <span class="tag">&lt;artifactId&gt;</span>protobuf-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+  <span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;protocArtifact&gt;</span>com.google.protobuf:protoc:3.2.0:exe:${os.detected.classifier}<span class="tag">&lt;/protocArtifact&gt;</span>
+    <span class="tag">&lt;pluginId&gt;</span>grpc-java<span class="tag">&lt;/pluginId&gt;</span>
+    <span class="comment">&lt;!-- NOTE: the gav coordinates point to the 3.x only compiler fork --&gt;</span>
+    <span class="tag">&lt;pluginArtifact&gt;</span>io.vertx:protoc-gen-grpc-java:${vertx.grpc.version}:exe:${os.detected.classifier}<span class="tag">&lt;/pluginArtifact&gt;</span>
+  <span class="tag">&lt;/configuration&gt;</span>
+  ...
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3529,25 +3535,111 @@ PubSecKeyOptions secKey =
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>      &lt;plugin&gt;
-        &lt;groupId&gt;org.xolstice.maven.plugins&lt;/groupId&gt;
-        &lt;artifactId&gt;protobuf-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;0.6.1&lt;/version&gt;
-        &lt;configuration&gt;
-          &lt;protocArtifact&gt;com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}&lt;/protocArtifact&gt;
-          &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
-          &lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}&lt;/pluginArtifact&gt;
-          &lt;protocPlugins&gt;
-            &lt;protocPlugin&gt;
-              &lt;id&gt;vertx-grpc-protoc-plugin&lt;/id&gt;
-              &lt;groupId&gt;io.vertx&lt;/groupId&gt;
-              &lt;artifactId&gt;vertx-grpc-protoc-plugin&lt;/artifactId&gt;
-              &lt;version&gt;${vertx.version}&lt;/version&gt;
-              &lt;mainClass&gt;io.vertx.grpc.protoc.plugin.VertxGrpcGenerator&lt;/mainClass&gt;
-            &lt;/protocPlugin&gt;
-          &lt;/protocPlugins&gt;
-        &lt;/configuration&gt;
-      &lt;/plugin&gt;</pre>
+<pre class="CodeRay highlight"><code data-lang="xml">    <span class="comment">&lt;!-- Vert.x 4.0 --&gt;</span>
+<span class="tag">&lt;plugin&gt;</span>
+  <span class="tag">&lt;groupId&gt;</span>org.xolstice.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
+  <span class="tag">&lt;artifactId&gt;</span>protobuf-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+  <span class="tag">&lt;configuration&gt;</span>
+    <span class="tag">&lt;protocArtifact&gt;</span>com.google.protobuf:protoc:3.2.0:exe:${os.detected.classifier}<span class="tag">&lt;/protocArtifact&gt;</span>
+    <span class="tag">&lt;pluginId&gt;</span>grpc-java<span class="tag">&lt;/pluginId&gt;</span>
+    <span class="comment">&lt;!-- NOTE: the gav coordinates point to the official compiler --&gt;</span>
+    <span class="tag">&lt;pluginArtifact&gt;</span>io.grpc:protoc-gen-grpc-java:${vertx.grpc.version}:exe:${os.detected.classifier}<span class="tag">&lt;/pluginArtifact&gt;</span>
+    <span class="tag">&lt;protocPlugins&gt;</span>
+      <span class="comment">&lt;!-- NEW: a plugin is added to generate the Vert.x specific code --&gt;</span>
+      <span class="tag">&lt;protocPlugin&gt;</span>
+        <span class="tag">&lt;id&gt;</span>vertx-grpc-protoc-plugin<span class="tag">&lt;/id&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>io.vertx<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>vertx-grpc-protoc-plugin<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;version&gt;</span>${vertx.version}<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;mainClass&gt;</span>io.vertx.grpc.protoc.plugin.VertxGrpcGenerator<span class="tag">&lt;/mainClass&gt;</span>
+      <span class="tag">&lt;/protocPlugin&gt;</span>
+    <span class="tag">&lt;/protocPlugins&gt;</span>
+  <span class="tag">&lt;/configuration&gt;</span>
+  ...
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_migrating_the_generated_code">Migrating the generated code</h4>
+<div class="paragraph">
+<p>In Vert.x 4, the new compiler is used. When the new gRPC plugin is used, the generated code is not written in the same source file. This is because the compiler does not allow custom code generation on its base class. The plugins must generate a new class with a different name to save the code.</p>
+</div>
+<div class="paragraph">
+<p>In earlier releases of Vert.x, the older gRPC plugin would write the generated code in the same source file.</p>
+</div>
+<div class="paragraph">
+<p>For example, if you have the following descriptor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="proto">service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Vert.x 3.x, the code would be generated in the <code>GreeterGrpc</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+GreeterGrpc.GreeterVertxImplBase service =
+  <span class="keyword">new</span> GreeterGrpc.GreeterVertxImplBase() {
+      ...
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, the code is generated in the <code>VertxGreeterGrpc</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x</span>
+VertxGreeterGrpc.GreeterVertxImplBase service =
+  <span class="keyword">new</span> VertxGreeterGrpc.GreeterVertxImplBase() {
+      ...
+  }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_grpc_apis_support_futures">gRPC APIs support futures</h4>
+<div class="paragraph">
+<p>In Vert.x 4, the gRPC APIs support futures. The gRPC plugin generates promisified APIs. These APIs use the standard Vert.x input and output arguments, which makes it easier to create standard Vert.x applications.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows you use of promises in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+GreeterGrpc.GreeterVertxImplBase service =
+  <span class="keyword">new</span> GreeterGrpc.GreeterVertxImplBase() {
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> sayHello(HelloRequest request, Promise&lt;HelloReply&gt; future) {
+          future.complete(
+              HelloReply.newBuilder().setMessage(request.getName()).build());
+        }
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows use of futures in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x</span>
+VertxGreeterGrpc.GreeterVertxImplBase service =
+  <span class="keyword">new</span> VertxGreeterGrpc.GreeterVertxImplBase() {
+      <span class="annotation">@Override</span>
+      <span class="directive">public</span> <span class="predefined-type">Future</span>&lt;HelloReply&gt; sayHello(HelloRequest request) {
+        <span class="keyword">return</span> <span class="predefined-type">Future</span>.succeededFuture(
+          HelloReply.newBuilder()
+            .setMessage(request.getName())
+            .build());
+      }
+  }</code></pre>
 </div>
 </div>
 </div>
@@ -3693,12 +3785,307 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
 <div class="sect2">
 <h3 id="changes-in-vertx-jdbc-client_changes-in-client-components">Changes in Vert.x JDBC client</h3>
 <div class="paragraph">
+<p>From Vert.x 4, the JDBC client supports SQL client. The SQL common module has also been merged in JDBC client, that is, <code>io.vertx:vertx-sql-common</code> merged in <code>io.vertx:vertx-jdbc-client</code> module. You will have to remove the <code>io.vertx:vertx-sql-common</code> dependency file because <code>io.vertx:vertx-jdbc-client</code> will include it. With the merging of SQL common client, all the database APIs have been consolidated into the JDBC client.</p>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, the SQL client has been updated to include the following clients:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reactive PostgreSQL client. In earlier releases, it included a reactive PostgreSQL client.</p>
+</li>
+<li>
+<p>Reactive MySQL client</p>
+</li>
+<li>
+<p>Reactive DB2 client</p>
+</li>
+<li>
+<p>Existing JDBC client that includes the JDBC client API and the SQL client API.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reactive implementations use the database network protocols. This makes them resource-efficient.</p>
+</div>
+<div class="paragraph">
+<p>JDBC calls to database are blocking calls. The JDBC client uses worker threads to make these calls non-blocking.</p>
+</div>
+<div class="paragraph">
 <p>The following section describes the changes in Vert.x JDBC client.</p>
 </div>
 <div class="sect3">
-<h4 id="_merged_vert_x_sql_common_module_in_jdbc_client_module">Merged Vert.x SQL common module in JDBC client module</h4>
+<h4 id="_creating_a_pool">Creating a pool</h4>
 <div class="paragraph">
-<p>The <code>io.vertx:vertx-sql-common</code> module has been merged in <code>io.vertx:vertx-jdbc-client</code> module. You will have to remove the <code>io.vertx:vertx-sql-common</code> dependency file because <code>io.vertx:vertx-jdbc-client</code> will include it.</p>
+<p>In Vert.x 4, you can create a pool using the JDBC client APIs. In earlier releases, you could create only clients. You could not create pools.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to create a client in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+SQLClient client = JDBCClient.create(vertx, jsonConfig);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to create a pool in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x</span>
+JDBCPool pool = JDBCPool.pool(vertx, jsonConfig);</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Though the Vert.x 3.x APIs are supported in Vert.x 4, it is recommended that you use the new JDC client APIs in your applications.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A pool enables you to perform simple queries. You do not need to manage connections for simple queries. However, for complex queries or multiple queries, you must manage your connections.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to manage connections for queries in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+client.getConnection(res -&gt; {
+  <span class="keyword">if</span> (res.succeeded()) {
+    SQLConnection connection = res.result();
+    <span class="comment">// very important! do not forget to return the connection</span>
+    connection.close();
+  } <span class="keyword">else</span> {
+    <span class="comment">// Failed to get connection - deal with it</span>
+  }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to manage connections for queries in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x</span>
+pool
+  .getConnection()
+  .onFailure(e -&gt; {
+    <span class="comment">// failed to get a connection</span>
+  })
+  .onSuccess(conn -&gt; {
+    <span class="comment">// very important! don't forget to return the connection</span>
+    conn.close();
+  });</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_support_for_typsesafe_config">Support for Typsesafe Config</h4>
+<div class="paragraph">
+<p>You can use <code>jsonConfig</code> for configurations. However, using the <code>jsonConfig</code> may sometimes result in errors. To avoid these errors, the JDBC client introduces Typesafe Config.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows the basic structure of a Typesafe Config.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x ONLY!!!</span>
+JDBCPool pool = JDBCPool.pool(
+      vertx,
+      <span class="comment">// configure the connection</span>
+      <span class="keyword">new</span> JDBCConnectOptions()
+        <span class="comment">// H2 connection string</span>
+        .setJdbcUrl(<span class="string"><span class="delimiter">&quot;</span><span class="content">jdbc:h2:~/test</span><span class="delimiter">&quot;</span></span>)
+        <span class="comment">// username</span>
+        .setUser(<span class="string"><span class="delimiter">&quot;</span><span class="content">sa</span><span class="delimiter">&quot;</span></span>)
+        <span class="comment">// password</span>
+        .setPassword(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>),
+      <span class="comment">// configure the pool</span>
+      <span class="keyword">new</span> PoolOptions()
+        .setMaxSize(<span class="integer">16</span>)
+    );</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+To use Typesafe Config, you must include the <code>agroal</code> connection pool in your project. The pool does not expose many configuration options and makes the configuration easy to use.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_sql_queries">Running SQL queries</h4>
+<div class="paragraph">
+<p>This section shows you how to run queries in the JDBC client.</p>
+</div>
+<div class="sect4">
+<h5 id="_running_one_shot_queries">Running one shot queries</h5>
+<div class="paragraph">
+<p>The following example shows how to run queries without managing the connection in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+client.query(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT * FROM user WHERE emp_id &gt; ?</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> JsonArray().add(<span class="integer">1000</span>), res -&gt; {
+  <span class="keyword">if</span> (res.succeeded()) {
+    <span class="predefined-type">ResultSet</span> rs = res2.result();
+    <span class="comment">// Do something with results</span>
+  }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to run queries without managing the connection in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x</span>
+pool
+  .preparedQuery(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT * FROM user WHERE emp_id &gt; ?</span><span class="delimiter">&quot;</span></span>)
+  <span class="comment">// the emp id to look up</span>
+  .execute(Tuple.of(<span class="integer">1000</span>))
+  .onSuccess(rows -&gt; {
+    <span class="keyword">for</span> (Row row : rows) {
+      <span class="predefined-type">System</span>.out.println(row.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">FIRST_NAME</span><span class="delimiter">&quot;</span></span>));
+    }
+  });</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_running_queries_on_managed_connections">Running queries on managed connections</h5>
+<div class="paragraph">
+<p>The following example shows how to run queries on managed connections in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pool
+  .getConnection()
+  .onFailure(e -&gt; {
+    <span class="comment">// failed to get a connection</span>
+  })
+  .onSuccess(conn -&gt; {
+    conn
+      .query(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT * FROM user</span><span class="delimiter">&quot;</span></span>)
+      .execute()
+      .onFailure(e -&gt; {
+        <span class="comment">// handle the failure</span>
+        <span class="comment">// very important! don't forget to return the connection</span>
+        conn.close();
+      })
+      .onSuccess(rows -&gt; {
+        <span class="keyword">for</span> (Row row : rows) {
+          <span class="predefined-type">System</span>.out.println(row.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">FIRST_NAME</span><span class="delimiter">&quot;</span></span>));
+        }
+        <span class="comment">// very important! don't forget to return the connection</span>
+        conn.close();
+      });
+  });</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_support_for_stored_procedures">Support for stored procedures</h4>
+<div class="paragraph">
+<p>Stored procedures are supported in the JDBC client.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to pass <code>IN</code> arguments in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+connection.callWithParams(
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">{ call new_customer(?, ?) }</span><span class="delimiter">&quot;</span></span>,
+  <span class="keyword">new</span> JsonArray().add(<span class="string"><span class="delimiter">&quot;</span><span class="content">John</span><span class="delimiter">&quot;</span></span>).add(<span class="string"><span class="delimiter">&quot;</span><span class="content">Doe</span><span class="delimiter">&quot;</span></span>),
+  <span class="predefined-constant">null</span>,
+  res -&gt; {
+    <span class="keyword">if</span> (res.succeeded()) {
+      <span class="comment">// Success!</span>
+    } <span class="keyword">else</span> {
+      <span class="comment">// Failed!</span>
+    }
+  });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to pass <code>IN</code> arguments in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.0</span>
+client
+  .preparedQuery(<span class="string"><span class="delimiter">&quot;</span><span class="content">{call new_customer(?, ?)}</span><span class="delimiter">&quot;</span></span>)
+  .execute(Tuple.of(<span class="string"><span class="delimiter">&quot;</span><span class="content">Paulo</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Lopes</span><span class="delimiter">&quot;</span></span>))
+  .onSuccess(rows -&gt; {
+    ...
+  });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Vert.x 3.x, the support for combining  the <code>IN</code> and <code>OUT</code> arguments was very limited due to the available types. In Vert.x 4, the pool is type safe and can handle the combination of <code>IN</code> and <code>OUT</code> arguments. You can also use <code>INOUT</code> parameters in your applications.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows handling of arguments in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+connection.callWithParams(
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">{ call customer_lastname(?, ?) }</span><span class="delimiter">&quot;</span></span>,
+  <span class="keyword">new</span> JsonArray().add(<span class="string"><span class="delimiter">&quot;</span><span class="content">John</span><span class="delimiter">&quot;</span></span>),
+  <span class="keyword">new</span> JsonArray().addNull().add(<span class="string"><span class="delimiter">&quot;</span><span class="content">VARCHAR</span><span class="delimiter">&quot;</span></span>),
+  res -&gt; {
+    <span class="keyword">if</span> (res.succeeded()) {
+      <span class="predefined-type">ResultSet</span> result = res.result();
+    } <span class="keyword">else</span> {
+      <span class="comment">// Failed!</span>
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows handling of arguments in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.x</span>
+client
+  .preparedQuery(<span class="string"><span class="delimiter">&quot;</span><span class="content">{call customer_lastname(?, ?)}</span><span class="delimiter">&quot;</span></span>)
+  .execute(Tuple.of(<span class="string"><span class="delimiter">&quot;</span><span class="content">John</span><span class="delimiter">&quot;</span></span>, SqlOutParam.OUT(JDBCType.VARCHAR)))
+  .onSuccess(rows -&gt; {
+    ...
+  });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the JDBC client, the data types have been updated.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For an argument is of type <code>OUT</code>, you can specify its return type. In the example, the <code>OUT</code> argument is specified as type <code>VARCHAR</code> which is a JDBC constant.</p>
+</li>
+<li>
+<p>The types are not bound by JSON limitations. You can now use database specific types instead of text constants for the type name.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -4045,8 +4432,8 @@ client.set("key", "value", s -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to handle requests after creating the client in Vert.x 4. The example uses a list
-to set XXX instead of hard coding options. See <a href="https://redis.io/commands/set">Redis SET command</a> for more information on arguments available for the command.</p>
+<p>The following example shows how to handle requests after creating the client in Vert.x 4. The example uses a list
+for setting the key-value pairs instead of hard coding options. See <a href="https://redis.io/commands/set">Redis SET command</a> for more information on arguments available for the command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4295,6 +4682,31 @@ options.setUseReplicas(RedisReplicas);</pre>
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_rabbitmq_client">RabbitMQ Client</h5>
+<div class="sect5">
+<h6 id="_rabbitmqoptions_changes">RabbitMQOptions changes</h6>
+<div class="paragraph">
+<p>In Vert.x 4 The RabbitMQ options inherits from NetClientOptions to leverage common connection options  including SSL.
+Two options have been removed in favor for their base class equivalent, hence they have been renamed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Vert.x RabbitMQOptions  3.x:</span>
+
+RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
+  .setConnectionRetries(<span class="integer">42</span>)
+  .setConnectionRetryDelay(<span class="integer">500</span>);
+
+
+<span class="comment">// Vert.x RabbitMQOptions 4.x:</span>
+RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
+  .setReconnectAttempts(<span class="integer">42</span>)
+  .setReconnectInterval(<span class="integer">500</span>);</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -4429,102 +4841,82 @@ This change resulted in following updates in JUnit5:</p>
 <div class="paragraph">
 <p>The <code>VertxTestContext.succeeding()</code> and <code>VertxTestContext.failing()</code> methods have been deprecated. Use <code>VertxTestContext.succeedingThenComplete()</code> and <code>VertxTestContext.failingThenComplete()</code> methods instead.</p>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="changes-in-infinispan-cluster-manager_{context}">Changes in Infinispan cluster manager</h3>
+<div class="sect4">
+<h5 id="_kotlin_changes">Kotlin changes</h5>
+<div class="sect5">
+<h6 id="_generated_coroutine_extension_methods">Generated coroutine extension methods</h6>
 <div class="paragraph">
-<p>The following section describes the changes in the Infinispan cluster manager.</p>
-</div>
-<div class="sect3">
-<h4 id="_updates_in_custom_configurations">Updates in custom configurations</h4>
-<div class="paragraph">
-<p>The Infinispan cluster manager is based on Infinispan 11.</p>
-</div>
-<div class="paragraph">
-<p>In Vert.x 4, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, Vert.x 3.x nodes and Vert.x 4 nodes cannot be added together in the same Infinispan cluster.</p>
-</div>
-<div class="paragraph">
-<p>The Vert.x applications are not impacted by this change as the EventBus and SharedData APIs remain the same.</p>
-</div>
-<div class="paragraph">
-<p>If you had a custom Infinispan configuration file in your Vert.x 3.x application:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Change the <code>__vertx.subs</code> cache type to replicated instead of distributed.</p>
-</li>
-<li>
-<p>Add the replicated cache <code>__vertx.nodeInfo</code>.</p>
-</li>
-</ul>
+<p>Vert.x 3 generates extension suspending extension methods, e.g <code>get(Handler&lt;AsyncResult&lt;Result&gt;&gt;</code>
+generates <code>getAwait()</code> extension method.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre> &lt;cache-container default-cache="distributed-cache"&gt;
-    &lt;distributed-cache name="distributed-cache"/&gt;
-    &lt;replicated-cache name="__vertx.subs"/&gt;
-    &lt;replicated-cache name="__vertx.haInfo"/&gt;
-    &lt;replicated-cache name="__vertx.nodeInfo"/&gt;
-    &lt;distributed-cache-configuration name="__vertx.distributed.cache.configuration"/&gt;
-  &lt;/cache-container&gt;</pre>
+<pre class="CodeRay highlight"><code data-lang="kotlin">// getSomethingAwait() is a generated extension method
+// and is deprecated
+var result = getSomethingAwait();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you run a Vert.x cluster on Openshift, the <code>infinispan-cloud</code> JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the <code>infinispan-core</code> JAR.</p>
+<p>Vert.x 4 provides a future based model and the Vert.x <code>Future</code> has an <code>await()</code> extension methods
+that does the same. The code above can simply be rewritten as</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">var result = getSomething().await();</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="changes-in-vertx-web-graphql_{context}">Changes in Vert.x Web GraphQL</h3>
+<div class="sect5">
+<h6 id="_script_compiler">Script compiler</h6>
 <div class="paragraph">
-<p>The following section describes the changes in Vert.x Web GraphQL.</p>
-</div>
-<div class="sect3">
-<h4 id="_updated_methods_to_be_supported_on_multi_language_polyglot_environments">Updated methods to be supported on multi-language (polyglot) environments</h4>
-<div class="paragraph">
-<p>Vert.x Web GraphQL is available as Technology Preview.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>For more information about the support scope of Red Hat Technology Preview features, see <a href="https://access.redhat.com/support/offerings/techpreview/">Technology Preview Features Support Scope</a>.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>Vert.x 3 provides a Kotlin Script compiler based on Kotlin Compiler API.</p>
 </div>
 <div class="paragraph">
-<p>The following methods have been updated and are now supported on polyglot environments:
-* <code>UploadScalar</code> is now a factory, use the method  <code>UploadScalar.create()</code> instead.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>VertxBatchLoader</code> is now a factory, use the method <code>io.vertx.ext.web.handler.graphql.dataloader.VertxBatchLoader.create()</code> instead.</p>
-</li>
-<li>
-<p><code>VertxDataFetcher</code> is now a factory, use the method <code>io.vertx.ext.web.handler.graphql.schema.VertxDataFetcher.create()</code> instead.</p>
-</li>
-<li>
-<p><code>VertxPropertyDataFetcher</code> is now a factory, use the method  <code>io.vertx.ext.web.handler.graphql.schema.VertxPropertyDataFetcher.create()</code> instead.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_handling_post_requests_in_vert_x_web_graphql">Handling POST requests in Vert.x Web GraphQL</h4>
-<div class="paragraph">
-<p>In prior releases, the Vert.x Web GraphQL handler could process its own POST requests. It did not need Vert.x Web <code>BodyHandler</code> to process the requests. However, this implementation was susceptible to DDoS attacks.</p>
+<p>The API often breaks and creates friction for upgrading Kotlin versions.</p>
 </div>
 <div class="paragraph">
-<p>From Vert.x 4 onward, to process POST requests <code>BodyHandler</code> is required. You must install <code>BodyHandler</code> before installing Vert.x Web GraphQL handler.</p>
+<p>This is removed in Vert.x 4.0.</p>
+</div>
+<div class="paragraph">
+<p>Such scripts should now be handled by Kotlin tools, e.g the Kotlin compiler has options
+to compile these scripts.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_testing_mongo_db_code">Testing Mongo DB Code</h5>
+<div class="paragraph">
+<p>The <a href="https://github.com/vert-x3/vertx-embedded-mongo-db">vertx-embedded-mongo-db</a> module is no longer supported in Vert.x 4. An alternative can be <a href="https://github.com/NoEnv/vertx-wiremongo">vertx-wiremongo</a> although it takes a different approach. While vertx-embedded-mongo-db spun up a full blown mongo server, vertx-wiremongo is an alternative in-memory implementation of Vert.x' <code>MongoClient</code> interface that allows specific mocking.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume we want to test our persistence layer&#8217;s <code>findApples</code> method to make sure it creates the correct mongo query. Here&#8217;s what such a test may look like with vertx-wiremongo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Test</span>
+<span class="directive">public</span> <span class="type">void</span> testFindApples(TestContext ctx) {
+
+  wiremongo.find()
+    .inCollection(<span class="string"><span class="delimiter">&quot;</span><span class="content">warehouse</span><span class="delimiter">&quot;</span></span>)
+    .withQuery(q -&gt; q.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>).equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">apple</span><span class="delimiter">&quot;</span></span>))
+    .returns(<span class="predefined-type">List</span>.of(<span class="keyword">new</span> JsonObject()
+      .put(<span class="string"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">apple</span><span class="delimiter">&quot;</span></span>)
+      .put(<span class="string"><span class="delimiter">&quot;</span><span class="content">mass</span><span class="delimiter">&quot;</span></span>, <span class="integer">161</span>)
+      .put(<span class="string"><span class="delimiter">&quot;</span><span class="content">expiration</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> JsonObject()
+        .put(<span class="string"><span class="delimiter">&quot;</span><span class="content">$date</span><span class="delimiter">&quot;</span></span>, Instant.now().plus(<span class="integer">7</span>, DAYS)))));
+
+  db.findApples()
+    .onSuccess(l -&gt; {
+      ctx.assertEquals(<span class="integer">1</span>, l.size());
+      ctx.assertEquals(<span class="integer">161</span>, l.get(<span class="integer">0</span>).getInteger(<span class="string"><span class="delimiter">&quot;</span><span class="content">mass</span><span class="delimiter">&quot;</span></span>));
+    })
+    .onComplete(ctx.asyncAssertSuccess());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A complete documentation can be found <a href="https://github.com/NoEnv/vertx-wiremongo">here</a>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -4533,7 +4925,7 @@ This change resulted in following updates in JUnit5:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-03 09:45:36 UTC
+Last updated 2020-12-03 15:31:11 UTC
 </div>
 </div>
 </body>
