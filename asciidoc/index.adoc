@@ -16,4 +16,6 @@ include::chapters/assembly_mg_changes-in-protocols.adoc[leveloffset=+1]
 
 include::chapters/assembly_mg_changes-in-client-components.adoc[leveloffset=+1]
 
+include::chapters/chapters/assembly_mg_changes-in-clustering.adoc[leveloffset+1]
+
 include::modules/con_mg_miscellaneous-changes-in-vertx.adoc[leveloffset=+1]

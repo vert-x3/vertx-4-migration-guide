@@ -1,0 +1,4 @@
+[id="clustered_flag_removed_from_option_classes_{context}"]
+= Clustered flag removed from options classes
+
+The methods and boolean value that were used to specify, get, and set clustering in {VertX} applications have been removed from `VertxOptions` and `EventBusOptions` classes.
