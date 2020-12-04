@@ -526,7 +526,6 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#use-future-methods-instead-of-callback-for-asynchronous-operations_what-is-new-and-different-in-vertx-4">Use future methods for asynchronous operations</a></li>
 <li><a href="#no_dependency_on_the_jackson_databind_library_what-is-new-and-different-in-vertx-4">No dependency on the Jackson Databind library</a></li>
-<li><a href="#support_for_tracing_what-is-new-and-different-in-vertx-4">Support for distributed tracing</a></li>
 <li><a href="#handling_deprecations_and_removals_what-is-new-and-different-in-vertx-4">Handling deprecations and removals</a></li>
 </ul>
 </li>
@@ -745,31 +744,6 @@ fut2.onComplete(ar -&gt; {
 </li>
 <li>
 <p>If you are not object mapping JSON, the Jackson Databind library is not required. You can run your application without this jar.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="support_for_tracing_what-is-new-and-different-in-vertx-4">Support for distributed tracing</h3>
-<div class="paragraph">
-<p>Vert.x 4 supports distributed tracing. You can use tracing to monitor microservices and identify performance issues.</p>
-</div>
-<div class="paragraph">
-<p>Vert.x 4 integrates with <a href="https://opentracing.io">OpenTracing</a> and <a href="https://zipkin.io">Zipkin</a> systems.</p>
-</div>
-<div class="paragraph">
-<p>The following Vert.x components can log traces:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>HTTP server and HTTP client</p>
-</li>
-<li>
-<p>Vert.x SQL client</p>
-</li>
-<li>
-<p>Vert.x Kafka client</p>
 </li>
 </ul>
 </div>
@@ -5206,7 +5180,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-04 14:03:52 UTC
+Last updated 2020-12-04 14:06:00 UTC
 </div>
 </div>
 </body>
