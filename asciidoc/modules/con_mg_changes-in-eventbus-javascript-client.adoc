@@ -1,0 +1,47 @@
+[id="changes-in-eventbus-javascript-client_{context}"]
+= Changes in EventBus JavaScript client
+
+In {VertX} {v4}, the EventBus JavaScript client module is available in a new location. You will have to update your build systems to use the module from the new location.
+
+In {VertX} {v3x}, the event bus JavaScript client was available in various locations, for example:
+
+* link:https://repo1.maven.org/maven2/io/vertx/vertx-web/3.9.4/vertx-web-3.9.4-client.js[Maven Central]
+* link:https://www.npmjs.com/package/vertx3-eventbus-client[NPM]
+* link:https://bower.io/search/?q=vertx3-eventbus-client[Bower.io]
+* link:https://cdnjs.com/libraries/vertx[CDNJS]
+* link:https://www.webjars.org[webjars]
+
+In {VertX} {v4}, the JavaScript client is available only in **npm**. The EventBus JavaScript client module can be accessed from the following locations:
+
+* link:https://unpkg.io/@vertx/eventbus-bridge-client.js@1.0.0/vertx-eventbus.js[CDN]
+
+* https://www.npmjs.com/package/@vertx/eventbus-bridge-client.js[npm packages]
++
+Use the following code in your build scripts to access the module.
++
+** JSON scripts
++
+----
+{
+  "devDependencies": {
+    "@vertx/eventbus-bridge-client.js": "1.0.0-1"
+  }
+}
+----
+
+** XML scripts
++
+[source,xml]
+----
+<dependency>
+    <groupId>org.webjars.npm</groupId>
+    <artifactId>vertx__eventbus-bridge-client.js</artifactId>
+    <version>1.0.0-1</version>
+</dependency>
+----
+
+== Versioning of JavaScript client
+
+In earlier releases, for every {VertX} release included a new release of the JavaScript client.
+
+However, from {VertX} {v4} onward, a new version of JavaScript client will be available in npm only if there changes in the client. You do not need to update your client application for every {VertX} release, unless there is a version change.

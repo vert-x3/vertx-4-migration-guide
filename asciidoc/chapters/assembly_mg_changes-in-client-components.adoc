@@ -12,13 +12,15 @@ include::../modules/con_mg_changes-in-vertx-jdbc-client.adoc[leveloffset=+1]
 
 include::../modules/con_mg_changes-in-vertx-mail-client.adoc[leveloffset=+1]
 
-include::../modules/con_mg_changes-in-vertx-cassandra-client.adoc[leveloffset=+1]
-
 include::../modules/con_mg_changes-in-vertx-amqp-client.adoc[leveloffset=+1]
 
 include::../modules/con_mg_changes-in-vertx-mongodb-client.adoc[leveloffset=+1]
 
+include::../modules/con_mg_changes-in-eventbus-javascript-client.adoc[leveloffset=+]
+
 include::../chapters/assembly_mg_changes-in-vertx-redis-client.adoc[leveloffset=+1]
+
+include::../community_features/con_mg_changes-in-vertx-cassandra-client.adoc[leveloffset=+1]
 
 include::../community_features/rabbitmq-client.adoc[leveloffset=+1]
 
