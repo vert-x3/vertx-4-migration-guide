@@ -574,10 +574,15 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-vertx-kafka-client_changes-in-client-components">Changes in Vert.x Kafka client</a></li>
 <li><a href="#changes-in-vertx-jdbc-client_changes-in-client-components">Changes in Vert.x JDBC client</a></li>
 <li><a href="#changes-in-vertx-mail-client_changes-in-client-components">Changes in Vert.x mail client</a></li>
-<li><a href="#changes-in-vertx-cassandra-client_changes-in-client-components">Changes in Vert.x Cassandra client</a></li>
 <li><a href="#changes-in-vertx-amqp-client_changes-in-client-components">Changes in Vert.x AMQP client</a></li>
 <li><a href="#changes-in-vertx-mongodb-client_changes-in-client-components">Changes in Vert.x MongoDB client</a></li>
+</ul>
+</li>
+<li><a href="#changes-in-eventbus-javascript-client_changes-in-client-components">Changes in EventBus JavaScript client</a>
+<ul class="sectlevel2">
+<li><a href="#_versioning_of_javascript_client">Versioning of JavaScript client</a></li>
 <li><a href="#changes-in-vertx-redis-client_changes-in-client-components">Changes in Vert.x Redis client</a></li>
+<li><a href="#changes-in-vertx-cassandra-client_changes-in-client-components">Changes in Vert.x Cassandra client</a></li>
 </ul>
 </li>
 <li><a href="#changes-in-clustering_{context}">Changes in clustering</a>
@@ -1282,9 +1287,66 @@ The non Vert.x threads are associated with a context the first time a context is
 <p>The <code>HttpClient</code> <code>webSocket()</code> methods use  <code>Handler&lt;AsyncResult&lt;WebSocket&gt;&gt;</code> instead of <code>Handler</code> or <code>Handler&lt;Throwable&gt;</code>.</p>
 </li>
 <li>
-<p>The number of overloaded methods to connect an HTTP client to a websocket has also been reduced by using the methods in <code>WebSocketConnectOptions</code> class.</p>
+<p>The number of overloaded methods to connect an HTTP client to a WebSocket has also been reduced by using the methods in <code>WebSocketConnectOptions</code> class.</p>
+</li>
+<li>
+<p>The <code>HttpServerRequest.upgrade()</code> method has been removed. This method was synchronous.</p>
+<div class="paragraph">
+<p>Use the new method <code>HttpServerRequest.toWebSocket()</code> instead. This new method is asynchronous.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows the use of synchronous method in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// 3.x
+server.requestHandler(req -&gt; {
+  WebSocket ws = req.upgrade();
+});</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows the use of asynchronous method in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// 4.0
+server.requestHandler(req -&gt; {
+  Future&lt;WebSocket&gt; fut = req.toWebSocket();
+  fut.onSuccess(ws -&gt; {
+  });
+});</pre>
+</div>
+</div>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_setting_the_number_of_websocket_connections">Setting the number of WebSocket connections</h5>
+<div class="paragraph">
+<p>In Vert.x 3.x, you could use the the HTTP client pool size to define the maximum number of WebSocket connections in an application. The value accessor methods <code>HttpClientOptions.maxPoolSize()</code> were used to get and set the WebSocket connections. The default number of connections was set to 4 for each endpoint.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to set WebSocket connections in Vert.x 3.x.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// 3.x
+options.setMaxPoolSize(30); // Maximum connection is set to 30 for each endpoint</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, in Vert.x 4, there is no pooling of WebSocket TCP connections, because the connections are closed after use. The applications use a different pool for HTTP requests. Use the value accessor methods <code>HttpClientOptions.maxWebSockets()</code> to get and set the WebSocket connections. The default number of connections is set to 50 for each endpoint.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to set WebSocket connections in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// 4.0
+options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoint</pre>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -4141,113 +4203,6 @@ client
 </div>
 </div>
 <div class="sect2">
-<h3 id="changes-in-vertx-cassandra-client_changes-in-client-components">Changes in Vert.x Cassandra client</h3>
-<div class="paragraph">
-<p>The Vert.x Cassandra client enables applications to interact with an Apache Cassandra service.</p>
-</div>
-<div class="paragraph">
-<p>The following section describes the changes in Vert.x Cassandra client.</p>
-</div>
-<div class="sect3">
-<h4 id="_changes_in_driver_versions">Changes in driver versions</h4>
-<div class="paragraph">
-<p>In Vert.x 4, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your Vert.x 3.x applications to Vert.x 4. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.</p>
-</div>
-<div class="paragraph">
-<p>The following example shows Datastax Java driver classes and create statements in Vert.x 3.x releases.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
-import com.datastax.driver.core.SimpleStatement;
-import io.vertx.cassandra.CassandraClient;
-
-SimpleStatement statement =
-  new SimpleStatement("SELECT release_version FROM system.local");
-cassandraClient.execute(statement, done -&gt; {
-    ResultSet results = done.result();
-    Row row = resultSet.one();
-    System.out.println(row.getString("release_version"));
-});</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following example shows Datastax Java driver classes and create statements in Vert.x 4.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>import com.datastax.oss.driver.api.core.cql.ResultSet;
-import com.datastax.oss.driver.api.core.cql.Row;
-import com.datastax.oss.driver.api.core.cql.SimpleStatement;
-import io.vertx.cassandra.CassandraClient;
-
-SimpleStatement statement =
-  SimpleStatement.newInstance("SELECT release_version FROM system.local");
-cassandraClient.execute(statement, done -&gt; {
-    ResultSet results = done.result();
-    Row row = resultSet.one();
-    System.out.println(row.getString("release_version"));
-});</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_objects_mappers_are_not_supported">Objects mappers are not supported</h4>
-<div class="paragraph">
-<p>Object mappers are no longer supported because of changes in Datastax Java driver 4.x.</p>
-</div>
-<div class="paragraph">
-<p>The following mapping construction is not supported in Vert.x 4 release:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>@Table(keyspace = "test", name = "names")
-public class MappedClass {
-  @PartitionKey
-  private String name;
-   ...
-}</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_updates_in_cassandra_client_options">Updates in Cassandra client options</h4>
-<div class="paragraph">
-<p>The <code>CassandraClientOptions.setPort()</code>, <code>CassandraClientOptions.getContactPoints()</code>, and <code>CassandraClientOptions.setContactPoints()</code> methods have been removed. Use the <code>CassandraClientOptions.addContactPoint()</code> method instead.</p>
-</div>
-<div class="paragraph">
-<p>The following example shows the use of older methods in Vert.x 3.x releases.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>import io.vertx.cassandra.CassandraClient;
-import io.vertx.cassandra.CassandraClientOptions;
-CassandraClientOptions options = new CassandraClientOptions()
-  .setContactPoints(List.of("node1.address", "node2.address", "node3.address"))
-  .setPort(9142)
-  .setKeyspace("my_keyspace");
-CassandraClient client = CassandraClient.create(vertx, options);</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The following example shows how to use `CassandraClientOptions.addContactPoint()`method in Vert.x 4.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>import io.vertx.cassandra.CassandraClient;
-import io.vertx.cassandra.CassandraClientOptions;
-CassandraClientOptions options = new CassandraClientOptions()
-  .addContactPoint("node1.address", 9142)
-  .addContactPoint("node2.address", 9142)
-  .addContactPoint("node3.address", 9142)
-  .setKeyspace("my_keyspace");
-CassandraClient client = CassandraClient.create(vertx, options);</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="changes-in-vertx-amqp-client_changes-in-client-components">Changes in Vert.x AMQP client</h3>
 <div class="paragraph">
 <p>The following section describes the changes in Vert.x AMQP client.</p>
@@ -4339,6 +4294,89 @@ CassandraClient client = CassandraClient.create(vertx, options);</pre>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="changes-in-eventbus-javascript-client_changes-in-client-components">Changes in EventBus JavaScript client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In Vert.x 4, the EventBus JavaScript client module is available in a new location. You will have to update your build systems to use the module from the new location.</p>
+</div>
+<div class="paragraph">
+<p>In Vert.x 3.x, the event bus JavaScript client was available in various locations, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://repo1.maven.org/maven2/io/vertx/vertx-web/3.9.4/vertx-web-3.9.4-client.js">Maven Central</a></p>
+</li>
+<li>
+<p><a href="https://www.npmjs.com/package/vertx3-eventbus-client">NPM</a></p>
+</li>
+<li>
+<p><a href="https://bower.io/search/?q=vertx3-eventbus-client">Bower.io</a></p>
+</li>
+<li>
+<p><a href="https://cdnjs.com/libraries/vertx">CDNJS</a></p>
+</li>
+<li>
+<p><a href="https://www.webjars.org">webjars</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, the JavaScript client is available only in <strong>npm</strong>. The EventBus JavaScript client module can be accessed from the following locations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://unpkg.io/@vertx/eventbus-bridge-client.js@1.0.0/vertx-eventbus.js">CDN</a></p>
+</li>
+<li>
+<p><a href="https://www.npmjs.com/package/@vertx/eventbus-bridge-client.js">npm packages</a></p>
+<div class="paragraph">
+<p>Use the following code in your build scripts to access the module.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>JSON scripts</p>
+<div class="listingblock">
+<div class="content">
+<pre>{
+  "devDependencies": {
+    "@vertx/eventbus-bridge-client.js": "1.0.0-1"
+  }
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>XML scripts</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.webjars.npm<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>vertx__eventbus-bridge-client.js<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>1.0.0-1<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_versioning_of_javascript_client">Versioning of JavaScript client</h3>
+<div class="paragraph">
+<p>In earlier releases, for every Vert.x release included a new release of the JavaScript client.</p>
+</div>
+<div class="paragraph">
+<p>However, from Vert.x 4 onward, a new version of JavaScript client will be available in npm only if there changes in the client. You do not need to update your client application for every Vert.x release, unless there is a version change.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4713,6 +4751,113 @@ options.setUseSlaves(RedisSlaves);</pre>
 <pre>// After (4.0)
 options.setUseReplicas(RedisReplicas);</pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="changes-in-vertx-cassandra-client_changes-in-client-components">Changes in Vert.x Cassandra client</h3>
+<div class="paragraph">
+<p>The Vert.x Cassandra client enables applications to interact with an Apache Cassandra service.</p>
+</div>
+<div class="paragraph">
+<p>The following section describes the changes in Vert.x Cassandra client.</p>
+</div>
+<div class="sect3">
+<h4 id="_changes_in_driver_versions">Changes in driver versions</h4>
+<div class="paragraph">
+<p>In Vert.x 4, the Cassandra client uses Datastax Java driver with version 4.x. This driver version is not backward compatible. You will have to migrate your Vert.x 3.x applications to Vert.x 4. As a part of the migration process, you should import new Datastax driver classes and change the way you create statements.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows Datastax Java driver classes and create statements in Vert.x 3.x releases.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.SimpleStatement;
+import io.vertx.cassandra.CassandraClient;
+
+SimpleStatement statement =
+  new SimpleStatement("SELECT release_version FROM system.local");
+cassandraClient.execute(statement, done -&gt; {
+    ResultSet results = done.result();
+    Row row = resultSet.one();
+    System.out.println(row.getString("release_version"));
+});</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows Datastax Java driver classes and create statements in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+import com.datastax.oss.driver.api.core.cql.SimpleStatement;
+import io.vertx.cassandra.CassandraClient;
+
+SimpleStatement statement =
+  SimpleStatement.newInstance("SELECT release_version FROM system.local");
+cassandraClient.execute(statement, done -&gt; {
+    ResultSet results = done.result();
+    Row row = resultSet.one();
+    System.out.println(row.getString("release_version"));
+});</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_objects_mappers_are_not_supported">Objects mappers are not supported</h4>
+<div class="paragraph">
+<p>Object mappers are no longer supported because of changes in Datastax Java driver 4.x.</p>
+</div>
+<div class="paragraph">
+<p>The following mapping construction is not supported in Vert.x 4 release:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Table(keyspace = "test", name = "names")
+public class MappedClass {
+  @PartitionKey
+  private String name;
+   ...
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updates_in_cassandra_client_options">Updates in Cassandra client options</h4>
+<div class="paragraph">
+<p>The <code>CassandraClientOptions.setPort()</code>, <code>CassandraClientOptions.getContactPoints()</code>, and <code>CassandraClientOptions.setContactPoints()</code> methods have been removed. Use the <code>CassandraClientOptions.addContactPoint()</code> method instead.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows the use of older methods in Vert.x 3.x releases.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .setContactPoints(List.of("node1.address", "node2.address", "node3.address"))
+  .setPort(9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options);</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to use `CassandraClientOptions.addContactPoint()`method in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>import io.vertx.cassandra.CassandraClient;
+import io.vertx.cassandra.CassandraClientOptions;
+CassandraClientOptions options = new CassandraClientOptions()
+  .addContactPoint("node1.address", 9142)
+  .addContactPoint("node2.address", 9142)
+  .addContactPoint("node3.address", 9142)
+  .setKeyspace("my_keyspace");
+CassandraClient client = CassandraClient.create(vertx, options);</pre>
 </div>
 </div>
 <div class="sect4">
@@ -5163,7 +5308,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-04 14:29:16 UTC
+Last updated 2020-12-04 14:40:18 UTC
 </div>
 </div>
 </body>
