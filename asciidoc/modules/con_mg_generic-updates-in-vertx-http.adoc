@@ -65,6 +65,50 @@ The new methods for `WebSocket` subprotocols use `List<String>` data type instea
 
 * The number of overloaded methods to connect an HTTP client to a websocket has also been reduced by using the methods in `WebSocketConnectOptions` class.
 
+* The `HttpServerRequest.upgrade()` method has been removed. This method was synchronous.
++
+Use the new method `HttpServerRequest.toWebSocket()` instead. This new method is asynchronous.
++
+The following example shows the use of synchronous method in {VertX} {v3x}.
++
+----
+// 3.x
+server.requestHandler(req -> {
+  WebSocket ws = req.upgrade();
+});
+----
++
+The following example shows the use of asynchronous method in {VertX} {v4}.
++
+----
+// 4.0
+server.requestHandler(req -> {
+  Future<WebSocket> fut = req.toWebSocket();
+  fut.onSuccess(ws -> {
+  });
+});
+----
+
+== Setting the number of websocket connections
+
+In {VertX} {v3x}, you could use the the HTTP client pool size to define the maximum number of websockets connections in an application. The value accessor methods `HttpClientOptions.maxPoolSize()` were used to get and set the websocket connections. The default number of connections was set to 4 for each endpoint.
+
+The following example shows how to set websocket connections in {VertX} {v3x}.
+
+----
+// 3.x
+options.setMaxPoolSize(30); // Maximum connection is set to 30 for each endpoint
+----
+
+However, in {VertX} {v4}, there is no pooling of websocket TCP connections, because the connections are closed after use. The applications use a different pool to send requests and to receive responses. Use the value accessor methods `HttpClientOptions.maxWebSockets()` to get and set the websocket connections. The default number of connections is set to 50 for each endpoint.
+
+The following example shows how to set websocket connections in {VertX} {v4}.
+
+----
+// 4.0
+options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoint
+----
+
 == Added `HttpMethod` as a new interface and removed the `HttpMethod` enumeration type
 
 `HttpMethod` is a new interface. In earlier releases of {VertX}, `HttpMethod` was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You would have to use the  `HttpMethod.OTHER` value along with the `rawMethod` attribute during server and client HTTP requests.
