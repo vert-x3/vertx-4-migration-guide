@@ -1,11 +1,11 @@
 ifdef::context[:parent-context-of-what-is-new-and-different-in-vertx-4: {context}]
 
 [id="what-is-new-and-different-in-vertx-4_{context}"]
-= Review What's New and Changed in {VertX} {v4}
+= What's different in {VertX} {v4}
 
 :context: what-is-new-and-different-in-vertx-4
 
-This section explains the major updates in {VertX} {v4} release.
+This section explains the fundamental differences between {VertX} {v4} and {v3x} releases.
 
 include::../modules/con_mg_use-future-methods-for-asynchronous-operations.adoc[leveloffset=+1]
 
