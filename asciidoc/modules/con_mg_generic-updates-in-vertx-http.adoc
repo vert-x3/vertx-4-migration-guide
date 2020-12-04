@@ -63,7 +63,7 @@ The new methods for `WebSocket` subprotocols use `List<String>` data type instea
 
 * The `HttpClient` `webSocket()` methods use  `Handler<AsyncResult<WebSocket>>` instead of `Handler` or `Handler<Throwable>`.
 
-* The number of overloaded methods to connect an HTTP client to a websocket has also been reduced by using the methods in `WebSocketConnectOptions` class.
+* The number of overloaded methods to connect an HTTP client to a WebSocket has also been reduced by using the methods in `WebSocketConnectOptions` class.
 
 * The `HttpServerRequest.upgrade()` method has been removed. This method was synchronous.
 +
@@ -89,20 +89,20 @@ server.requestHandler(req -> {
 });
 ----
 
-== Setting the number of websocket connections
+== Setting the number of WebSocket connections
 
-In {VertX} {v3x}, you could use the the HTTP client pool size to define the maximum number of websockets connections in an application. The value accessor methods `HttpClientOptions.maxPoolSize()` were used to get and set the websocket connections. The default number of connections was set to 4 for each endpoint.
+In {VertX} {v3x}, you could use the the HTTP client pool size to define the maximum number of WebSocket connections in an application. The value accessor methods `HttpClientOptions.maxPoolSize()` were used to get and set the WebSocket connections. The default number of connections was set to 4 for each endpoint.
 
-The following example shows how to set websocket connections in {VertX} {v3x}.
+The following example shows how to set WebSocket connections in {VertX} {v3x}.
 
 ----
 // 3.x
 options.setMaxPoolSize(30); // Maximum connection is set to 30 for each endpoint
 ----
 
-However, in {VertX} {v4}, there is no pooling of websocket TCP connections, because the connections are closed after use. The applications use a different pool to send requests and to receive responses. Use the value accessor methods `HttpClientOptions.maxWebSockets()` to get and set the websocket connections. The default number of connections is set to 50 for each endpoint.
+However, in {VertX} {v4}, there is no pooling of WebSocket TCP connections, because the connections are closed after use. The applications use a different pool for HTTP requests. Use the value accessor methods `HttpClientOptions.maxWebSockets()` to get and set the WebSocket connections. The default number of connections is set to 50 for each endpoint.
 
-The following example shows how to set websocket connections in {VertX} {v4}.
+The following example shows how to set WebSocket connections in {VertX} {v4}.
 
 ----
 // 4.0

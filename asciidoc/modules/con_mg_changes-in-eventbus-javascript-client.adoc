@@ -13,7 +13,7 @@ In {VertX} {v3x}, the event bus JavaScript client was available in various locat
 
 In {VertX} {v4}, the JavaScript client is available only in **npm**. The EventBus JavaScript client module can be accessed from the following locations:
 
-* link:https://unpkg.io/@vertx/eventbus-bridge-client.js@1.0.0-1/vertx-eventbus.js[CDN]
+* link:https://unpkg.io/@vertx/eventbus-bridge-client.js@1.0.0/vertx-eventbus.js[CDN]
 
 * https://www.npmjs.com/package/@vertx/eventbus-bridge-client.js[npm packages]
 +
