@@ -1,7 +1,7 @@
 ifdef::context[:parent-context-of-what-is-new-and-different-in-vertx-4: {context}]
 
 [id="what-is-new-and-different-in-vertx-4_{context}"]
-= What's different in {VertX} {v4}
+= What's changed in {VertX} {v4}
 
 :context: what-is-new-and-different-in-vertx-4
 
