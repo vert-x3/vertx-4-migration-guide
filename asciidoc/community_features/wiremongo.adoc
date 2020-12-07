@@ -1,4 +1,4 @@
-=== Testing Mongo DB Code
+= Testing Mongo DB Code
 
 The https://github.com/vert-x3/vertx-embedded-mongo-db[vertx-embedded-mongo-db] module is no longer supported in Vert.x 4. An alternative can be https://github.com/NoEnv/vertx-wiremongo[vertx-wiremongo] although it takes a different approach. While vertx-embedded-mongo-db spun up a full blown mongo server, vertx-wiremongo is an alternative in-memory implementation of Vert.x' `MongoClient` interface that allows specific mocking.
 

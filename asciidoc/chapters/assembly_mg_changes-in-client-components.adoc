@@ -16,7 +16,7 @@ include::../modules/con_mg_changes-in-vertx-amqp-client.adoc[leveloffset=+1]
 
 include::../modules/con_mg_changes-in-vertx-mongodb-client.adoc[leveloffset=+1]
 
-include::../modules/con_mg_changes-in-eventbus-javascript-client.adoc[leveloffset=+]
+include::../modules/con_mg_changes-in-eventbus-javascript-client.adoc[leveloffset=+1]
 
 include::../chapters/assembly_mg_changes-in-vertx-redis-client.adoc[leveloffset=+1]
 
