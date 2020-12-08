@@ -9,7 +9,7 @@ The `HttpClient` and `HttpClientRequest` methods have been updated to use asynch
 
 In earlier releases of {VertX}, the `HttpClient` methods `getNow()`, `optionsNow()` and `headNow()` used to return `HttpClientRequest`, that you had to further send to perform a request. The `getNow()`, `optionsNow()` and `headNow()` methods have been removed. In {VertX} {v4}, you can directly send a request with the required information using `Handler<AsyncResult<HttpClientResponse>>`.
 
-The following examples show how to send a request in {VertX} {v4}:
+The following examples show how to send a request in {VertX} {v3x}.
 
 * To perform a GET operation:
 +
@@ -32,7 +32,7 @@ Future<HttpClientResponse> f2 = client.post(8080, "localhost", "/uri", HttpHeade
 Future<HttpClientResponse> f3 = client.post(8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"), asyncFile);
 ----
 
-However, you can use the `HttpClientRequest.request()` methods to create an `HttpClientRequest` instance that has not been sent to perform a request operation. These methods can be used in basic interactions such as:
+In {VertX} {v4}, you can use the `HttpClientRequest.request()` methods to create an `HttpClientRequest` instance. These methods can be used in basic interactions such as:
 
 * Sending the request headers
 * HTTP/2 specific operations such as setting a push handler, setting stream priority, pings, and so on.
@@ -41,7 +41,7 @@ However, you can use the `HttpClientRequest.request()` methods to create an `Htt
 * Resetting a stream
 * Handling 100 continue headers manually
 
-The following example shows you how to create an `HTTPClientRequest`.
+The following example shows you how to create an `HTTPClientRequest` in {VertX} {v4}.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
