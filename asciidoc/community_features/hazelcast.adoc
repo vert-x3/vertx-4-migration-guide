@@ -1,0 +1,22 @@
+[id="changes-in-hazelcast-cluster-manager_{context}"]
+= Changes in Hazelcast cluster manager
+
+The following section describes the changes in the Hazelcast cluster manager.
+
+== Updates in custom configurations
+
+The Hazelcast cluster manager is based on Hazelcast 4.
+
+In {VertX} {v4}, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, {VertX} {v3x} nodes and {VertX} {v4} nodes cannot be added together in the same Hazelcast cluster.
+
+The {VertX} applications are not impacted by this change as the EventBus and SharedData APIs remain the same.
+
+If you had a custom Hazelcast configuration file in your {VertX} {v3x} application:
+
+* Add the map `__vertx.nodeInfo`.
+
+----
+<map name="__vertx.nodeInfo">
+  <backup-count>1</backup-count>
+</map>
+----
