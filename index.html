@@ -576,19 +576,17 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-vertx-mail-client_changes-in-client-components">Changes in Vert.x mail client</a></li>
 <li><a href="#changes-in-vertx-amqp-client_changes-in-client-components">Changes in Vert.x AMQP client</a></li>
 <li><a href="#changes-in-vertx-mongodb-client_changes-in-client-components">Changes in Vert.x MongoDB client</a></li>
-</ul>
-</li>
-<li><a href="#changes-in-eventbus-javascript-client_changes-in-client-components">Changes in EventBus JavaScript client</a>
-<ul class="sectlevel2">
-<li><a href="#_versioning_of_javascript_client">Versioning of JavaScript client</a></li>
+<li><a href="#changes-in-eventbus-javascript-client_changes-in-client-components">Changes in EventBus JavaScript client</a></li>
 <li><a href="#changes-in-vertx-redis-client_changes-in-client-components">Changes in Vert.x Redis client</a></li>
 <li><a href="#changes-in-vertx-cassandra-client_changes-in-client-components">Changes in Vert.x Cassandra client</a></li>
+<li><a href="#_rabbitmq_client">RabbitMQ Client</a></li>
 </ul>
 </li>
 <li><a href="#changes-in-clustering_{context}">Changes in clustering</a>
 <ul class="sectlevel2">
-<li><a href="#changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</a></li>
 <li><a href="#clustered_flag_removed_from_option_classes_changes-in-clustering">Clustered flag removed from options classes</a></li>
+<li><a href="#changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</a></li>
+<li><a href="#changes-in-ignite-cluster-manager_changes-in-clustering">Changes in Apache Ignite cluster manager</a></li>
 </ul>
 </li>
 <li><a href="#miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</a>
@@ -603,6 +601,8 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_removed_the_pooled_buffer_methods">Removed the pooled buffer methods</a></li>
 <li><a href="#_methods_to_create_clients_that_have_no_shared_data_sources">Methods to create clients that have no shared data sources</a></li>
 <li><a href="#changes-in-vertx-junit5_{context}">Changes in Vert.x JUnit5</a></li>
+<li><a href="#_kotlin_changes">Kotlin changes</a></li>
+<li><a href="#_testing_mongo_db_code">Testing Mongo DB Code</a></li>
 </ul>
 </li>
 </ul>
@@ -4296,11 +4296,8 @@ client
 </table>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="changes-in-eventbus-javascript-client_changes-in-client-components">Changes in EventBus JavaScript client</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="changes-in-eventbus-javascript-client_changes-in-client-components">Changes in EventBus JavaScript client</h3>
 <div class="paragraph">
 <p>In Vert.x 4, the EventBus JavaScript client module is available in a new location. You will have to update your build systems to use the module from the new location.</p>
 </div>
@@ -4370,13 +4367,14 @@ client
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="_versioning_of_javascript_client">Versioning of JavaScript client</h3>
+<div class="sect3">
+<h4 id="_versioning_of_javascript_client">Versioning of JavaScript client</h4>
 <div class="paragraph">
 <p>In earlier releases, for every Vert.x release included a new release of the JavaScript client.</p>
 </div>
 <div class="paragraph">
 <p>However, from Vert.x 4 onward, a new version of JavaScript client will be available in npm only if there changes in the client. You do not need to update your client application for every Vert.x release, unless there is a version change.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -4860,10 +4858,12 @@ CassandraClientOptions options = new CassandraClientOptions()
 CassandraClient client = CassandraClient.create(vertx, options);</pre>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_rabbitmq_client">RabbitMQ Client</h5>
-<div class="sect5">
-<h6 id="_rabbitmqoptions_changes">RabbitMQOptions changes</h6>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rabbitmq_client">RabbitMQ Client</h3>
+<div class="sect3">
+<h4 id="_rabbitmqoptions_changes">RabbitMQOptions changes</h4>
 <div class="paragraph">
 <p>In Vert.x 4 The RabbitMQ options inherits from NetClientOptions to leverage common connection options  including SSL.
 Two options have been removed in favor for their base class equivalent, hence they have been renamed.</p>
@@ -4887,13 +4887,17 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 </div>
 </div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="changes-in-clustering_{context}">Changes in clustering</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section explains the changes in clustering.</p>
+</div>
+<div class="sect2">
+<h3 id="clustered_flag_removed_from_option_classes_changes-in-clustering">Clustered flag removed from options classes</h3>
+<div class="paragraph">
+<p>The methods and boolean value that were used to specify, get, and set clustering in Vert.x applications have been removed from <code>VertxOptions</code> and <code>EventBusOptions</code> classes.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</h3>
@@ -4941,12 +4945,7 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 </div>
 <div class="sect2">
-<h3 id="clustered_flag_removed_from_option_classes_changes-in-clustering">Clustered flag removed from options classes</h3>
-<div class="paragraph">
-<p>The methods and boolean value that were used to specify, get, and set clustering in Vert.x applications have been removed from <code>VertxOptions</code> and <code>EventBusOptions</code> classes.</p>
-</div>
-<div class="sect4">
-<h5 id="_apache_ignite_cluster_manager">Apache Ignite Cluster Manager</h5>
+<h3 id="changes-in-ignite-cluster-manager_changes-in-clustering">Changes in Apache Ignite cluster manager</h3>
 <div class="paragraph">
 <p>The Vert.x Ignite cluster manager has been rewritten to support the new Clustering SPI in Vert.x 4. This should not have any notable difference for the developer.</p>
 </div>
@@ -4957,8 +4956,8 @@ This change removes more than 10MB of assets from the dependencies.</p>
 <div class="paragraph">
 <p>If the cluster manager is used without any configuration changes there is no migration required but if there was a custom <code>ignite.xml</code> used, it can be either switched to the new <code>ignite.json</code> format or the <code>ignite-spring</code> dependency can be added back to you classpath.</p>
 </div>
-<div class="sect5">
-<h6 id="_migrate_to_custom_ignite_json">Migrate to custom ignite.json</h6>
+<div class="sect3">
+<h4 id="_migrate_to_custom_ignite_json">Migrate to custom ignite.json</h4>
 <div class="paragraph">
 <p>To overide the <code>default-ignite.json</code> you can simply add <code>ignite.json</code> to your classpath. The json format supports customizing ignite options, cache options, discovery options and ssl options. For further customization you need to fall back to the old XML format.</p>
 </div>
@@ -4996,8 +4995,8 @@ This change removes more than 10MB of assets from the dependencies.</p>
 </div>
 </div>
 </div>
-<div class="sect5">
-<h6 id="_migrate_back_to_ignite_xml_with_ignite_spring">Migrate back to ignite.xml with ignite-spring</h6>
+<div class="sect3">
+<h4 id="_migrate_back_to_ignite_xml_with_ignite_spring">Migrate back to ignite.xml with ignite-spring</h4>
 <div class="paragraph">
 <p>Add the <code>ignite-spring</code> dependency and provide the <code>ignite.xml</code> configuration to your classpath.</p>
 </div>
@@ -5093,7 +5092,6 @@ This change removes more than 10MB of assets from the dependencies.</p>
     <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">metricsLogFrequency</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
   <span class="tag">&lt;/bean&gt;</span>
 <span class="tag">&lt;/beans&gt;</span></code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -5224,10 +5222,12 @@ This change resulted in following updates in JUnit5:</p>
 <div class="paragraph">
 <p>The <code>VertxTestContext.succeeding()</code> and <code>VertxTestContext.failing()</code> methods have been deprecated. Use <code>VertxTestContext.succeedingThenComplete()</code> and <code>VertxTestContext.failingThenComplete()</code> methods instead.</p>
 </div>
-<div class="sect4">
-<h5 id="_kotlin_changes">Kotlin changes</h5>
-<div class="sect5">
-<h6 id="_generated_coroutine_extension_methods">Generated coroutine extension methods</h6>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_kotlin_changes">Kotlin changes</h3>
+<div class="sect3">
+<h4 id="_generated_coroutine_extension_methods">Generated coroutine extension methods</h4>
 <div class="paragraph">
 <p>Vert.x 3 generates extension suspending extension methods, e.g <code>get(Handler&lt;AsyncResult&lt;Result&gt;&gt;</code>
 generates <code>getAwait()</code> extension method.</p>
@@ -5249,8 +5249,8 @@ that does the same. The code above can simply be rewritten as</p>
 </div>
 </div>
 </div>
-<div class="sect5">
-<h6 id="_script_compiler">Script compiler</h6>
+<div class="sect3">
+<h4 id="_script_compiler">Script compiler</h4>
 <div class="paragraph">
 <p>Vert.x 3 provides a Kotlin Script compiler based on Kotlin Compiler API.</p>
 </div>
@@ -5266,8 +5266,8 @@ to compile these scripts.</p>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_testing_mongo_db_code">Testing Mongo DB Code</h5>
+<div class="sect2">
+<h3 id="_testing_mongo_db_code">Testing Mongo DB Code</h3>
 <div class="paragraph">
 <p>The <a href="https://github.com/vert-x3/vertx-embedded-mongo-db">vertx-embedded-mongo-db</a> module is no longer supported in Vert.x 4. An alternative can be <a href="https://github.com/NoEnv/vertx-wiremongo">vertx-wiremongo</a> although it takes a different approach. While vertx-embedded-mongo-db spun up a full blown mongo server, vertx-wiremongo is an alternative in-memory implementation of Vert.x' <code>MongoClient</code> interface that allows specific mocking.</p>
 </div>
@@ -5304,11 +5304,9 @@ to compile these scripts.</p>
 </div>
 </div>
 </div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-08 04:01:39 UTC
+Last updated 2020-12-08 08:52:32 UTC
 </div>
 </div>
 </body>
