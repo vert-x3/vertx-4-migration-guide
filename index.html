@@ -585,6 +585,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-clustering_{context}">Changes in clustering</a>
 <ul class="sectlevel2">
 <li><a href="#clustered_flag_removed_from_option_classes_changes-in-clustering">Clustered flag removed from options classes</a></li>
+<li><a href="#changes-in-hazelcast-cluster-manager_changes-in-clustering">Changes in Hazelcast cluster manager</a></li>
 <li><a href="#changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</a></li>
 <li><a href="#changes-in-ignite-cluster-manager_changes-in-clustering">Changes in Apache Ignite cluster manager</a></li>
 </ul>
@@ -4900,12 +4901,47 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 </div>
 <div class="sect2">
+<h3 id="changes-in-hazelcast-cluster-manager_changes-in-clustering">Changes in Hazelcast cluster manager</h3>
+<div class="paragraph">
+<p>The following section describes the changes in the Hazelcast cluster manager.</p>
+</div>
+<div class="sect3">
+<h4 id="_updates_in_custom_configurations">Updates in custom configurations</h4>
+<div class="paragraph">
+<p>The Hazelcast cluster manager is based on Hazelcast 4.</p>
+</div>
+<div class="paragraph">
+<p>In Vert.x 4, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, Vert.x 3.x nodes and Vert.x 4 nodes cannot be added together in the same Hazelcast cluster.</p>
+</div>
+<div class="paragraph">
+<p>The Vert.x applications are not impacted by this change as the EventBus and SharedData APIs remain the same.</p>
+</div>
+<div class="paragraph">
+<p>If you had a custom Hazelcast configuration file in your Vert.x 3.x application:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the map <code>__vertx.nodeInfo</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&lt;map name="__vertx.nodeInfo"&gt;
+  &lt;backup-count&gt;1&lt;/backup-count&gt;
+&lt;/map&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</h3>
 <div class="paragraph">
 <p>The following section describes the changes in the Infinispan cluster manager.</p>
 </div>
 <div class="sect3">
-<h4 id="_updates_in_custom_configurations">Updates in custom configurations</h4>
+<h4 id="_updates_in_custom_configurations_2">Updates in custom configurations</h4>
 <div class="paragraph">
 <p>The Infinispan cluster manager is based on Infinispan 11.</p>
 </div>
@@ -5306,7 +5342,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-08 08:52:32 UTC
+Last updated 2020-12-08 16:38:31 UTC
 </div>
 </div>
 </body>
