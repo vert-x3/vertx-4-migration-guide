@@ -3,21 +3,21 @@
 
 The following section describes the changes in EventBus.
 
-== Removed the request-response send methods in `EventBus`
+== Removed the request-response send methods in EventBus
 
 The `EventBus.send(..., Handler<AsyncResult<Message<T>>>)` and `Message.reply(..., Handler<AsyncResult<Message<T>>>)` methods have been removed. These methods would have caused overloading issues in {VertX} {v4}. The version of the method returning `Future<Message<T>>` would collide with the fire and forget version.
 
-The request-response messaging pattern should use the new `request` and `replyAndRequest` methods. Use the method `EventBus.request(..., Handler<AsyncResult<Message<T>>>)` instead of `EventBus.send(..., Handler<AsyncResult<Message<T>>>)` to send a message. Use the method `Message.replyAndRequest(..., Handler<AsyncResult<Message<T>>>)` instead of `Message.reply(..., Handler<AsyncResult<Message<T>>>)` to reply to the message.
+The request-response messaging pattern should use the new `request` and `replyAndRequest` methods.
 
-The following is an example of request and reply to a message in {VertX} {v3x} releases:
+* Use the method `EventBus.request(..., Handler<AsyncResult<Message<T>>>)` instead of `EventBus.send(..., Handler<AsyncResult<Message<T>>>)` to send a message.
+
+* Use the method `Message.replyAndRequest(..., Handler<AsyncResult<Message<T>>>)` instead of `Message.reply(..., Handler<AsyncResult<Message<T>>>)` to reply to the message.
+
+The following example shows the request and reply to a message in {VertX} {v3x} releases.
 
 Request::
 ----
 eventBus.send("the-address", body, ar -> ...);
-Reply:
-eventBus.consumer("the-address", message -> {
-       message.reply(body, ar -> ...);
-});
 ----
 
 Reply::
@@ -27,12 +27,15 @@ eventBus.consumer("the-address", message -> {
 });
 ----
 
-The following is an example of request and reply to a message in {VertX} {v4}:
+The following example shows the request and reply to a message in {VertX} {v4}.
 
 Request::
 ----
 eventBus.request("the-address", body, ar -> ...);
-Reply:
+----
+
+Reply::
+----
 eventBus.consumer("the-address", message -> {
   message.replyAndRequest(body, ar -> ...);
 });

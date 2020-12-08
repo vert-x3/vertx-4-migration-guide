@@ -1,19 +1,20 @@
 [id="changes-in-handlers_{context}"]
 = Changes in Future
 
-This section explains the changes in the Future.
+This section explains the changes in Future.
 
 == Support for multiple handlers for futures
 
-From {VertX} {v4} onward, multiple handlers are supported for a future. The `Future<T>.setHandler()` used to set a single handler and has been removed. Use `Future<T>.onComplete()`, `Future<T>.onSuccess()`, and `Future<T>.onFailure()` methods instead to call handlers on completion, success, and failure results of an action.
+From {VertX} {v4} onward, multiple handlers are supported for a future. The `Future<T>.setHandler()` method used to set a single handler and has been removed. Use `Future<T>.onComplete()`, `Future<T>.onSuccess()`, and `Future<T>.onFailure()` methods instead to call handlers on completion, success, and failure results of an action.
 
-The following is an example of how to call a handler in {VertX} {v3x} release.
+The following example shows how to call a handler in {VertX} {v3x} releases.
 ----
 Future<String> fut = getSomeFuture();
 fut.setHandler(ar -> ...);
 ----
 
-The following is an example of how to call the new `Future<T>.onComplete()` method in {VertX} {v4}:
+The following example shows how to call the new `Future<T>.onComplete()` method in {VertX} {v4}.
+
 ----
 Future<String> fut = getSomeFuture();
 fut.onComplete(ar -> ...);
@@ -21,18 +22,18 @@ fut.onComplete(ar -> ...);
 
 == Removed the `completer()` method in future
 
-In the earlier releases, you would use the `Future.completer()` method to access `Handler<AsyncResult<T>>`, which was associated with the `Future`.
+In earlier releases of {VertX}, you would use the `Future.completer()` method to access `Handler<AsyncResult<T>>`, which was associated with the `Future`.
 
-In {VertX} {v4}, the `Future<T>.completer()` method has been removed. `Future<T>` directly extends `Handler<AsyncResult<T>>`. You can access any of the handler methods using the `Future` object. The `Future` object is also a handler.
+In {VertX} {v4}, the `Future<T>.completer()` method has been removed. `Future<T>` directly extends `Handler<AsyncResult<T>>`. You can access all the handler methods using the `Future` object. The `Future` object is also a handler.
 
-== Removed the HTTP client request connection handler() method
+== Removed the connection handler method in HTTP client request
 
 The `HttpClientRequest.connectionHandler()` method has been removed. Use `HttpClient.connectionHandler()` method instead to call connection handlers for client requests in your application.
 
-The following example shows you how the `HttpClientRequest.connectionHandler()` method was used in {VertX} {v3x} releases.
+The following example shows how the `HttpClientRequest.connectionHandler()` method was used in {VertX} {v3x} releases.
 ----
 client.request().connectionHandler(conn -> {
-  // Do something with connection
+  // Connection related code
 }).end();
 ----
 

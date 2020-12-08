@@ -1,12 +1,12 @@
 [id="changes-in-threads_{context}"]
 = Changes in threads
 
-This section explains the changes in the threads.
+This section explains the changes in threads.
 
 == Context affinity for non {VertX} thread
 
-The `Vertx.getOrCreateContext()` creates a single context for each non {VertX} thread. In releases prior to {VertX} {v4}, a new context was created each time the method was called from a non {VertX} thread.
-The non {VertX} threads are associated with a context the first time a context is created.
+The `Vertx.getOrCreateContext()` method creates a single context for each non {VertX} thread. The non {VertX} threads are associated with a context the first time a context is created. In earlier releases, a new context was created each time the method was called from a non {VertX} thread.
+
 ----
 new Thread(() -> {
   assertSame(vertx.getOrCreateContext(), vertx.getOrCreateContext());
@@ -15,7 +15,7 @@ new Thread(() -> {
 
 This change does not affect your applications, unless your application implicitly relies on a new context to be created with each invocation.
 
-For example, the n blocks run concurrently as each blocking code is called on a different context.
+In the following example the n blocks run concurrently as each blocking code is called on a different context.
 ----
 for (int i = 0;i < n;i++) {
   vertx.executeBlocking(block, handler);

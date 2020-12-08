@@ -3,38 +3,40 @@
 
 This section explains the changes in the verticles.
 
-== Updates in the `VerticleFactory.createVerticle()` method
+== Updates in the create verticle method
 
 In earlier releases of {VertX}, `VerticleFactory.createVerticle()` method synchronously instantiated a verticle. From {VertX} {v4} onward, the method asynchronously instantiates the verticle and returns the callback `Callable<Verticle>` instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.
 
-The following code shows you how verticles were instantiated in {VertX} {v3x} releases:
+The following code shows how verticles were instantiated in {VertX} {v3x} releases.
 ----
 Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception;
 ----
 
-The following code shows you how verticles are instantiated in {VertX} {v4}:
+The following code shows how verticles are instantiated in {VertX} {v4}.
 ----
 void createVerticle(String verticleName, ClassLoader classLoader, Promise<Callable<Verticle>> promise);
 ----
 
-For existing factories, you can update the code to use a callable when a promise completes or fails. The callable can be called several times.
+== Updates in the factory class and methods
 
-The following code example shows you existing factories in {VertX} {v3x} releases:
+The `VerticleFactory` class has been simplified. The class does not require initial resolution of an identifier because the factory can instead use nested deployment to deploy the verticle.
+
+If your existing applications use factories, in {VertX} {v4} you can update the code to use a callable when a promise completes or fails. The callable can be called several times.
+
+The following example shows existing factories in an {VertX} {v3x} application.
 ----
 return new MyVerticle();
 ----
 
-The following code example shows you how to update existing factories to use promise in {VertX} {v4}:
+The following example shows how to update existing factories to use promise in {VertX} {v4}.
 ----
 promise.complete(() -> new MyVerticle());
 ----
 
 Use the `Vertx.executeBlocking()` method, if you want the factory to block code. When the factory receives the blocking code, it should resolve the promise and get the verticle instances from the promise.
 
-The `VerticleFactory` class has been simplified. The class does not require initial resolution of an identifier because the factory can instead use nested deployment to deploy the verticle.
-
 == Removed the multithreaded worker verticles
 
 Multi-threaded worker verticle deployment option has been removed. This feature could only be used with {VertX} event-bus. Other {VertX} components such as HTTP did not support the feature.
 
-Use the unordered Vertx.executeBlocking()` method to achieve the same functionality as multi-threaded worker deployment.
+Use the unordered `Vertx.executeBlocking()` method to achieve the same functionality as multi-threaded worker deployment.

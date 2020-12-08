@@ -1,11 +1,12 @@
 [id="use-future-methods-instead-of-callback-for-asynchronous-operations_{context}"]
 = Use future methods for asynchronous operations
 
-{VertX} {v4} uses futures for asynchronous operations. Every callback method has a corresponding future method. You can use a combination of callback and future methods to migrate callback-based applications to {VertX} {v4}. However, you can also continue using callbacks for asynchronous operations.
+{VertX} {v4} uses futures for asynchronous operations. Every callback method has a corresponding future method. Futures can be used to compose asynchronous operations. You can use a combination of callback and future methods to migrate callback-based applications to {VertX} {v4}. However, you can also continue using callbacks for asynchronous operations.
 
-The following example shows you how a callback was used for asynchronous operations in {VertX} {v3x} releases.
+The following example shows how a callback was used for asynchronous operations in {VertX} {v3x} releases.
 
 ----
+WebClient client = WebClient.create(vertx);
 HttpRequest request = client.get("/resource");
 
 request.send(ar -> {
@@ -17,9 +18,10 @@ request.send(ar -> {
 });
 ----
 
-The following example shows you how to use callback and future methods together for asynchronous operations in {VertX} {v4}.
+The following example shows how to use callback and future methods together for asynchronous operations in {VertX} {v4}.
 
 ----
+WebClient client = WebClient.create(vertx);
 HttpRequest request = client.get("/resource");
 
 Future<HttpResponse> response = request.send();
@@ -33,9 +35,10 @@ response.onComplete(ar -> {
 });
 ----
 
-In basic applications, you will not notice distinct difference between using callbacks and futures. However, futures are very useful for composing asynchronous operations. When you use futures, the error handling is better. In callbacks, you have to handle failures at every stage of the composition, whereas in futures you can handle the failure once in the end.
+Error handling is better with futures. In callbacks, you have to handle failures at every stage of the composition, whereas in futures you can handle the failure once in the end. In basic applications, you may not notice distinct difference between using callbacks and futures.
 
-The following example shows you how callbacks can be used to compose two asynchronous operations. You can see that the error is handled at every composition.
+The following example shows how callbacks can be used to compose two asynchronous operations. You
+can see that the error is handled at every composition.
 
 ----
 client.get("/resource1").send(ar1 -> {
@@ -55,7 +58,7 @@ client.get("/resource1").send(ar1 -> {
 });
 ----
 
-The following example shows you how callbacks and futures can be used to compose two asynchronous operations in {VertX} {v4}. The error is handled only once in the end.
+The following example shows how callbacks and futures can be used to compose two asynchronous operations in {VertX} {v4}. The error is handled only once in the end.
 
 ----
 Future<HttpResponse> fut1 = client.get("/resource1").send();
