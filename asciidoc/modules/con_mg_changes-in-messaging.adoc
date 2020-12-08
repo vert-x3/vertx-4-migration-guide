@@ -3,7 +3,7 @@
 
 This section explains the changes in the messaging methods.
 
-== Write and end methods in `WriteStream<T> are no longer fluent
+== Write and end methods in write streams are no longer fluent
 
 The `WriteStream<T>.write()` and `WriteStream<T>.end()` methods are no longer fluent.
 
@@ -12,16 +12,16 @@ The `WriteStream<T>.write()` and `WriteStream<T>.end()` methods are no longer fl
 
 This is a breaking change. Update your applications if you have used the fluent aspect for write streams.
 
-== `MessageProducer` interface does not extend the `WriteStream` interface
+== `MessageProducer` does not extend `WriteStream`
 
 The `MessageProducer` interface does not extend the `WriteStream` interface.
 
-In the previous releases of {VertX}, the `MessageProducer` interface extended the `WriteStream` interface. The `MessageProducer` interface provided limited support for message back-pressure. Credit leaks would result in a reduction of credits in the message producer. If these leaks used all the credits, messages were not sent.
+In the previous releases of {VertX}, the `MessageProducer` interface extended the `WriteStream` interface. The `MessageProducer` interface provided limited support for message back-pressure. Credit leaks would result in a reduction of credits in the message producer. If these leaks used all the credits, messages would not be sent.
 
 However, `MessageConsumer` will continue to extend `ReadStream`. When `MessageConsumer` is paused and the pending message queue is full, the messages are dropped. This continues the integration with Rx generators to build message consuming pipelines.
 
-== Removed the send methods from `MessageProducer` interface
+== Removed the send methods from `MessageProducer`
 
 The send methods in the `MessageProducer` interface have been removed.
 
-Use the methods `MessageProducer<T>.write(T)` instead of `MessageProducer<T>.send(T)` and  `EventBus.request(String,Object,Handler)` instead of `MessageProducer.send(T,Handler)`.
+Use the methods `MessageProducer<T>.write(T)` instead of `MessageProducer<T>.send(T)` and `EventBus.request(String,Object,Handler)` instead of `MessageProducer.send(T,Handler)`.

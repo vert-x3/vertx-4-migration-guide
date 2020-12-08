@@ -3,7 +3,7 @@
 
 The following section describes the changes in EventBus.
 
-== Removed the request-response send methods in `EventBus`
+== Removed the request-response send methods in EventBus
 
 The `EventBus.send(..., Handler<AsyncResult<Message<T>>>)` and `Message.reply(..., Handler<AsyncResult<Message<T>>>)` methods have been removed. These methods would have caused overloading issues in {VertX} {v4}. The version of the method returning `Future<Message<T>>` would collide with the fire and forget version.
 
@@ -27,7 +27,7 @@ eventBus.consumer("the-address", message -> {
 });
 ----
 
-The following example shows request and reply to a message in {VertX} {v4}.
+The following example shows the request and reply to a message in {VertX} {v4}.
 
 Request::
 ----

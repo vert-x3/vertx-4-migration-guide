@@ -32,7 +32,7 @@ Future<HttpClientResponse> f2 = client.post(8080, "localhost", "/uri", HttpHeade
 Future<HttpClientResponse> f3 = client.post(8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"), asyncFile);
 ----
 
-In {VertX} {v4}, you can use the `HttpClientRequest.request()` methods to create an `HttpClientRequest` instance. These methods can be used in basic interactions such as:
+In {VertX} {v4}, you can use the `requests` methods to create an `HttpClientRequest` instance. These methods can be used in basic interactions such as:
 
 * Sending the request headers
 * HTTP/2 specific operations such as setting a push handler, setting stream priority, pings, and so on.
