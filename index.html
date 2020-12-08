@@ -616,7 +616,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>ECLIPSE VERT.X 4 MIGRATION GUIDE</p>
 </div>
 <div class="paragraph">
-<p>This guide describes the updates in Vert.x 4 release. Use the information to upgrade your Vert.x 3.x applications to Vert.x 4.</p>
+<p>This guide describes the updates in Eclipse Vert.x 4 release. Use the information to upgrade your Vert.x 3.x applications to Vert.x 4.</p>
 </div>
 </div>
 </div>
@@ -624,7 +624,7 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="about-vertx_{context}">About Vert.x</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Vert.x is a toolkit used for creating reactive, non-blocking, and asynchronous applications that run on the JVM (Java Virtual Machine). It contains several components that help you create reactive applications. It is designed to be cloud-native.</p>
+<p>Vert.x is a toolkit used for creating reactive, non-blocking, and asynchronous applications that run on Java Virtual Machine. (JVM). It contains several components that help you create reactive applications. It is designed to be cloud-native.</p>
 </div>
 <div class="paragraph">
 <p>Since Vert.x supports asynchronous applications it can be used to create applications with high volume of messages, large event processing, HTTP interactions, and so on.</p>
@@ -640,14 +640,15 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="use-future-methods-instead-of-callback-for-asynchronous-operations_what-is-new-and-different-in-vertx-4">Use future methods for asynchronous operations</h3>
 <div class="paragraph">
-<p>Vert.x 4 uses futures for asynchronous operations. Every callback method has a corresponding future method. You can use a combination of callback and future methods to migrate callback-based applications to Vert.x 4. However, you can also continue using callbacks for asynchronous operations.</p>
+<p>Vert.x 4 uses futures for asynchronous operations. Every callback method has a corresponding future method. Futures can be used to compose asynchronous operations. You can use a combination of callback and future methods to migrate callback-based applications to Vert.x 4. However, you can also continue using callbacks for asynchronous operations.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how a callback was used for asynchronous operations in Vert.x 3.x releases.</p>
+<p>The following example shows how a callback was used for asynchronous operations in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>HttpRequest request = client.get("/resource");
+<pre>WebClient client = WebClient.create(vertx);
+HttpRequest request = client.get("/resource");
 
 request.send(ar -&gt; {
   if (ar.succeeded()) {
@@ -659,11 +660,12 @@ request.send(ar -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use callback and future methods together for asynchronous operations in Vert.x 4.</p>
+<p>The following example shows how to use callback and future methods together for asynchronous operations in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>HttpRequest request = client.get("/resource");
+<pre>WebClient client = WebClient.create(vertx);
+HttpRequest request = client.get("/resource");
 
 Future&lt;HttpResponse&gt; response = request.send();
 
@@ -677,10 +679,11 @@ response.onComplete(ar -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>In basic applications, you will not notice distinct difference between using callbacks and futures. However, futures are very useful for composing asynchronous operations. When you use futures, the error handling is better. In callbacks, you have to handle failures at every stage of the composition, whereas in futures you can handle the failure once in the end.</p>
+<p>Error handling is better with futures. In callbacks, you have to handle failures at every stage of the composition, whereas in futures you can handle the failure once in the end. In basic applications, you may not notice distinct difference between using callbacks and futures.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how callbacks can be used to compose two asynchronous operations. You can see that the error is handled at every composition.</p>
+<p>The following example shows how callbacks can be used to compose two asynchronous operations. You
+can see that the error is handled at every composition.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -702,7 +705,7 @@ response.onComplete(ar -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how callbacks and futures can be used to compose two asynchronous operations in Vert.x 4. The error is handled only once in the end.</p>
+<p>The following example shows how callbacks and futures can be used to compose two asynchronous operations in Vert.x 4. The error is handled only once in the end.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -749,7 +752,7 @@ fut2.onComplete(ar -&gt; {
 </div>
 </li>
 <li>
-<p>If you are not object mapping JSON, the Jackson Databind library is not required. You can run your application without this jar.</p>
+<p>If you are not object mapping JSON, the Jackson Databind library is not required. You can run your applications without this jar.</p>
 </li>
 </ul>
 </div>
@@ -757,15 +760,15 @@ fut2.onComplete(ar -&gt; {
 <div class="sect2">
 <h3 id="handling_deprecations_and_removals_what-is-new-and-different-in-vertx-4">Handling deprecations and removals</h3>
 <div class="paragraph">
-<p>Some features and functions might have been deprecated or removed in Vert.x 4. Before you migrate your applications to Vert.x 4, check for deprecations and removals.</p>
+<p>Some features and functions have been deprecated or removed in Vert.x 4. Before you migrate your applications to Vert.x 4, check for deprecations and removals.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>APIs were deprecated in a Vert.x 3.x release and new equivalent APIs were provided in that release.</p>
+<p>Some APIs were deprecated in a Vert.x 3.x release and new equivalent APIs were provided in that release.</p>
 </li>
 <li>
-<p>Deprecated APIs have been removed in Vert.x 4.</p>
+<p>The deprecated APIs have been removed in Vert.x 4.</p>
 </li>
 </ul>
 </div>
@@ -776,7 +779,7 @@ fut2.onComplete(ar -&gt; {
 <p>The Java compiler generates warnings when deprecated APIs are used. You can use the compiler to check for deprecated methods while migrating applications to Vert.x 4.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you an EventBus method that was deprecated in a Vert.x 3.x release.</p>
+<p>The following example shows an EventBus method that was deprecated in an Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -790,7 +793,7 @@ vertx.eventBus().send("some-address", "hello world", ar -&gt; {
 <p>The method <code>send(String,String,Handler&lt;AsyncResult&lt;Message&gt;&gt;)</code> has been replaced in Vert.x 4 with the method <code>request(String,String,Handler&lt;AsyncResult&lt;Message&gt;&gt;</code>).</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to update your application to use the new method.</p>
+<p>The following example shows how to update your application to use the new method.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -815,7 +818,7 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 <p>This section explains the changes in the messaging methods.</p>
 </div>
 <div class="sect3">
-<h4 id="_write_and_end_methods_in_writestream_t_are_no_longer_fluent">Write and end methods in `WriteStream&lt;T&gt; are no longer fluent</h4>
+<h4 id="_write_and_end_methods_in_write_streams_are_no_longer_fluent">Write and end methods in write streams are no longer fluent</h4>
 <div class="paragraph">
 <p>The <code>WriteStream&lt;T&gt;.write()</code> and <code>WriteStream&lt;T&gt;.end()</code> methods are no longer fluent.</p>
 </div>
@@ -834,24 +837,24 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_code_messageproducer_code_interface_does_not_extend_the_code_writestream_code_interface"><code>MessageProducer</code> interface does not extend the <code>WriteStream</code> interface</h4>
+<h4 id="_code_messageproducer_code_does_not_extend_code_writestream_code"><code>MessageProducer</code> does not extend <code>WriteStream</code></h4>
 <div class="paragraph">
 <p>The <code>MessageProducer</code> interface does not extend the <code>WriteStream</code> interface.</p>
 </div>
 <div class="paragraph">
-<p>In the previous releases of Vert.x, the <code>MessageProducer</code> interface extended the <code>WriteStream</code> interface. The <code>MessageProducer</code> interface provided limited support for message back-pressure. Credit leaks would result in a reduction of credits in the message producer. If these leaks used all the credits, messages were not sent.</p>
+<p>In the previous releases of Vert.x, the <code>MessageProducer</code> interface extended the <code>WriteStream</code> interface. The <code>MessageProducer</code> interface provided limited support for message back-pressure. Credit leaks would result in a reduction of credits in the message producer. If these leaks used all the credits, messages would not be sent.</p>
 </div>
 <div class="paragraph">
 <p>However, <code>MessageConsumer</code> will continue to extend <code>ReadStream</code>. When <code>MessageConsumer</code> is paused and the pending message queue is full, the messages are dropped. This continues the integration with Rx generators to build message consuming pipelines.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_removed_the_send_methods_from_code_messageproducer_code_interface">Removed the send methods from <code>MessageProducer</code> interface</h4>
+<h4 id="_removed_the_send_methods_from_code_messageproducer_code">Removed the send methods from <code>MessageProducer</code></h4>
 <div class="paragraph">
 <p>The send methods in the <code>MessageProducer</code> interface have been removed.</p>
 </div>
 <div class="paragraph">
-<p>Use the methods <code>MessageProducer&lt;T&gt;.write(T)</code> instead of <code>MessageProducer&lt;T&gt;.send(T)</code> and  <code>EventBus.request(String,Object,Handler)</code> instead of <code>MessageProducer.send(T,Handler)</code>.</p>
+<p>Use the methods <code>MessageProducer&lt;T&gt;.write(T)</code> instead of <code>MessageProducer&lt;T&gt;.send(T)</code> and <code>EventBus.request(String,Object,Handler)</code> instead of <code>MessageProducer.send(T,Handler)</code>.</p>
 </div>
 </div>
 </div>
@@ -861,15 +864,25 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 <p>The following section describes the changes in EventBus.</p>
 </div>
 <div class="sect3">
-<h4 id="_removed_the_request_response_send_methods_in_code_eventbus_code">Removed the request-response send methods in <code>EventBus</code></h4>
+<h4 id="_removed_the_request_response_send_methods_in_eventbus">Removed the request-response send methods in EventBus</h4>
 <div class="paragraph">
 <p>The <code>EventBus.send(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> and <code>Message.reply(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> methods have been removed. These methods would have caused overloading issues in Vert.x 4. The version of the method returning <code>Future&lt;Message&lt;T&gt;&gt;</code> would collide with the fire and forget version.</p>
 </div>
 <div class="paragraph">
-<p>The request-response messaging pattern should use the new <code>request</code> and <code>replyAndRequest</code> methods. Use the method <code>EventBus.request(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> instead of <code>EventBus.send(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> to send a message. Use the method <code>Message.replyAndRequest(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> instead of <code>Message.reply(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> to reply to the message.</p>
+<p>The request-response messaging pattern should use the new <code>request</code> and <code>replyAndRequest</code> methods.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the method <code>EventBus.request(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> instead of <code>EventBus.send(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> to send a message.</p>
+</li>
+<li>
+<p>Use the method <code>Message.replyAndRequest(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> instead of <code>Message.reply(&#8230;&#8203;, Handler&lt;AsyncResult&lt;Message&lt;T&gt;&gt;&gt;)</code> to reply to the message.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The following is an example of request and reply to a message in Vert.x 3.x releases:</p>
+<p>The following example shows the request and reply to a message in Vert.x 3.x releases.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -878,11 +891,7 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>eventBus.send("the-address", body, ar -&gt; ...);
-Reply:
-eventBus.consumer("the-address", message -&gt; {
-       message.reply(body, ar -&gt; ...);
-});</pre>
+<pre>eventBus.send("the-address", body, ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="dlist">
@@ -898,7 +907,7 @@ eventBus.consumer("the-address", message -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following is an example of request and reply to a message in Vert.x 4:</p>
+<p>The following example shows the request and reply to a message in Vert.x 4.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -907,9 +916,17 @@ eventBus.consumer("the-address", message -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>eventBus.request("the-address", body, ar -&gt; ...);
-Reply:
-eventBus.consumer("the-address", message -&gt; {
+<pre>eventBus.request("the-address", body, ar -&gt; ...);</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Reply</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>eventBus.consumer("the-address", message -&gt; {
   message.replyAndRequest(body, ar -&gt; ...);
 });</pre>
 </div>
@@ -919,15 +936,15 @@ eventBus.consumer("the-address", message -&gt; {
 <div class="sect2">
 <h3 id="changes-in-handlers_changes-in-common-components">Changes in Future</h3>
 <div class="paragraph">
-<p>This section explains the changes in the Future.</p>
+<p>This section explains the changes in Future.</p>
 </div>
 <div class="sect3">
 <h4 id="_support_for_multiple_handlers_for_futures">Support for multiple handlers for futures</h4>
 <div class="paragraph">
-<p>From Vert.x 4 onward, multiple handlers are supported for a future. The <code>Future&lt;T&gt;.setHandler()</code> used to set a single handler and has been removed. Use <code>Future&lt;T&gt;.onComplete()</code>, <code>Future&lt;T&gt;.onSuccess()</code>, and <code>Future&lt;T&gt;.onFailure()</code> methods instead to call handlers on completion, success, and failure results of an action.</p>
+<p>From Vert.x 4 onward, multiple handlers are supported for a future. The <code>Future&lt;T&gt;.setHandler()</code> method used to set a single handler and has been removed. Use <code>Future&lt;T&gt;.onComplete()</code>, <code>Future&lt;T&gt;.onSuccess()</code>, and <code>Future&lt;T&gt;.onFailure()</code> methods instead to call handlers on completion, success, and failure results of an action.</p>
 </div>
 <div class="paragraph">
-<p>The following is an example of how to call a handler in Vert.x 3.x release.</p>
+<p>The following example shows how to call a handler in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -936,7 +953,7 @@ fut.setHandler(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following is an example of how to call the new <code>Future&lt;T&gt;.onComplete()</code> method in Vert.x 4:</p>
+<p>The following example shows how to call the new <code>Future&lt;T&gt;.onComplete()</code> method in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -948,24 +965,24 @@ fut.onComplete(ar -&gt; ...);</pre>
 <div class="sect3">
 <h4 id="_removed_the_code_completer_code_method_in_future">Removed the <code>completer()</code> method in future</h4>
 <div class="paragraph">
-<p>In the earlier releases, you would use the <code>Future.completer()</code> method to access <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>, which was associated with the <code>Future</code>.</p>
+<p>In earlier releases of Vert.x, you would use the <code>Future.completer()</code> method to access <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>, which was associated with the <code>Future</code>.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x 4, the <code>Future&lt;T&gt;.completer()</code> method has been removed. <code>Future&lt;T&gt;</code> directly extends <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>. You can access any of the handler methods using the <code>Future</code> object. The <code>Future</code> object is also a handler.</p>
+<p>In Vert.x 4, the <code>Future&lt;T&gt;.completer()</code> method has been removed. <code>Future&lt;T&gt;</code> directly extends <code>Handler&lt;AsyncResult&lt;T&gt;&gt;</code>. You can access all the handler methods using the <code>Future</code> object. The <code>Future</code> object is also a handler.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_removed_the_http_client_request_connection_handler_method">Removed the HTTP client request connection handler() method</h4>
+<h4 id="_removed_the_connection_handler_method_in_http_client_request">Removed the connection handler method in HTTP client request</h4>
 <div class="paragraph">
 <p>The <code>HttpClientRequest.connectionHandler()</code> method has been removed. Use <code>HttpClient.connectionHandler()</code> method instead to call connection handlers for client requests in your application.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how the <code>HttpClientRequest.connectionHandler()</code> method was used in Vert.x 3.x releases.</p>
+<p>The following example shows how the <code>HttpClientRequest.connectionHandler()</code> method was used in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>client.request().connectionHandler(conn -&gt; {
-  // Do something with connection
+  // Connection related code
 }).end();</pre>
 </div>
 </div>
@@ -996,12 +1013,12 @@ fut.onComplete(ar -&gt; ...);</pre>
 <p>This section explains the changes in the verticles.</p>
 </div>
 <div class="sect3">
-<h4 id="_updates_in_the_code_verticlefactory_createverticle_code_method">Updates in the <code>VerticleFactory.createVerticle()</code> method</h4>
+<h4 id="_updates_in_the_create_verticle_method">Updates in the create verticle method</h4>
 <div class="paragraph">
 <p>In earlier releases of Vert.x, <code>VerticleFactory.createVerticle()</code> method synchronously instantiated a verticle. From Vert.x 4 onward, the method asynchronously instantiates the verticle and returns the callback <code>Callable&lt;Verticle&gt;</code> instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.</p>
 </div>
 <div class="paragraph">
-<p>The following code shows you how verticles were instantiated in Vert.x 3.x releases:</p>
+<p>The following code shows how verticles were instantiated in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1009,18 +1026,24 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following code shows you how verticles are instantiated in Vert.x 4:</p>
+<p>The following code shows how verticles are instantiated in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>void createVerticle(String verticleName, ClassLoader classLoader, Promise&lt;Callable&lt;Verticle&gt;&gt; promise);</pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_updates_in_the_factory_class_and_methods">Updates in the factory class and methods</h4>
 <div class="paragraph">
-<p>For existing factories, you can update the code to use a callable when a promise completes or fails. The callable can be called several times.</p>
+<p>The <code>VerticleFactory</code> class has been simplified. The class does not require initial resolution of an identifier because the factory can instead use nested deployment to deploy the verticle.</p>
 </div>
 <div class="paragraph">
-<p>The following code example shows you existing factories in Vert.x 3.x releases:</p>
+<p>If your existing applications use factories, in Vert.x 4 you can update the code to use a callable when a promise completes or fails. The callable can be called several times.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows existing factories in an Vert.x 3.x application.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1028,7 +1051,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following code example shows you how to update existing factories to use promise in Vert.x 4:</p>
+<p>The following example shows how to update existing factories to use promise in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1038,9 +1061,6 @@ fut.onComplete(ar -&gt; ...);</pre>
 <div class="paragraph">
 <p>Use the <code>Vertx.executeBlocking()</code> method, if you want the factory to block code. When the factory receives the blocking code, it should resolve the promise and get the verticle instances from the promise.</p>
 </div>
-<div class="paragraph">
-<p>The <code>VerticleFactory</code> class has been simplified. The class does not require initial resolution of an identifier because the factory can instead use nested deployment to deploy the verticle.</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_removed_the_multithreaded_worker_verticles">Removed the multithreaded worker verticles</h4>
@@ -1048,20 +1068,19 @@ fut.onComplete(ar -&gt; ...);</pre>
 <p>Multi-threaded worker verticle deployment option has been removed. This feature could only be used with Vert.x event-bus. Other Vert.x components such as HTTP did not support the feature.</p>
 </div>
 <div class="paragraph">
-<p>Use the unordered Vertx.executeBlocking()` method to achieve the same functionality as multi-threaded worker deployment.</p>
+<p>Use the unordered <code>Vertx.executeBlocking()</code> method to achieve the same functionality as multi-threaded worker deployment.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="changes-in-threads_changes-in-common-components">Changes in threads</h3>
 <div class="paragraph">
-<p>This section explains the changes in the threads.</p>
+<p>This section explains the changes in threads.</p>
 </div>
 <div class="sect3">
 <h4 id="_context_affinity_for_non_vert_x_thread">Context affinity for non Vert.x thread</h4>
 <div class="paragraph">
-<p>The <code>Vertx.getOrCreateContext()</code> creates a single context for each non Vert.x thread. In releases prior to Vert.x 4, a new context was created each time the method was called from a non Vert.x thread.
-The non Vert.x threads are associated with a context the first time a context is created.</p>
+<p>The <code>Vertx.getOrCreateContext()</code> method creates a single context for each non Vert.x thread. The non Vert.x threads are associated with a context the first time a context is created. In earlier releases, a new context was created each time the method was called from a non Vert.x thread.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1074,7 +1093,7 @@ The non Vert.x threads are associated with a context the first time a context is
 <p>This change does not affect your applications, unless your application implicitly relies on a new context to be created with each invocation.</p>
 </div>
 <div class="paragraph">
-<p>For example, the n blocks run concurrently as each blocking code is called on a different context.</p>
+<p>In the following example the n blocks run concurrently as each blocking code is called on a different context.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1775,7 +1794,7 @@ response.exceptionHandler(err -&gt; {
 <p>In earlier releases of Vert.x, the <code>HttpClient</code> methods <code>getNow()</code>, <code>optionsNow()</code> and <code>headNow()</code> used to return <code>HttpClientRequest</code>, that you had to further send to perform a request. The <code>getNow()</code>, <code>optionsNow()</code> and <code>headNow()</code> methods have been removed. In Vert.x 4, you can directly send a request with the required information using <code>Handler&lt;AsyncResult&lt;HttpClientResponse&gt;&gt;</code>.</p>
 </div>
 <div class="paragraph">
-<p>The following examples show how to send a request in Vert.x 4:</p>
+<p>The following examples show how to send a request in Vert.x 3.x.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1806,7 +1825,7 @@ response.exceptionHandler(err -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>However, you can use the <code>HttpClientRequest.request()</code> methods to create an <code>HttpClientRequest</code> instance that has not been sent to perform a request operation. These methods can be used in basic interactions such as:</p>
+<p>In Vert.x 4, you can use the <code>requests</code> methods to create an <code>HttpClientRequest</code> instance. These methods can be used in basic interactions such as:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1831,7 +1850,7 @@ response.exceptionHandler(err -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to create an <code>HTTPClientRequest</code>.</p>
+<p>The following example shows you how to create an <code>HTTPClientRequest</code> in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5342,7 +5361,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-08 16:38:31 UTC
+Last updated 2020-12-08 17:24:28 UTC
 </div>
 </div>
 </body>
