@@ -1,6 +1,6 @@
-=== Kotlin changes
+= Kotlin changes
 
-==== Generated coroutine extension methods
+== Generated coroutine extension methods
 
 Vert.x 3 generates extension suspending extension methods, e.g `get(Handler<AsyncResult<Result>>`
 generates `getAwait()` extension method.
@@ -18,7 +18,7 @@ that does the same. The code above can simply be rewritten as
 var result = getSomething().await();
 ```
 
-==== Script compiler
+== Script compiler
 
 Vert.x 3 provides a Kotlin Script compiler based on Kotlin Compiler API.
 

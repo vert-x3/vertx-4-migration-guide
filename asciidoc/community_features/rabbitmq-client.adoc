@@ -1,6 +1,6 @@
-=== RabbitMQ Client
+= RabbitMQ Client
 
-==== RabbitMQOptions changes
+== RabbitMQOptions changes
 
 In Vert.x 4 The RabbitMQ options inherits from NetClientOptions to leverage common connection options  including SSL.
 Two options have been removed in favor for their base class equivalent, hence they have been renamed.
