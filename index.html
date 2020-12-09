@@ -588,6 +588,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-hazelcast-cluster-manager_changes-in-clustering">Changes in Hazelcast cluster manager</a></li>
 <li><a href="#changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</a></li>
 <li><a href="#changes-in-ignite-cluster-manager_changes-in-clustering">Changes in Apache Ignite cluster manager</a></li>
+<li><a href="#con_mg_migrating-clusters-gradually_changes-in-clustering">Migrating clusters gradually</a></li>
 </ul>
 </li>
 <li><a href="#miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</a>
@@ -5151,6 +5152,102 @@ This change removes more than 10MB of assets from the dependencies.</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="con_mg_migrating-clusters-gradually_changes-in-clustering">Migrating clusters gradually</h3>
+<div class="paragraph">
+<p>It is not possible to mix Vert.x 3.x nodes and Vert.x 4 nodes in a single cluster, for a few reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>cluster manager upgrades: major version upgrade of Hazelcast, Infinispan or Apache Ignite</p>
+</li>
+<li>
+<p>subscription data changes: the information stored in subscription maps/caches is no longer the same</p>
+</li>
+<li>
+<p>transport protocol changes: some fields in the message transport protocol have been changed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In general, you should have a Vert.x cluster for a single application or a few closely related microservices.
+In this case, migrating a codebase at once is possible.</p>
+</div>
+<div class="paragraph">
+<p>This section provides a couple of solutions when you can&#8217;t perform a one-shot migration of a Vert.x 3.x codebase to Vert.x 4.</p>
+</div>
+<div class="sect3">
+<h4 id="_divide_and_conquer">Divide and conquer</h4>
+<div class="paragraph">
+<p>If you have a cluster where several independent teams deploy verticles consider splitting the Vert.x 3.x cluster into smaller ones.</p>
+</div>
+<div class="paragraph">
+<p>Of course, the separated components can no longer rely on clustering features to communicate.
+Here are some alternatives:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>EventBus request/reply: HTTP/RESTful web service, gRPC</p>
+</li>
+<li>
+<p>EventBus send/publish: messaging system (ActiveMQ, RabbitMQ, Kafka), Postgres <code>LISTEN</code>/<code>NOTIFY</code>, Redis Pub/Sub</p>
+</li>
+<li>
+<p>Shared Data: Redis, Infinispan, Hazelcast, Apache Ignite</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each team will gain flexibility and will be able to move to Vert.x 4 when they are ready or if it is needed.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_vert_x_eventbus_link">Vert.x EventBus Link</h4>
+<div class="paragraph">
+<p>If you can&#8217;t split your cluster, then <a href="https://github.com/vert-x3/vertx-eventbus-link">Vert.x EventBus Link</a> can help to migrate gradually.</p>
+</div>
+<div class="paragraph">
+<p>Vert.x EventBus Link is a tool that helps to connect a Vert.x 3 clustered EventBus with a Vert.x 4 clustered EventBus.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+Shared Data API (maps, counters and locks) migration is <strong>not</strong> supported.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It provides an <code>EventBusLink</code> object that implements the <code>EventBus</code> interface.
+An instance of <code>EventBusLink</code> shall be created on at least one node of each cluster.</p>
+</div>
+<div class="paragraph">
+<p>It is created by providing a set of addresses and its behavior depends on the message paradigm:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>fire and forget</em> and <em>request/reply</em>: the message will be forwarded to the remote cluster which delegates to the Vert.x EventBus</p>
+</li>
+<li>
+<p><em>publish</em>: the message will be forwarded to the remote cluster <strong>and</strong> to the Vert.x EventBus</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In practice, Vert.x EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.</p>
+</div>
+<div class="paragraph">
+<p>Visit the project page to <a href="https://github.com/vert-x3/vertx-eventbus-link#getting-started">get started</a> or to learn <a href="https://github.com/vert-x3/vertx-eventbus-link#using">using</a> it.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -5361,7 +5458,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-09 04:01:40 UTC
+Last updated 2020-12-09 10:17:38 UTC
 </div>
 </div>
 </body>
