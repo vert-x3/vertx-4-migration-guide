@@ -4,7 +4,7 @@
 
 It is important to decide the migration strategy for your codebase. This is because you cannot add {VertX} {v3x} nodes and {VertX} {v4} nodes together in a single cluster for the following reasons:
 
-* Cluster manager upgrades - If there are major version upgrades in cluster managers, they may not have support all features for backward compatibility. You will have to check the updates in cluster managers.
+* Cluster manager upgrades - major version upgrades in cluster managers prevent non-backward compatibility changes.
 * Subscription data changes - {VertX} has changed the format of the EventBus subscription data stored in cluster managers. 
 * Transport protocol changes - {VertX} has changed some fields in the message transport protocol in the cluster.
 
