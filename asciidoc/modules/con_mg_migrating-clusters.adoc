@@ -2,7 +2,7 @@
 
 = Migrating clusters
 
-It is important to decide the migration strategy for your codebase in a cluster. This is because you cannot add {VertX} {v3x} nodes and {VertX} {v4} nodes together in a single cluster for the following reasons: 
+It is important to decide the migration strategy for your codebase. This is because you cannot add {VertX} {v3x} nodes and {VertX} {v4} nodes together in a single cluster for the following reasons:
 
 * Cluster manager upgrades - If there are major version upgrades in cluster managers, they may not have support all features for backward compatibility. You will have to check the updates in cluster managers.
 * Subscription data changes - If the information stored in subscription maps or caches is no longer the same in the cluster manager versions. 
