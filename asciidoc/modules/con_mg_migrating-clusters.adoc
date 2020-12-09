@@ -6,7 +6,7 @@ It is important to decide the migration strategy for your codebase. This is beca
 
 * Cluster manager upgrades - If there are major version upgrades in cluster managers, they may not have support all features for backward compatibility. You will have to check the updates in cluster managers.
 * Subscription data changes - {VertX} has changed the format of the EventBus subscription data stored in cluster managers. 
-* Transport protocol changes - If some fields in the message transport protocol have changed in the cluster.
+* Transport protocol changes - {VertX} has changed some fields in the message transport protocol in the cluster.
 
 If you have a {VertX} cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.
 
