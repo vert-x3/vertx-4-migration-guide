@@ -20,7 +20,7 @@ If you have a cluster where different teams have deployed verticles for their ap
 * EventBus send and publish - Messaging systems such as, Kafka, Postgres `LISTEN` and `NOTIFY`, Redis Pub and Sub
 * Shared Data - Redis, Infinispan
 
-When you split the cluster, each team can move to {VertX} {v4} when they are ready or if it is needed.
+After you split the cluster, each team can move to {VertX} {v4} when they are ready or if it is needed.
 
 == Using {VertX} EventBus Link
 
