@@ -14,7 +14,7 @@ However, if you cannot migrate the codebase at one time, use the recommendations
 
 == Splitting the cluster
 
-If you have a cluster where different teams have deployed verticles for their applications, you can consider splitting the {VertX} {v3x} cluster into smaller ones. Note that after splitting the cluster, the separated components will not be able to communicate using the clustering features. You can splitthe cluster using the following XXX:
+If you have a cluster where different teams have deployed verticles for their applications, you can consider splitting the {VertX} {v3x} cluster into smaller ones. Note that after splitting the cluster, the separated components will not be able to communicate using the clustering features. You can split the cluster using the following:
 
 * EventBus request and reply - HTTP/RESTful web services, gRPC
 * EventBus send and publish - Messaging systems such as, Kafka, Postgres `LISTEN` and `NOTIFY`, Redis Pub and Sub
