@@ -33,7 +33,7 @@ WARNING: The migration of shared data API, that is, maps, counters and locks is 
 The tool creates an `EventBusLink` object that implements the `EventBus` interface. An instance of `EventBusLink` is created on one node of each cluster. The instance is created by providing a set of addresses and its behavior depends on the message paradigmXXX:
 
 * _fire and forget_ and _request/reply_ - The message is sent to the remote cluster
-* _publish_ - The message is sent (XXX instaed of forwarded) to the remote cluster and to the {VertX} EventBus.
+* _publish_ - The message is sent to both this cluster and the remote cluster.
 
 The {VertX} EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.
 
