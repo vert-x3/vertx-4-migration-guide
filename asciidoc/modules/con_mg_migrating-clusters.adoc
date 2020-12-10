@@ -4,8 +4,8 @@
 
 It is important to decide the migration strategy for your codebase. This is because you cannot add {VertX} {v3x} nodes and {VertX} {v4} nodes together in a single cluster for the following reasons:
 
-* Cluster manager upgrades - major version upgrades in cluster managers prevent non-backward compatibility changes.
-* Subscription data changes - {VertX} has changed the format of the EventBus subscription data stored in cluster managers. 
+* Cluster manager upgrades - Major version upgrades in cluster managers prevent breaking (non-backward compatibility) changes.
+* Subscription data changes - {VertX} has changed the format of the EventBus subscription data stored in cluster managers.
 * Transport protocol changes - {VertX} has changed some fields in the message transport protocol in the cluster.
 
 If you have a {VertX} cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.
@@ -17,14 +17,14 @@ However, if you cannot migrate the codebase at one time, use the recommendations
 If you have a cluster where different teams have deployed verticles for their applications, you can consider splitting the {VertX} {v3x} cluster into smaller ones. Note that after splitting the cluster, the separated components will not be able to communicate using the clustering features. You can split the cluster using the following:
 
 * EventBus request and reply - HTTP/RESTful web services, gRPC
-* EventBus send and publish - Messaging systems such as, Kafka, Postgres `LISTEN` and `NOTIFY`, Redis Pub and Sub
-* Shared Data - Redis, Infinispan
+* EventBus send and publish - Messaging systems such as, {AMQ}, Postgres `LISTEN` and `NOTIFY`, Redis Pub and Sub
+* Shared Data - Redis, Infinispan, {Hazelcast}
 
 After you split the cluster, each team can move to {VertX} {v4} when they are ready or if it is needed.
 
 == Using {VertX} EventBus Link
 
-If you cannot split your cluster, then use https://github.com/vert-x3/vertx-eventbus-link[Vert.x EventBus Link] to migrate your codebase incrementallyXXX.
+If you cannot split your cluster, then use https://github.com/vert-x3/vertx-eventbus-link[Vert.x EventBus Link] to migrate your codebase incrementally.
 
 Vert.x EventBus Link is a tool that connects a {VertX} {v3x} clustered EventBus to a {VertX} {v4} clustered EventBus.
 
@@ -37,4 +37,4 @@ The tool creates an `EventBusLink` object that implements the `EventBus` interfa
 
 The {VertX} EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.
 
-See the sections link:https://github.com/vert-x3/vertx-eventbus-linkdocumentation for more details.
+See the sections link:https://github.com/vert-x3/vertx-eventbus-link#getting-started[get started] and link:https://github.com/vert-x3/vertx-eventbus-link#using[using] for more details.
