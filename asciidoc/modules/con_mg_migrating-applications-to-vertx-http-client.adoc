@@ -6,7 +6,7 @@ The HTTP client has fine grained control over HTTP interactions and focuses on t
 
 The HTTP client has been updated and improved in {VertX} {v4}:
 
-* Simplified API with fewer interactions
+* Simplified APIs with fewer interactions
 * Robust error handling
 * Support for connection reset for HTTP/1
 
@@ -18,14 +18,14 @@ The updates in HTTP client APIs are:
 
 == Sending a simple request
 
-The following example shows how to send a GET request in {VertX} {v3x} releases:
+The following example shows how to send a GET request in {VertX} {v3x} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
 HttpClientRequest request = client.get(80, "example.com", "/", response -> {
   int statusCode = response.statusCode();
   response.exceptionHandler(err -> {
-    // Handle connection error, e.g connection closed
+    // Handle connection error, for example, connection closed
   });
   response.bodyHandler(body -> {
     // Handle body entirely
@@ -37,7 +37,7 @@ request.exceptionHandler(err -> {
 request.end();
 ----
 
-The following example shows how to send a GET request in {VertX} {v4} release:
+The following example shows how to send a GET request in {VertX} {v4}.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -53,22 +53,22 @@ client.request(HttpMethod.GET, 80, "example.com", "/", ar -> {
             Buffer body = ar3.result();
             // Handle body entirely
           } else {
-            // Handle server error, e.g connection closed
+            // Handle server error, for example, connection closed
           }
         });
       } else {
-        // Handle server error, e.g connection closed
+        // Handle server error, for example, connection closed
       }
     });
   } else {
-    // Deal connection error, e.g the invalid server or invalid SSL certificate
+    // Connection error, for example, invalid server or invalid SSL certificate
   }
 });
 ----
 
 You can see that error handling is better in the new HTTP client.
 
-The following example shows you how to use future composition in GET operation in {VertX} {v4}:
+The following example shows how to use future composition in a GET operation in {VertX} {v4}.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -98,19 +98,19 @@ WARNING: When you use the HTTP client with futures, the `HttpClientResponse()` m
 
 == Sending requests
 
-In {VertX} {v3x} releases, you can use the `end()` method to send requests.
+In {VertX} {v3x} releases, you could use the `end()` method to send requests.
 
 ----
 request.end();
 ----
 
-You can also send a body in the request.
+You could also send a body in the request.
 
 ----
 request.end(Buffer.buffer("hello world));
 ----
 
-Since `HttpClientRequest` is a `Writestream<Buffer>`, you can also use a pipe to stream the request.
+Since `HttpClientRequest` is a `Writestream<Buffer>`, you could also use a pipe to stream the request.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -121,7 +121,7 @@ writeStream.pipeTo(request, ar -> {
 });
 ----
 
-In {VertX} {v4}, you can perform all the operations shown in the examples using the `get()` method. Additionally, you can also use the new `send()` method to perform these operations. You can pass a buffer, a string or a `ReadStream` as input to the `send()` method. The method returns an `HttpClientResponse` instance.
+In {VertX} {v4}, you can perform all the operations shown in the examples using the `get()` method. You can also use the new `send()` method to perform these operations. You can pass a buffer, a string, or a `ReadStream` as input to the `send()` method. The method returns an `HttpClientResponse` instance.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -134,7 +134,7 @@ request.onComplete(ar -> {
 })
 request.end();
 
-// The new send method combines the above in a single operation
+// The new send method combines all the operations
 request.send(ar -> {
   if (ar.succeeded()) {
     HttpClientResponse response = ar.result();
@@ -145,39 +145,39 @@ request.send(ar -> {
 
 == Handling responses
 
-The `HttpClientResponse` interface has been updated and improved with following methods:
+The `HttpClientResponse` interface has been updated and improved with the following methods:
 
 `body()` method::
 The `body()` method returns an asynchronous buffer. Use the `body()` method instead of `bodyHandler()`.
 +
-The following example shows how to use `bodyHandler()` method to get the request body.
+The following example shows how to use the `bodyHandler()` method to get the request body.
 +
 [source,java,options="nowrap",subs="attributes+"]
 ----
 response.bodyHandler(body -> {
-  // Process the body
+  // Process the request body
 });
 response.exceptionHandler(err -> {
-  // Could not get a body
+  // Could not get the request body
 });
 ----
 +
-The following example shows how to use `body()` method to get the request body.
+The following example shows how to use the `body()` method to get the request body.
 +
 [source,java,options="nowrap",subs="attributes+"]
 ----
 response.body(ar -> {
   if (ar.succeeded()) {
-    // Process the body
+    // Process the request body
   } else {
-    // Could not get a body
+    // Could not get the request body
   }
 });
 ----
 
 `end()` method:: The `end()` method returns a future when a response is fully received successfully or failed. The method removes the response body. Use this method instead of `endHandler()` method.
 +
-The following example shows how to use `endHandler()` method.
+The following example shows how to use the `endHandler()` method.
 +
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -189,7 +189,7 @@ response.exceptionHandler(err -> {
 });
 ----
 +
-The following example shows how to use `end()` method.
+The following example shows how to use the `end()` method.
 +
 [source,java,options="nowrap",subs="attributes+"]
 ----

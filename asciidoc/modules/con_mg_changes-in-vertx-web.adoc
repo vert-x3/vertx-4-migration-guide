@@ -106,7 +106,7 @@ SockJSHandlerOptions options = new SockJSHandlerOptions()
   .setRegisterWriteHandler(true); // enable the event bus consumer registration
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
 router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -> {
-  // Retrieve the writeHandlerID and store it (e.g. in a local map)
+  // Retrieve the writeHandlerID and store it (For example, in a local map)
   String writeHandlerID = sockJSSocket.writeHandlerID();
 }));
 ----
