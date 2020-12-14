@@ -59,7 +59,7 @@ The new methods for `WebSocket` subprotocols use `List<String>` data type instea
 |`websocketStream()`|`webSocketStream()`
 |===
 
-* `WebsocketRejectedException` is deprecated. The methods will throw the `UpgradeRejectedException` instead.
+* `WebsocketRejectedException` is deprecated. The methods throw `UpgradeRejectedException` instead.
 
 * The `HttpClient` `webSocket()` methods use  `Handler<AsyncResult<WebSocket>>` instead of `Handler` or `Handler<Throwable>`.
 
@@ -93,7 +93,7 @@ server.requestHandler(req -> {
 
 In {VertX} {v3x}, you could use the the HTTP client pool size to define the maximum number of WebSocket connections in an application. The value accessor methods `HttpClientOptions.maxPoolSize()` were used to get and set the WebSocket connections. The default number of connections was set to 4 for each endpoint.
 
-The following example shows how to set WebSocket connections in {VertX} {v3x}.
+The following example shows how WebSocket connections are set in {VertX} {v3x}.
 
 ----
 // 3.x
@@ -109,11 +109,13 @@ The following example shows how to set WebSocket connections in {VertX} {v4}.
 options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoint
 ----
 
-== Added `HttpMethod` as a new interface and removed the `HttpMethod` enumeration type
+== `HttpMethod` is available as a interface
 
-`HttpMethod` is a new interface. In earlier releases of {VertX}, `HttpMethod` was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You would have to use the  `HttpMethod.OTHER` value along with the `rawMethod` attribute during server and client HTTP requests.
+`HttpMethod` is available as a new interface.
 
-If you are using `HttpMethod` enumerated data type in a switch block, you can use the following code to migrate your application to {VertX} {v4}.
+In earlier releases of {VertX}, `HttpMethod` was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You had to use the  `HttpMethod.OTHER` value along with the `rawMethod` attribute during server and client HTTP requests.
+
+If you are using `HttpMethod` enumerated data type in a switch block, you can use the following code to migrate your applications to {VertX} {v4}.
 
 The following example shows a switch block in {VertX} {v3x} releases.
 

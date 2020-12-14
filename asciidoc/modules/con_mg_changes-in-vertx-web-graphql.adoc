@@ -3,7 +3,7 @@
 
 The following section describes the changes in {VertX} Web GraphQL.
 
-== Updated methods to be supported on multi-language (polyglot) environments
+== Updated methods to be supported on multiple language (polyglot) environments
 
 The following methods have been updated and are now supported on polyglot environments:
 * `UploadScalar` is now a factory, use the method  `UploadScalar.create()` instead.

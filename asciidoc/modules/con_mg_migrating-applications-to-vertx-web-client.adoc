@@ -6,7 +6,7 @@ The web client was available from {VertX} 3.4.0 release. There is no change in t
 
 The client provides simplified HTTP interactions and some additional features, such as HTTP session, JSON encoding and decoding, response predicates, which are not available in the {VertX} HTTP Client.
 
-The following example shows how to use HTTP client in {VertX} {v3x} releases:
+The following example shows how to use HTTP client in {VertX} {v3x} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -25,7 +25,7 @@ request.exceptionHandler(err -> {
 request.end();
 ----
 
-The following example shows how to migrate an application to web client in {VertX} {v3x} and {VertX} {v4} releases:
+The following example shows how to migrate an application to web client in {VertX} {v3x} and {VertX} {v4} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
