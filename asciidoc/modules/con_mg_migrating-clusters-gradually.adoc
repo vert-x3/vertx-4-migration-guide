@@ -1,0 +1,46 @@
+[id="con_mg_migrating-clusters-gradually_{context}"]
+= Migrating clusters gradually
+
+It is not possible to mix {VertX} {v3x} nodes and {VertX} {v4} nodes in a single cluster, for a few reasons:
+
+* cluster manager upgrades: major version upgrade of Hazelcast, Infinispan or Apache Ignite
+* subscription data changes: the information stored in subscription maps/caches is no longer the same
+* transport protocol changes: some fields in the message transport protocol have been changed
+
+In general, you should have a Vert.x cluster for a single application or a few closely related microservices.
+In this case, migrating a codebase at once is possible.
+
+This section provides a couple of solutions when you can't perform a one-shot migration of a {VertX} {v3x} codebase to {VertX} {v4}.
+
+== Divide and conquer
+
+If you have a cluster where several independent teams deploy verticles consider splitting the {VertX} {v3x} cluster into smaller ones.
+
+Of course, the separated components can no longer rely on clustering features to communicate.
+Here are some alternatives:
+
+- EventBus request/reply: HTTP/RESTful web service, gRPC
+- EventBus send/publish: messaging system (ActiveMQ, RabbitMQ, Kafka), Postgres `LISTEN`/`NOTIFY`, Redis Pub/Sub
+- Shared Data: Redis, Infinispan, Hazelcast, Apache Ignite
+
+Each team will gain flexibility and will be able to move to {VertX} {v4} when they are ready or if it is needed.
+
+== Vert.x EventBus Link
+
+If you can't split your cluster, then https://github.com/vert-x3/vertx-eventbus-link[Vert.x EventBus Link] can help to migrate gradually.
+
+Vert.x EventBus Link is a tool that helps to connect a Vert.x 3 clustered EventBus with a Vert.x 4 clustered EventBus.
+
+WARNING: Shared Data API (maps, counters and locks) migration is *not* supported.
+
+It provides an `EventBusLink` object that implements the `EventBus` interface.
+An instance of `EventBusLink` shall be created on at least one node of each cluster.
+
+It is created by providing a set of addresses and its behavior depends on the message paradigm:
+
+* _fire and forget_ and _request/reply_: the message will be forwarded to the remote cluster which delegates to the Vert.x EventBus
+* _publish_: the message will be forwarded to the remote cluster *and* to the Vert.x EventBus
+
+In practice, Vert.x EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.
+
+Visit the project page to https://github.com/vert-x3/vertx-eventbus-link#getting-started[get started] or to learn https://github.com/vert-x3/vertx-eventbus-link#using[using] it.
