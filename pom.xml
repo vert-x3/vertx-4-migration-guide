@@ -50,9 +50,7 @@
           <attributes>
             <VertX>Vert.x</VertX>
             <v3x>3.x</v3x>
-            <v4>4</v4>
-            <AMQ>Apache Kafka or Apache ActiveMQ</AMQ>
-            <Hazelcast>Hazelcast</Hazelcast>
+            <v4>4</v4>            
             <toc>left</toc>
           </attributes>
         </configuration>

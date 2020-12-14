@@ -4,7 +4,7 @@
 
 It is important to decide the migration strategy for your codebase. This is because you cannot add {VertX} {v3x} nodes and {VertX} {v4} nodes together in a single cluster for the following reasons:
 
-* Cluster manager upgrades - Major version upgrades in cluster managers prevent breaking (non-backward compatibility) changes.
+* Cluster manager upgrades - Major version upgrades in cluster managers prevent backward compatibility.
 * Subscription data changes - {VertX} has changed the format of the EventBus subscription data stored in cluster managers.
 * Transport protocol changes - {VertX} has changed some fields in the message transport protocol in the cluster.
 
@@ -14,13 +14,13 @@ However, if you cannot migrate the codebase at one time, use the recommendations
 
 == Splitting the cluster
 
-If you have a cluster where different teams have deployed verticles for their applications, you can consider splitting the {VertX} {v3x} cluster into smaller ones. Note that after splitting the cluster, the separated components will not be able to communicate using the clustering features. You can split the cluster using the following:
+If you have a cluster where different teams have deployed verticles for their applications, you can consider splitting the {VertX} {v3x} cluster into smaller ones. Note that after splitting the cluster, the separated components will not be able to communicate using the clustering features. You can split the cluster using the following components:
 
-* EventBus request and reply - HTTP/RESTful web services, gRPC
-* EventBus send and publish - Messaging systems such as, {AMQ}, Postgres `LISTEN` and `NOTIFY`, Redis Pub and Sub
-* Shared Data - Redis, Infinispan, {Hazelcast}
+* EventBus request and reply - HTTP or RESTful web services, gRPC
+* EventBus send and publish - Messaging systems, Postgres `LISTEN` and `NOTIFY`, Redis Pub and Sub
+* Shared Data - Redis, Infinispan
 
-After you split the cluster, each team can move to {VertX} {v4} when they are ready or if it is needed.
+After you split the cluster, each team can move to {VertX} {v4} when they are ready or if required.
 
 == Using {VertX} EventBus Link
 
@@ -32,7 +32,7 @@ WARNING: The migration of shared data API, that is, maps, counters and locks is 
 
 The tool creates an `EventBusLink` object that implements the `EventBus` interface. An instance of `EventBusLink` is created on at least one node of each cluster. The instance is created by providing a set of addresses and its behavior depends on the message paradigm:
 
-* _fire and forget_ and _request/reply_ - The message is sent to the remote cluster
+* _fire and forget_ and _request and reply_ - The message is sent to the remote cluster.
 * _publish_ - The message is sent to both this cluster and the remote cluster.
 
 The {VertX} EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.
