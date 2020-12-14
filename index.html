@@ -588,7 +588,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#changes-in-hazelcast-cluster-manager_changes-in-clustering">Changes in Hazelcast cluster manager</a></li>
 <li><a href="#changes-in-infinispan-cluster-manager_changes-in-clustering">Changes in Infinispan cluster manager</a></li>
 <li><a href="#changes-in-ignite-cluster-manager_changes-in-clustering">Changes in Apache Ignite cluster manager</a></li>
-<li><a href="#con_mg_migrating-clusters-gradually_changes-in-clustering">Migrating clusters gradually</a></li>
+<li><a href="#migrating_clusters_changes-in-clustering">Migrating clusters</a></li>
 </ul>
 </li>
 <li><a href="#miscellaneous-changes-in-vertx_{context}">Miscellaneous changes in Vert.x</a>
@@ -1085,9 +1085,9 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>new Thread(() -&gt; {
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">new</span> <span class="predefined-type">Thread</span>(() -&gt; {
   assertSame(vertx.getOrCreateContext(), vertx.getOrCreateContext());
-}).start();</pre>
+}).start();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1098,9 +1098,9 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>for (int i = 0;i &lt; n;i++) {
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>;i &lt; n;i++) {
   vertx.executeBlocking(block, handler);
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1108,9 +1108,9 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>for (int i = 0;i &lt; n;i++) {
-  vertx.executeBlocking(block, false, handler);
-}</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>;i &lt; n;i++) {
+  vertx.executeBlocking(block, <span class="predefined-constant">false</span>, handler);
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1302,7 +1302,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 </li>
 <li>
-<p><code>WebsocketRejectedException</code> is deprecated. The methods will throw the <code>UpgradeRejectedException</code> instead.</p>
+<p><code>WebsocketRejectedException</code> is deprecated. The methods throw <code>UpgradeRejectedException</code> instead.</p>
 </li>
 <li>
 <p>The <code>HttpClient</code> <code>webSocket()</code> methods use  <code>Handler&lt;AsyncResult&lt;WebSocket&gt;&gt;</code> instead of <code>Handler</code> or <code>Handler&lt;Throwable&gt;</code>.</p>
@@ -1349,7 +1349,7 @@ server.requestHandler(req -&gt; {
 <p>In Vert.x 3.x, you could use the the HTTP client pool size to define the maximum number of WebSocket connections in an application. The value accessor methods <code>HttpClientOptions.maxPoolSize()</code> were used to get and set the WebSocket connections. The default number of connections was set to 4 for each endpoint.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to set WebSocket connections in Vert.x 3.x.</p>
+<p>The following example shows how WebSocket connections are set in Vert.x 3.x.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1371,12 +1371,15 @@ options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoi
 </div>
 </div>
 <div class="sect4">
-<h5 id="_added_code_httpmethod_code_as_a_new_interface_and_removed_the_code_httpmethod_code_enumeration_type">Added <code>HttpMethod</code> as a new interface and removed the <code>HttpMethod</code> enumeration type</h5>
+<h5 id="_code_httpmethod_code_is_available_as_a_interface"><code>HttpMethod</code> is available as a interface</h5>
 <div class="paragraph">
-<p><code>HttpMethod</code> is a new interface. In earlier releases of Vert.x, <code>HttpMethod</code> was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You would have to use the  <code>HttpMethod.OTHER</code> value along with the <code>rawMethod</code> attribute during server and client HTTP requests.</p>
+<p><code>HttpMethod</code> is available as a new interface.</p>
 </div>
 <div class="paragraph">
-<p>If you are using <code>HttpMethod</code> enumerated data type in a switch block, you can use the following code to migrate your application to Vert.x 4.</p>
+<p>In earlier releases of Vert.x, <code>HttpMethod</code> was declared as an enumerated data type. As an enumeration, it limited the extensibility of HTTP. Further, it prevented serving other HTTP methods with this type directly. You had to use the  <code>HttpMethod.OTHER</code> value along with the <code>rawMethod</code> attribute during server and client HTTP requests.</p>
+</div>
+<div class="paragraph">
+<p>If you are using <code>HttpMethod</code> enumerated data type in a switch block, you can use the following code to migrate your applications to Vert.x 4.</p>
 </div>
 <div class="paragraph">
 <p>The following example shows a switch block in Vert.x 3.x releases.</p>
@@ -1488,7 +1491,7 @@ Vert.x web client is based on Vert.x HTTP client.
 <p>The client provides simplified HTTP interactions and some additional features, such as HTTP session, JSON encoding and decoding, response predicates, which are not available in the Vert.x HTTP Client.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how to use HTTP client in Vert.x 3.x releases:</p>
+<p>The following example shows how to use HTTP client in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1508,7 +1511,7 @@ request.end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to migrate an application to web client in Vert.x 3.x and Vert.x 4 releases:</p>
+<p>The following example shows how to migrate an application to web client in Vert.x 3.x and Vert.x 4 releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1561,7 +1564,7 @@ request.end();</code></pre>
 <div class="sect5">
 <h6 id="_sending_a_simple_request">Sending a simple request</h6>
 <div class="paragraph">
-<p>The following example shows how to send a GET request in Vert.x 3.x releases:</p>
+<p>The following example shows how to send a GET request in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1581,7 +1584,7 @@ request.end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to send a GET request in Vert.x 4 release:</p>
+<p>The following example shows how to send a GET request in Vert.x 4 release.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1614,7 +1617,7 @@ request.end();</code></pre>
 <p>You can see that error handling is better in the new HTTP client.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use future composition in GET operation in Vert.x 4:</p>
+<p>The following example shows you how to use future composition in GET operation in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1724,10 +1727,10 @@ request.send(ar -&gt; {
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java">response.bodyHandler(body -&gt; {
-  <span class="comment">// Process the body</span>
+  <span class="comment">// Process the request body</span>
 });
 response.exceptionHandler(err -&gt; {
-  <span class="comment">// Could not get a body</span>
+  <span class="comment">// Could not get the request body</span>
 });</code></pre>
 </div>
 </div>
@@ -1738,9 +1741,9 @@ response.exceptionHandler(err -&gt; {
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java">response.body(ar -&gt; {
   <span class="keyword">if</span> (ar.succeeded()) {
-    <span class="comment">// Process the body</span>
+    <span class="comment">// Process the request body</span>
   } <span class="keyword">else</span> {
-    <span class="comment">// Could not get a body</span>
+    <span class="comment">// Could not get the request body</span>
   }
 });</code></pre>
 </div>
@@ -1881,7 +1884,7 @@ response.exceptionHandler(err -&gt; {
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java">client.request().connectionHandler(conn -&gt; {
-  <span class="comment">// Do something with connection</span>
+  <span class="comment">// Connection related code</span>
 }).end();</code></pre>
 </div>
 </div>
@@ -1920,7 +1923,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to get net socket for a connection in Vert.x 4:</p>
+<p>The following example shows how to get net socket for a connection in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2050,7 +2053,7 @@ response.exceptionHandler(err -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use these new methods:</p>
+<p>The following example shows how to use the new methods.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2078,12 +2081,12 @@ response.exceptionHandler(err -&gt; {
 <p>This section explains the changes in connection methods.</p>
 </div>
 <div class="sect3">
-<h4 id="_checking_if_authentication_is_required_client">Checking if authentication is required client</h4>
+<h4 id="_checking_if_authentication_is_required_for_client">Checking if authentication is required for client</h4>
 <div class="paragraph">
 <p>The <code>NetServerOptions.isClientAuthRequired()</code> method has been removed. Use the <code>getClientAuth() == ClientAuth.REQUIRED</code> enumerated type to check if client authentication is required.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use a switch statement to check if authentication of the client is required.</p>
+<p>The following example shows how to use a switch statement to check if authentication of the client is required.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2097,7 +2100,7 @@ default:
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use the check if authentication of the client is required in Vert.x 4.</p>
+<p>The following example shows how to use the check if authentication of the client is required in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2134,11 +2137,10 @@ default:
 <div class="sect2">
 <h3 id="changes-in-vertx-reactive-extensions_changes-in-common-components">Changes in Vert.x Reactive Extensions (Rx)</h3>
 <div class="paragraph">
-<p>This section describes the changes in Reactive Extensions (Rx) in Vert.x.
-Vert.x uses the RxJava library.</p>
+<p>This section describes the changes in Reactive Extensions (Rx) in Vert.x. Vert.x uses the RxJava library.</p>
 </div>
 <div class="sect3">
-<h4 id="_removed_code_writestreamsubscriber_oncomplete_code_callback_from_code_writestream_code">Removed <code>WriteStreamSubscriber.onComplete()</code> callback from <code>WriteStream</code></h4>
+<h4 id="_removed_code_oncomplete_code_callback_from_write_stream">Removed <code>onComplete</code> callback from write stream</h4>
 <div class="paragraph">
 <p>The <code>WriteStreamSubscriber.onComplete()</code> callback has been removed. This callback was invoked if <code>WriteStream</code> had pending streams of data to be written.</p>
 </div>
@@ -2147,17 +2149,17 @@ Vert.x uses the RxJava library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>WriteStreamSubscriber&lt;Buffer&gt; subscriber = writeStream.toSubscriber();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">WriteStreamSubscriber&lt;<span class="predefined-type">Buffer</span>&gt; subscriber = writeStream.toSubscriber();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to create the adapter from a <code>WriteStream</code> in  Vert.x 3.x releases:</p>
+<p>The following example shows how to create the adapter from a <code>WriteStream</code> in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>subscriber.onComplete(() -&gt; {
-    // Called after writeStream.end() is invoked, even if operation has not completed
-});</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">subscriber.onComplete(() -&gt; {
+    <span class="comment">// Called after writeStream.end() is invoked, even if operation has not completed</span>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2165,16 +2167,16 @@ Vert.x uses the RxJava library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>subscriber.onWriteStreamEnd(() -&gt; {
-    // Called after writeStream.end() is invoked and completes successfully
-});</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">subscriber.onWriteStreamEnd(() -&gt; {
+    <span class="comment">// Called after writeStream.end() is invoked and completes successfully</span>
+});</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>subscriber.onWriteStreamError(() -&gt; {
-    // Called after writeStream.end() is invoked and fails
-});</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">subscriber.onWriteStreamError(() -&gt; {
+    <span class="comment">// Called after writeStream.end() is invoked and fails</span>
+});</code></pre>
 </div>
 </div>
 </div>
@@ -2194,7 +2196,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Future&lt;JsonObject&gt; fut = ConfigRetriever. getConfigAsFuture(retriever);</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">Future</span>&lt;JsonObject&gt; fut = ConfigRetriever. getConfigAsFuture(retriever);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2202,7 +2204,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>fut = retriever.getConfig();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">fut = retriever.getConfig();</code></pre>
 </div>
 </div>
 </div>
@@ -2260,7 +2262,7 @@ Vert.x uses the RxJava library.</p>
 <p>In Vert.x 3.x releases:</p>
 <div class="listingblock">
 <div class="content">
-<pre>List&lt;Foo&gt; foo1 = Json.decodeValue(json, new TypeReference&lt;List&lt;Foo&gt;&gt;() {});</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">List</span>&lt;Foo&gt; foo1 = Json.decodeValue(json, <span class="keyword">new</span> TypeReference&lt;<span class="predefined-type">List</span>&lt;Foo&gt;&gt;() {});</code></pre>
 </div>
 </div>
 </li>
@@ -2268,7 +2270,7 @@ Vert.x uses the RxJava library.</p>
 <p>In Vert.x 4 release:</p>
 <div class="listingblock">
 <div class="content">
-<pre>List&lt;Foo&gt; foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, new TypeReference&lt;List&lt;Foo&gt;&gt;() {});</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">List</span>&lt;Foo&gt; foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, <span class="keyword">new</span> TypeReference&lt;<span class="predefined-type">List</span>&lt;Foo&gt;&gt;() {});</code></pre>
 </div>
 </div>
 </li>
@@ -2283,7 +2285,7 @@ Vert.x uses the RxJava library.</p>
 <p>In Vert.x 3.x releases:</p>
 <div class="listingblock">
 <div class="content">
-<pre>ObjectMapper mapper = Json.mapper;</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">ObjectMapper mapper = Json.mapper;</code></pre>
 </div>
 </div>
 </li>
@@ -2291,7 +2293,7 @@ Vert.x uses the RxJava library.</p>
 <p>In Vert.x 4 release:</p>
 <div class="listingblock">
 <div class="content">
-<pre>mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();</code></pre>
 </div>
 </div>
 </li>
@@ -2306,7 +2308,7 @@ Vert.x uses the RxJava library.</p>
 <p>In Vert.x 3.x releases:</p>
 <div class="listingblock">
 <div class="content">
-<pre>Json.mapper = someMapper;</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">Json.mapper = someMapper;</code></pre>
 </div>
 </div>
 </li>
@@ -2417,7 +2419,7 @@ Vert.x uses the RxJava library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>java -Dvertx.json.base64=legacy ...</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">java -Dvertx.json.base64=legacy ...</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2438,8 +2440,8 @@ Vert.x uses the RxJava library.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>String base64url = someJsonObject.getString("base64encodedElement")
-String base64 = Json.toBase64(base64url);</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">String</span> base64url = someJsonObject.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">base64encodedElement</span><span class="delimiter">&quot;</span></span>)
+<span class="predefined-type">String</span> base64 = Json.toBase64(base64url);</code></pre>
 </div>
 </div>
 </div>
@@ -2461,7 +2463,7 @@ String base64 = Json.toBase64(base64url);</pre>
 <p>In earlier releases of Vert.x, you had to specify both the <code>UserSessionHandler</code> and <code>SessionHandler</code> handlers when working in a session.</p>
 </div>
 <div class="paragraph">
-<p>To simplify the process, in Vert.x 4,  the <code>UserSessionHandler</code> class has been removed and its functionality has been added in the <code>SessionHandler</code> class. In Vert.x 4, to work with sessions you must specify only one handler.</p>
+<p>To simplify the process, in Vert.x 4, the <code>UserSessionHandler</code> class has been removed and its functionality has been added in the <code>SessionHandler</code> class. In Vert.x 4, to work with sessions you must specify only one handler.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2489,21 +2491,21 @@ String base64 = Json.toBase64(base64url);</pre>
 <p>The create methods in <code>FaviconHandler</code> and <code>ErrorHandler</code> have been updated. You must pass a <code>Vertx</code> instance object in the create methods. These methods access file system. Passing the <code>Vertx</code> object ensures consistent access to files using the 'Vertx' file system.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how create methods were used in Vert.x 3.x releases:</p>
+<p>The following example shows how create methods were used in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>FaviconHandler.create();
-ErrorHandler.create();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">FaviconHandler.create();
+ErrorHandler.create();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how create methods should be used in Vert.x 4:</p>
+<p>The following example shows how create methods should be used in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>FaviconHandler.create(vertx);
-ErrorHandler.create(vertx);</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">FaviconHandler.create(vertx);
+ErrorHandler.create(vertx);</code></pre>
 </div>
 </div>
 </div>
@@ -2562,24 +2564,24 @@ ErrorHandler.create(vertx);</pre>
 <p>The <code>JWTAuthHandler.create(JWTAuth authProvider, String skip)</code> method has been removed. Use the <code>JWTAuthHandler.create(JWTAuth authProvider)</code> method instead.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows how JWT authentication handler was created in Vert.x 3.x releases:</p>
+<p>The following example shows how JWT authentication handler was created in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>router
-   // protect everything but "/excluded/path"
-   .route().handler(JWTAuthHandler(jwtAuth, "/excluded/path")</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">router
+   <span class="comment">// protect everything but &quot;/excluded/path&quot;</span>
+   .route().handler(JWTAuthHandler(jwtAuth, <span class="string"><span class="delimiter">&quot;</span><span class="content">/excluded/path</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>TThe following example shows how JWT authentication handler was created in Vert.x 4.</p>
+<p>The following example shows how JWT authentication handler was created in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>router
-   .route("/excluded/path").handler(/* public access to "/excluded/path" */)
-   // protect everything
-   .route().handler(JWTAuthHandler(jwtAuth)</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">router
+   .route(<span class="string"><span class="delimiter">&quot;</span><span class="content">/excluded/path</span><span class="delimiter">&quot;</span></span>).handler(<span class="comment">/* public access to &quot;/excluded/path&quot; */</span>)
+   <span class="comment">// protect everything</span>
+   .route().handler(JWTAuthHandler(jwtAuth)</code></pre>
 </div>
 </div>
 </div>
@@ -2601,7 +2603,7 @@ ErrorHandler.create(vertx);</pre>
 <p>There is no change in the behavior of the new class, except that the name of the data object class has changed.</p>
 </div>
 <div class="paragraph">
-<p>When you used <code>sockjs.BridgeOptions</code> class to add new bridges, there were a lot of duplicate configurations. The new class contains all the possible common configurations, and removes duplicate configurations.</p>
+<p>In previous releases, when you used <code>sockjs.BridgeOptions</code> class to add new bridges, there were a lot of duplicate configurations. The new class contains all the possible common configurations, and removes duplicate configurations.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2611,14 +2613,14 @@ ErrorHandler.create(vertx);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Router router = Router.router(vertx);
-SockJSHandlerOptions options = new SockJSHandlerOptions()
-  .setRegisterWriteHandler(true); // enable the event bus consumer registration
+<pre class="CodeRay highlight nowrap"><code data-lang="java">Router router = Router.router(vertx);
+SockJSHandlerOptions options = <span class="keyword">new</span> SockJSHandlerOptions()
+  .setRegisterWriteHandler(<span class="predefined-constant">true</span>); <span class="comment">// enable the event bus consumer registration</span>
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
-router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
-  // Retrieve the writeHandlerID and store it (e.g. in a local map)
-  String writeHandlerID = sockJSSocket.writeHandlerID();
-}));</pre>
+router.mountSubRouter(<span class="string"><span class="delimiter">&quot;</span><span class="content">/myapp</span><span class="delimiter">&quot;</span></span>, sockJSHandler.socketHandler(sockJSSocket -&gt; {
+  <span class="comment">// Retrieve the writeHandlerID and store it (e.g. in a local map)</span>
+  <span class="predefined-type">String</span> writeHandlerID = sockJSSocket.writeHandlerID();
+}));</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2626,9 +2628,9 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SockJSHandlerOptions options = new SockJSHandlerOptions()
-  .setRegisterWriteHandler(true) // enable the event bus consumer registration
-  .setLocalWriteHandler(false) // register a clustered event bus consumer</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">SockJSHandlerOptions options = <span class="keyword">new</span> SockJSHandlerOptions()
+  .setRegisterWriteHandler(<span class="predefined-constant">true</span>) <span class="comment">// enable the event bus consumer registration</span>
+  .setLocalWriteHandler(<span class="predefined-constant">false</span>) <span class="comment">// register a clustered event bus consumer</span></code></pre>
 </div>
 </div>
 </div>
@@ -2651,7 +2653,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <p>The following section describes the changes in Vert.x Web GraphQL.</p>
 </div>
 <div class="sect3">
-<h4 id="_updated_methods_to_be_supported_on_multi_language_polyglot_environments">Updated methods to be supported on multi-language (polyglot) environments</h4>
+<h4 id="_updated_methods_to_be_supported_on_multiple_language_polyglot_environments">Updated methods to be supported on multiple language (polyglot) environments</h4>
 <div class="paragraph">
 <p>The following methods have been updated and are now supported on polyglot environments:
 * <code>UploadScalar</code> is now a factory, use the method  <code>UploadScalar.create()</code> instead.</p>
@@ -2875,7 +2877,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="sect2">
 <h3 id="changes-in-vertx-openapi_changes-in-common-components">Changes in Vert.x OpenAPI</h3>
 <div class="paragraph">
-<p>In Vert.x 4, a new module <code>vertx-web-openapi</code> is available. Use his module alone with <code>vertx-web</code> to develop contract-driven applications.</p>
+<p>In Vert.x 4, a new module <code>vertx-web-openapi</code> is available. Use this module alone with <code>vertx-web</code> to develop contract-driven applications.</p>
 </div>
 <div class="paragraph">
 <p>The new module works well with Vert.x Web <code>Router</code>. The new module requires the following Vert.x dependencies:</p>
@@ -2906,29 +2908,29 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>RouterBuilder.create(vertx, "petstore.yaml").onComplete(ar -&gt; {
-  if (ar.succeeded()) {
-    // Spec loaded with success
+<pre class="CodeRay highlight nowrap"><code data-lang="java">RouterBuilder.create(vertx, <span class="string"><span class="delimiter">&quot;</span><span class="content">petstore.yaml</span><span class="delimiter">&quot;</span></span>).onComplete(ar -&gt; {
+  <span class="keyword">if</span> (ar.succeeded()) {
+    <span class="comment">// Spec loaded with success</span>
     RouterBuilder routerBuilder = ar.result();
-  } else {
-    // Something went wrong during router builder initialization
-    Throwable exception = ar.cause();
+  } <span class="keyword">else</span> {
+    <span class="comment">// Something went wrong during router builder initialization</span>
+    <span class="predefined-type">Throwable</span> exception = ar.cause();
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also instantiate the <code>RouterBuilder</code> using futures:</p>
+<p>You can also instantiate the <code>RouterBuilder</code> using futures.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>RouterBuilder.create(vertx, "petstore.yaml")
+<pre class="CodeRay highlight nowrap"><code data-lang="java">RouterBuilder.create(vertx, <span class="string"><span class="delimiter">&quot;</span><span class="content">petstore.yaml</span><span class="delimiter">&quot;</span></span>)
   .onSuccess(routerBuilder -&gt; {
-    // Spec loaded with success
+    <span class="comment">// Spec loaded with success</span>
   })
   .onFailure(exception -&gt; {
-    // Something went wrong during router builder initialization
-  });</pre>
+    <span class="comment">// Something went wrong during router builder initialization</span>
+  });</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2938,7 +2940,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -&gt; {
 <div class="title">Note</div>
 </td>
 <td class="content">
-The vertx-web-openapi` module uses the Vert.x file system APIs to load the files. Therefore, you do not have to specify <code>/</code> for the classpath resources. For example, you can specify <code>petstore.yaml</code> in your application. The <code>RouterBuilder</code> can identify the contract from your classpath resources.
+The <code>vertx-web-openapi</code> module uses the Vert.x file system APIs to load the files. Therefore, you do not have to specify <code>/</code> for the classpath resources. For example, you can specify <code>petstore.yaml</code> in your application. The <code>RouterBuilder</code> can identify the contract from your classpath resources.
 </td>
 </tr>
 </table>
@@ -2992,8 +2994,8 @@ The vertx-web-openapi` module uses the Vert.x file system APIs to load the files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>RequestParameters parameters = routingContext.get(io.vertx.ext.web.validation.ValidationHandler.REQUEST_CONTEXT_KEY);
-int aParam = parameters.queryParameter("aParam").getInteger();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">RequestParameters parameters = routingContext.get(io.vertx.ext.web.validation.ValidationHandler.REQUEST_CONTEXT_KEY);
+<span class="type">int</span> aParam = parameters.queryParameter(<span class="string"><span class="delimiter">&quot;</span><span class="content">aParam</span><span class="delimiter">&quot;</span></span>).getInteger();</code></pre>
 </div>
 </div>
 </div>
@@ -3004,7 +3006,7 @@ int aParam = parameters.queryParameter("aParam").getInteger();</pre>
 methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()</code> are no longer available.</p>
 </div>
 <div class="paragraph">
-<p>Use the <code>RouterBuilder.securityHandler()</code> method instead. This method accepts <code>io.vertx.ext.web.handler.AuthenticationHandler</code> as an handler. The method also automatically recognizes <code>OAuth2Handler</code> and sets up the security schema.</p>
+<p>Use the <code>RouterBuilder.securityHandler()</code> method instead. This method accepts <code>io.vertx.ext.web.handler.AuthenticationHandler</code> as an handler. The method automatically recognizes <code>OAuth2Handler</code> and sets up the security schema.</p>
 </div>
 <div class="paragraph">
 <p>The new security handlers also implement the operations defined in the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md#operationObject">OpenAPI specification</a>.</p>
@@ -3044,19 +3046,19 @@ methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3Router
 <p>In Vert.x 4, the OpenAPI contract is not mapped to plain old Java object (POJO). So, the additional swagger-parser dependency is no longer required. You can use the getters and resolvers to retrieve specific components of the contract.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to retrieve a specific component using a single operation.</p>
+<p>The following example shows how to retrieve a specific component using a single operation.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>JsonObject model = routerBuilder.operation("getPets").getOperationModel();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">JsonObject model = routerBuilder.operation(<span class="string"><span class="delimiter">&quot;</span><span class="content">getPets</span><span class="delimiter">&quot;</span></span>).getOperationModel();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to retrieve the full contract.</p>
+<p>The following example shows how to retrieve the full contract.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>JsonObject contract = routerBuilder.getOpenAPI().getOpenAPI();</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">JsonObject contract = routerBuilder.getOpenAPI().getOpenAPI();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3064,7 +3066,7 @@ methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3Router
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>JsonObject petModel = routerBuilder.getOpenAPI().getCached(JsonPointer.from("/components/schemas/Pet"));</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">JsonObject petModel = routerBuilder.getOpenAPI().getCached(JsonPointer.from(<span class="string"><span class="delimiter">&quot;</span><span class="content">/components/schemas/Pet</span><span class="delimiter">&quot;</span></span>));</code></pre>
 </div>
 </div>
 </div>
@@ -3087,15 +3089,15 @@ methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3Router
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>router.get("/api/transactions")
+<pre class="CodeRay highlight nowrap"><code data-lang="java">router.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/api/transactions</span><span class="delimiter">&quot;</span></span>)
   .handler(
     ValidationHandlerBuilder.create(schemaParser)
-      .queryParameter(optionalParam("from", stringSchema()))
-      .queryParameter(optionalParam("to", stringSchema()))
+      .queryParameter(optionalParam(<span class="string"><span class="delimiter">&quot;</span><span class="content">from</span><span class="delimiter">&quot;</span></span>, stringSchema()))
+      .queryParameter(optionalParam(<span class="string"><span class="delimiter">&quot;</span><span class="content">to</span><span class="delimiter">&quot;</span></span>, stringSchema()))
       .build()
   ).handler(
-    RouteToEBServiceHandler.build(eventBus, "transactions.myapplication", "getTransactionsList")
-  );</pre>
+    RouteToEBServiceHandler.build(eventBus, <span class="string"><span class="delimiter">&quot;</span><span class="content">transactions.myapplication</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">getTransactionsList</span><span class="delimiter">&quot;</span></span>)
+  );</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5153,63 +5155,58 @@ This change removes more than 10MB of assets from the dependencies.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con_mg_migrating-clusters-gradually_changes-in-clustering">Migrating clusters gradually</h3>
+<h3 id="migrating_clusters_changes-in-clustering">Migrating clusters</h3>
 <div class="paragraph">
-<p>It is not possible to mix Vert.x 3.x nodes and Vert.x 4 nodes in a single cluster, for a few reasons:</p>
+<p>It is important to decide the migration strategy for your codebase. This is because you cannot add Vert.x 3.x nodes and Vert.x 4 nodes together in a single cluster for the following reasons:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>cluster manager upgrades: major version upgrade of Hazelcast, Infinispan or Apache Ignite</p>
+<p>Cluster manager upgrades - Major version upgrades in cluster managers prevent backward compatibility.</p>
 </li>
 <li>
-<p>subscription data changes: the information stored in subscription maps/caches is no longer the same</p>
+<p>Subscription data changes - Vert.x has changed the format of the EventBus subscription data stored in cluster managers.</p>
 </li>
 <li>
-<p>transport protocol changes: some fields in the message transport protocol have been changed</p>
+<p>Transport protocol changes - Vert.x has changed some fields in the message transport protocol in the cluster.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In general, you should have a Vert.x cluster for a single application or a few closely related microservices.
-In this case, migrating a codebase at once is possible.</p>
+<p>If you have a Vert.x cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.</p>
 </div>
 <div class="paragraph">
-<p>This section provides a couple of solutions when you can&#8217;t perform a one-shot migration of a Vert.x 3.x codebase to Vert.x 4.</p>
+<p>However, if you cannot migrate the codebase at one time, use the recommendations in this section to migrate a Vert.x 3.x codebase to Vert.x 4.</p>
 </div>
 <div class="sect3">
-<h4 id="_divide_and_conquer">Divide and conquer</h4>
+<h4 id="_splitting_the_cluster">Splitting the cluster</h4>
 <div class="paragraph">
-<p>If you have a cluster where several independent teams deploy verticles consider splitting the Vert.x 3.x cluster into smaller ones.</p>
-</div>
-<div class="paragraph">
-<p>Of course, the separated components can no longer rely on clustering features to communicate.
-Here are some alternatives:</p>
+<p>If you have a cluster where different teams have deployed verticles for their applications, you can consider splitting the Vert.x 3.x cluster into smaller ones. Note that after splitting the cluster, the separated components will not be able to communicate using the clustering features. You can split the cluster using the following components:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>EventBus request/reply: HTTP/RESTful web service, gRPC</p>
+<p>EventBus request and reply - HTTP or RESTful web services, gRPC</p>
 </li>
 <li>
-<p>EventBus send/publish: messaging system (ActiveMQ, RabbitMQ, Kafka), Postgres <code>LISTEN</code>/<code>NOTIFY</code>, Redis Pub/Sub</p>
+<p>EventBus send and publish - Messaging systems, Postgres <code>LISTEN</code> and <code>NOTIFY</code>, Redis Pub and Sub</p>
 </li>
 <li>
-<p>Shared Data: Redis, Infinispan, Hazelcast, Apache Ignite</p>
+<p>Shared Data - Redis, Infinispan</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Each team will gain flexibility and will be able to move to Vert.x 4 when they are ready or if it is needed.</p>
+<p>After you split the cluster, each team can move to Vert.x 4 when they are ready or if required.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_vert_x_eventbus_link">Vert.x EventBus Link</h4>
+<h4 id="_using_vert_x_eventbus_link">Using Vert.x EventBus Link</h4>
 <div class="paragraph">
-<p>If you can&#8217;t split your cluster, then <a href="https://github.com/vert-x3/vertx-eventbus-link">Vert.x EventBus Link</a> can help to migrate gradually.</p>
+<p>If you cannot split your cluster, then use <a href="https://github.com/vert-x3/vertx-eventbus-link">Vert.x EventBus Link</a> to migrate your codebase incrementally.</p>
 </div>
 <div class="paragraph">
-<p>Vert.x EventBus Link is a tool that helps to connect a Vert.x 3 clustered EventBus with a Vert.x 4 clustered EventBus.</p>
+<p>Vert.x EventBus Link is a tool that connects a Vert.x 3.x clustered EventBus to a Vert.x 4 clustered EventBus.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5218,33 +5215,29 @@ Here are some alternatives:</p>
 <div class="title">Warning</div>
 </td>
 <td class="content">
-Shared Data API (maps, counters and locks) migration is <strong>not</strong> supported.
+The migration of shared data API, that is, maps, counters and locks is not supported.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>It provides an <code>EventBusLink</code> object that implements the <code>EventBus</code> interface.
-An instance of <code>EventBusLink</code> shall be created on at least one node of each cluster.</p>
-</div>
-<div class="paragraph">
-<p>It is created by providing a set of addresses and its behavior depends on the message paradigm:</p>
+<p>The tool creates an <code>EventBusLink</code> object that implements the <code>EventBus</code> interface. An instance of <code>EventBusLink</code> is created on at least one node of each cluster. The instance is created by providing a set of addresses and its behavior depends on the message paradigm:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>fire and forget</em> and <em>request/reply</em>: the message will be forwarded to the remote cluster which delegates to the Vert.x EventBus</p>
+<p><em>fire and forget</em> and <em>request and reply</em> - The message is sent to the remote cluster.</p>
 </li>
 <li>
-<p><em>publish</em>: the message will be forwarded to the remote cluster <strong>and</strong> to the Vert.x EventBus</p>
+<p><em>publish</em> - The message is sent to both this cluster and the remote cluster.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In practice, Vert.x EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.</p>
+<p>The Vert.x EventBus Link creates a WebSocket server to receive messages and uses a WebSocket client to send them.</p>
 </div>
 <div class="paragraph">
-<p>Visit the project page to <a href="https://github.com/vert-x3/vertx-eventbus-link#getting-started">get started</a> or to learn <a href="https://github.com/vert-x3/vertx-eventbus-link#using">using</a> it.</p>
+<p>See the sections <a href="https://github.com/vert-x3/vertx-eventbus-link#getting-started">get started</a> and <a href="https://github.com/vert-x3/vertx-eventbus-link#using">using</a> for more details.</p>
 </div>
 </div>
 </div>
@@ -5458,7 +5451,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-14 04:01:27 UTC
+Last updated 2020-12-14 17:54:23 UTC
 </div>
 </div>
 </body>
