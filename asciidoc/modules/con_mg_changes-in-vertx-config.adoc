@@ -8,11 +8,15 @@ The following section describes the changes in {VertX} configuration.
 The method `ConfigRetriever.getConfigAsFuture()` has been removed. Use the method `retriever.getConfig()` instead.
 
 The following example shows how configuration was retrieved in {VertX} {v3x} releases.
+
+[source,java,options="nowrap",subs="attributes+"]
 ----
 Future<JsonObject> fut = ConfigRetriever. getConfigAsFuture(retriever);
 ----
 
 The following example shows how to retrieve configuration in {VertX} {v4}.
+
+[source,java,options="nowrap",subs="attributes+"]
 ----
 fut = retriever.getConfig();
 ----

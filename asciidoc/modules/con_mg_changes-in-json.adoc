@@ -22,12 +22,14 @@ For example, use the following code:
 * When using Jackson `TypeReference`:
 ** In {VertX} {v3x} releases:
 +
+[source,java,options="nowrap",subs="attributes+"]
 ----
 List<Foo> foo1 = Json.decodeValue(json, new TypeReference<List<Foo>>() {});
 ----
 
 ** In {VertX} {v4} release:
 +
+[source,java,options="nowrap",subs="attributes+"]
 ----
 List<Foo> foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, new TypeReference<List<Foo>>() {});
 ----
@@ -36,12 +38,14 @@ List<Foo> foo2 = io.vertx.core.json.jackson.JacksonCodec.decodeValue(json, new T
 
 ** In {VertX} {v3x} releases:
 +
+[source,java,options="nowrap",subs="attributes+"]
 ----
 ObjectMapper mapper = Json.mapper;
 ----
 
 ** In {VertX} {v4} release:
 +
+[source,java,options="nowrap",subs="attributes+"]
 ----
 mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();
 ----
@@ -50,6 +54,7 @@ mapper = io.vertx.core.json.jackson.DatabindCodec.mapper();
 
 ** In {VertX} {v3x} releases:
 +
+[source,java,options="nowrap",subs="attributes+"]
 ----
 Json.mapper = someMapper;
 ----
@@ -97,6 +102,7 @@ The {VertX} JSON types implement RFC-7493. In earlier releases of {VertX}, the i
 
 If you want to continue using the Base64 encoder in {VertX} {v4}, you can use the configuration flag `legacy`. The following example shows how to set the configuration flag in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 java -Dvertx.json.base64=legacy ...
 ----
@@ -109,6 +115,7 @@ A new utility method `Json.toBase64()` converts the Base64URL string to Base64. 
 
 Use the following example code to convert a Base64URL to Base64 encoder.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 String base64url = someJsonObject.getString("base64encodedElement")
 String base64 = Json.toBase64(base64url);

@@ -18,7 +18,7 @@ The updates in HTTP client APIs are:
 
 == Sending a simple request
 
-The following example shows how to send a GET request in {VertX} {v3x} releases:
+The following example shows how to send a GET request in {VertX} {v3x} releases.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -37,7 +37,7 @@ request.exceptionHandler(err -> {
 request.end();
 ----
 
-The following example shows how to send a GET request in {VertX} {v4} release:
+The following example shows how to send a GET request in {VertX} {v4} release.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -68,7 +68,7 @@ client.request(HttpMethod.GET, 80, "example.com", "/", ar -> {
 
 You can see that error handling is better in the new HTTP client.
 
-The following example shows you how to use future composition in GET operation in {VertX} {v4}:
+The following example shows you how to use future composition in GET operation in {VertX} {v4}.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -155,10 +155,10 @@ The following example shows how to use `bodyHandler()` method to get the request
 [source,java,options="nowrap",subs="attributes+"]
 ----
 response.bodyHandler(body -> {
-  // Process the body
+  // Process the request body
 });
 response.exceptionHandler(err -> {
-  // Could not get a body
+  // Could not get the request body
 });
 ----
 +
@@ -168,9 +168,9 @@ The following example shows how to use `body()` method to get the request body.
 ----
 response.body(ar -> {
   if (ar.succeeded()) {
-    // Process the body
+    // Process the request body
   } else {
-    // Could not get a body
+    // Could not get the request body
   }
 });
 ----

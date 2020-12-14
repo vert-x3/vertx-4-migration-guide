@@ -3,11 +3,11 @@
 
 This section explains the changes in connection methods.
 
-== Checking if authentication is required client
+== Checking if authentication is required for client
 
 The `NetServerOptions.isClientAuthRequired()` method has been removed. Use the `getClientAuth() == ClientAuth.REQUIRED` enumerated type to check if client authentication is required.
 
-The following example shows you how to use a switch statement to check if authentication of the client is required.
+The following example shows how to use a switch statement to check if authentication of the client is required.
 
 ----
 switch (options.getClientAuth()) {
@@ -19,7 +19,7 @@ default:
 }
 ----
 
-The following example shows you how to use the check if authentication of the client is required in {Vertx} {v4}.
+The following example shows how to use the check if authentication of the client is required in {Vertx} {v4}.
 ----
 if (options.getClientAuth() == ClientAuth.REQUIRED) {
 // behavior in releases prior to {VertX} {v4}
