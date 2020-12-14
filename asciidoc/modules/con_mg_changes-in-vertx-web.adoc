@@ -7,7 +7,7 @@ The following section describes the changes in {VertX} web.
 
 In earlier releases of {VertX}, you had to specify both the `UserSessionHandler` and `SessionHandler` handlers when working in a session.
 
-To simplify the process, in {VertX} {v4},  the `UserSessionHandler` class has been removed and its functionality has been added in the `SessionHandler` class. In {VertX} {v4}, to work with sessions you must specify only one handler.
+To simplify the process, in {VertX} {v4}, the `UserSessionHandler` class has been removed and its functionality has been added in the `SessionHandler` class. In {VertX} {v4}, to work with sessions you must specify only one handler.
 
 == Removed the cookie interfaces
 
@@ -22,15 +22,17 @@ Use the `io.vertx.core.http.Cookie` interface instead.
 
 The create methods in `FaviconHandler` and `ErrorHandler` have been updated. You must pass a `Vertx` instance object in the create methods. These methods access file system. Passing the `Vertx` object ensures consistent access to files using the 'Vertx' file system.
 
-The following example shows how create methods were used in {VertX} {v3x} releases:
+The following example shows how create methods were used in {VertX} {v3x} releases.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 FaviconHandler.create();
 ErrorHandler.create();
 ----
 
-The following example shows how create methods should be used in {VertX} {v4}:
+The following example shows how create methods should be used in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 FaviconHandler.create(vertx);
 ErrorHandler.create(vertx);
@@ -65,16 +67,18 @@ In earlier releases of {VertX}, the `Router.mountSubRouter()` method incorrectly
 
 The `JWTAuthHandler.create(JWTAuth authProvider, String skip)` method has been removed. Use the `JWTAuthHandler.create(JWTAuth authProvider)` method instead.
 
-The following example shows how JWT authentication handler was created in {VertX} {v3x} releases:
+The following example shows how JWT authentication handler was created in {VertX} {v3x} releases.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 router
    // protect everything but "/excluded/path"
    .route().handler(JWTAuthHandler(jwtAuth, "/excluded/path")
 ----
 
-TThe following example shows how JWT authentication handler was created in {VertX} {v4}.
+The following example shows how JWT authentication handler was created in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 router
    .route("/excluded/path").handler(/* public access to "/excluded/path" */)
@@ -94,12 +98,13 @@ The `sockjs.BridgeOptions` class has been removed. Use the new `sockjs.SockJSBri
 
 There is no change in the behavior of the new class, except that the name of the data object class has changed.
 
-When you used `sockjs.BridgeOptions` class to add new bridges, there were a lot of duplicate configurations. The new class contains all the possible common configurations, and removes duplicate configurations.
+In previous releases, when you used `sockjs.BridgeOptions` class to add new bridges, there were a lot of duplicate configurations. The new class contains all the possible common configurations, and removes duplicate configurations.
 
 == SockJS socket event bus does not register a clustered event by default
 
 `SockJSSocket` no longer registers a clustered event bus consumer by default. If you want to write to the socket using the event bus, you must enable the `writeHandler` in `SockJSHandlerOptions`. When you enable the `writeHandler`, the event bus consumer is set to local by default.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 Router router = Router.router(vertx);
 SockJSHandlerOptions options = new SockJSHandlerOptions()
@@ -113,6 +118,7 @@ router.mountSubRouter("/myapp", sockJSHandler.socketHandler(sockJSSocket -> {
 
 You can configure the event bus consumer to a cluster.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 SockJSHandlerOptions options = new SockJSHandlerOptions()
   .setRegisterWriteHandler(true) // enable the event bus consumer registration

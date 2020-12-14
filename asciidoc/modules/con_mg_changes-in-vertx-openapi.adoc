@@ -1,7 +1,7 @@
 [id="changes-in-vertx-openapi_{context}"]
 = Changes in {VertX} OpenAPI
 
-In {VertX} {v4}, a new module `vertx-web-openapi` is available. Use his module alone with `vertx-web` to develop contract-driven applications.
+In {VertX} {v4}, a new module `vertx-web-openapi` is available. Use this module alone with `vertx-web` to develop contract-driven applications.
 
 The new module works well with {VertX} Web `Router`. The new module requires the following {VertX} dependencies:
 
@@ -18,6 +18,7 @@ The `vertx-web-openapi` module uses `RouterBuilder` to build the {VertX} Web rou
 
 To start working with the `vertx-web-openapi` module, instantiate the `RouterBuilder`.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 RouterBuilder.create(vertx, "petstore.yaml").onComplete(ar -> {
   if (ar.succeeded()) {
@@ -30,8 +31,9 @@ RouterBuilder.create(vertx, "petstore.yaml").onComplete(ar -> {
 });
 ----
 
-You can also instantiate the `RouterBuilder` using futures:
+You can also instantiate the `RouterBuilder` using futures.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 RouterBuilder.create(vertx, "petstore.yaml")
   .onSuccess(routerBuilder -> {
@@ -42,7 +44,7 @@ RouterBuilder.create(vertx, "petstore.yaml")
   });
 ----
 
-NOTE: The vertx-web-openapi` module uses the {VertX} file system APIs to load the files. Therefore, you do not have to specify `/` for the classpath resources. For example, you can specify `petstore.yaml` in your application. The `RouterBuilder` can identify the contract from your classpath resources.
+NOTE: The `vertx-web-openapi` module uses the {VertX} file system APIs to load the files. Therefore, you do not have to specify `/` for the classpath resources. For example, you can specify `petstore.yaml` in your application. The `RouterBuilder` can identify the contract from your classpath resources.
 
 == New router builder methods
 
@@ -61,6 +63,7 @@ In most cases, you can search and replace usages of old `OpenAPI3RouterFactory` 
 
 Use the following syntax to access the parsed request parameters:
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 RequestParameters parameters = routingContext.get(io.vertx.ext.web.validation.ValidationHandler.REQUEST_CONTEXT_KEY);
 int aParam = parameters.queryParameter("aParam").getInteger();
@@ -71,7 +74,7 @@ int aParam = parameters.queryParameter("aParam").getInteger();
 In {VertX} {v4}, the
 methods `RouterFactory.addSecurityHandler()` and `OpenAPI3RouterFactory.addSecuritySchemaScopeValidator()` are no longer available.
 
-Use the `RouterBuilder.securityHandler()` method instead. This method accepts `io.vertx.ext.web.handler.AuthenticationHandler` as an handler. The method also automatically recognizes `OAuth2Handler` and sets up the security schema.
+Use the `RouterBuilder.securityHandler()` method instead. This method accepts `io.vertx.ext.web.handler.AuthenticationHandler` as an handler. The method automatically recognizes `OAuth2Handler` and sets up the security schema.
 
 The new security handlers also implement the operations defined in the link:https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md#operationObject[OpenAPI specification].
 
@@ -90,20 +93,23 @@ In `vertx-web-openapi` module, the following  failure handlers are not available
 
 In {VertX} {v4}, the OpenAPI contract is not mapped to plain old Java object (POJO). So, the additional swagger-parser dependency is no longer required. You can use the getters and resolvers to retrieve specific components of the contract.
 
-The following example shows you how to retrieve a specific component using a single operation.
+The following example shows how to retrieve a specific component using a single operation.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 JsonObject model = routerBuilder.operation("getPets").getOperationModel();
 ----
 
-The following example shows you how to retrieve the full contract.
+The following example shows how to retrieve the full contract.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 JsonObject contract = routerBuilder.getOpenAPI().getOpenAPI();
 ----
 
 The following example shows you how to resolve parts of the contract.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 JsonObject petModel = routerBuilder.getOpenAPI().getCached(JsonPointer.from("/components/schemas/Pet"));
 ----
@@ -120,6 +126,7 @@ The `vertx-web-api-service` module has been updated and can be used with the `ve
 
 However, if you do not use OpenAPI, then to use the web service module with `vertx-web-validation` module you must use the `RouteToEBServiceHandler` class.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 router.get("/api/transactions")
   .handler(

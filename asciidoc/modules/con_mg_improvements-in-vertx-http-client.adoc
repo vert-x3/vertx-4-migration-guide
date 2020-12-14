@@ -68,7 +68,7 @@ The following example shows how the `HttpClientRequest.connectionHandler()` meth
 [source,java,options="nowrap",subs="attributes+"]
 ----
 client.request().connectionHandler(conn -> {
-  // Do something with connection
+  // Connection related code
 }).end();
 ----
 
@@ -101,7 +101,7 @@ client.request(HttpMethod.CONNECT, uri, ar -> {
 }).end();
 ----
 
-The following example shows how to get net socket for a connection in {VertX} {v4}:
+The following example shows how to get net socket for a connection in {VertX} {v4}.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -184,7 +184,7 @@ In {VertX} {v4}, the following new methods are available in the `RequestOptions`
 * FollowRedirects
 * Timeout
 
-The following example shows you how to use these new methods:
+The following example shows how to use the new methods.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
