@@ -26,4 +26,4 @@ If you had a custom Infinispan configuration file in your {VertX} {v3x} applicat
   </cache-container>
 ----
 
-If you run a {VertX} cluster on Openshift, the `infinispan-cloud` JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the `infinispan-core` JAR.
+If you run an {VertX} cluster on Openshift, the `infinispan-cloud` JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the `infinispan-core` JAR.

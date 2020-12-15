@@ -1,7 +1,7 @@
 [id="changes-in-handlers_{context}"]
-= Changes in Future
+= Changes in future
 
-This section explains the changes in Future.
+This section explains the changes in future.
 
 == Support for multiple handlers for futures
 
@@ -43,9 +43,3 @@ client.connectionHandler(conn -> {
   // Connection related code
 });
 ----
-
-== Checking the version of HTTP running on the server
-
-In earlier releases of {VertX}, the version of HTTP running on a server was checked only if the application explicitly called the `HttpServerRequest.version()` method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.
-
-From {VertX} {v4} onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the `HttpServerRequest.version()` method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.

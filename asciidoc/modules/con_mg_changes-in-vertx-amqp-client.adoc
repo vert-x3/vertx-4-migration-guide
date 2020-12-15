@@ -5,7 +5,7 @@ The following section describes the changes in {VertX} AMQP client.
 
 == Removed methods in AMQP client that contain `AmqpMessage` argument
 
-The AMQP client methods that had `Handler<AmqpMessage>` as an argument have been removed. In earlier releases, you could set this handler on  `ReadStream<AmqpMessage>`. However, if you migrate your applications to use futures, such types of methods cannot be used.
+The AMQP client methods that had `Handler<AmqpMessage>` as an argument have been removed. In earlier releases, you could set this handler on  `ReadStream<AmqpMessage>`. However, if you migrate your applications to use futures, such methods cannot be used.
 
 |===
 |Removed methods|Replacing methods

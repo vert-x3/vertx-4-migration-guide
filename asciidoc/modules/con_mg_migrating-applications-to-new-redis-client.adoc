@@ -1,7 +1,7 @@
 [id="migrating-applications-to-new-redis-client_{context}"]
 = Migrating existing Redis client applications to new client
 
-You can migrate your existing applications to new `Redis` client directly or use the helper class `RedisAPI` to move your in two steps.
+You can migrate your existing applications to new `Redis` client directly or use the helper class `RedisAPI` to migrate your applications in two steps.
 
 Before migrating the applications you must create the client.
 
@@ -9,6 +9,7 @@ Before migrating the applications you must create the client.
 
 The following example shows how a Redis client was created in {VertX} {v3x} releases.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Create the redis client (3.x)
 RedisClient client = RedisClient
@@ -17,6 +18,7 @@ RedisClient client = RedisClient
 
 The following example shows how to create a Redis client in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Create the redis client (4.x)
 Redis client = Redis
@@ -27,6 +29,7 @@ Redis client = Redis
 
 In {VertX} {v4}, the client uses the following standard connection string syntax:
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 redis[s]://[[user]:password@]server[:port]/[database]
 ----
@@ -43,7 +46,9 @@ Or
 
 You must create the client and then update the applications to handle requests.
 
-The following example shows you how to handle requests after creating the client in {VertX} {v3x} releases.
+The following example shows how to handle requests after creating the client in {VertX} {v3x} releases.
+
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Using 3.x
 // omitting the error handling for brevity
@@ -62,6 +67,7 @@ client.set("key", "value", s -> {
 The following example shows how to handle requests after creating the client in {VertX} {v4}. The example uses a list
 for setting the key-value pairs instead of hard coding options. See link:https://redis.io/commands/set[Redis SET command] for more information on arguments available for the command.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Using 4.x
 // omitting the error handling for brevity
@@ -93,7 +99,9 @@ When you migrate to the new `Redis` client directly:
 
 You must create the client and then update the applications to handle requests.
 
-The following example shows you how to set and get requests after creating the client in {VertX} {v3x} releases.
+The following example shows how to set and get requests after creating the client in {VertX} {v3x} releases.
+
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Using 3.x
 // omitting the error handling for brevity
@@ -109,8 +117,9 @@ client.set("key", "value", s -> {
 });
 ----
 
-The following example shows you how to handle requests after creating the client in {VertX} {v4}.
+The following example shows how to handle requests after creating the client in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Using 4.x
 // omitting the error handling for brevity
@@ -138,7 +147,7 @@ In {VertX} {v3x}, the client used to hardcode all known commands till Redis 5, a
 
 In the new client, the commands are not hardcoded. The responses are of the type `Response`. The new wire protocol has more range of types.
 
-In older client, a response would be of a type:
+In older client, a response would be of following types:
 
 * `null`
 
@@ -150,7 +159,7 @@ In older client, a response would be of a type:
 
 * `JsonObject` (For `INFO` and `HMGET` array responses)
 
-In the new client, the response is of type:
+In the new client, the response is of following types:
 
 * `null`
 
@@ -166,13 +175,14 @@ The `Response` object has type converters. For example, converters such as:
 
 * `toBuffer()`
 
-If the data received is not of the requested type, then the type converters convert it to the closet possible data type.
+If the received data is not of the requested type, then the type converters convert it to the closet possible data type.
 When the conversion to a particular type is not possible, the `UnsupportedOperationException` is thrown. For example, conversion from `String` to `List` or `Map` is not possible.
 
 You can also handle collections, because the `Response` object implements the `Iterable` interface.
 
 The following example shows how to perform a MGET request.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 // Using 4.x
 // omitting the error handling for brevity
@@ -183,5 +193,5 @@ import static io.vertx.redis.client.Command.*;
 client.send(cmd(MGET).arg("key1").arg("key2").arg("key3"), mget -> {
   mget.result()
     .forEach(value -> {
-      // Do something with a single value...
+      // Use the single value
 ----
