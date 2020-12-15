@@ -42,6 +42,6 @@ Use the following code in your build scripts to access the module.
 
 == Versioning of JavaScript client
 
-In earlier releases, for every {VertX} release included a new release of the JavaScript client.
+Before {VertX} {v4}, every {VertX} release included a new release of the JavaScript client.
 
 However, from {VertX} {v4} onward, a new version of JavaScript client will be available in npm only if there changes in the client. You do not need to update your client application for every {VertX} release, unless there is a version change.

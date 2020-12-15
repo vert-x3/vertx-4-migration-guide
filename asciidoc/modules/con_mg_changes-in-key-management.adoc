@@ -19,6 +19,7 @@ The `SecretOptions` class is no longer available. Use the new `PubSecKeyOptions`
 
 The following example shows how methods of `SecretOptions` class were used in {VertX} {v3x} releases.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 new SecretOptions()
     .setType("HS256")
@@ -27,6 +28,7 @@ new SecretOptions()
 
 The following example shows how methods of `PubSecKeyOptions` class should be used in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 new PubSecKeyOptions()
     .setAlgorithm("HS256")
@@ -118,7 +120,7 @@ new KeyStoreOptions()
   .setType("jceks")
   .setPassword("keystore-password")
   // optionally if your keys have different passwords
-  // if a key specific id is not provided it defaults to
+  // and if a key specific id is not provided it defaults to
   // the keystore password
   .putPasswordProtection("key-id", "key-specific-password");
 ----

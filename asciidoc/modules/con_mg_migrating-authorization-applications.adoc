@@ -14,15 +14,15 @@ user.isAuthorized("printers:printer1234", res -> {
   if (res.succeeded()) {
     boolean hasAuthority = res.result();
     if (hasAuthority) {
-      System.out.println("User has the authority");
+      System.out.println("User can use the printer");
     } else {
-      System.out.println("User does not have the authority");
+      System.out.println("User cannot use the printer");
     }
   }
 });
 ----
 
-This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From {VertX} {v4}, it is possible to perform such authorization by using different providers.
+This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From {VertX} {v4}, it is possible to perform such authorization checks by using different providers.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -30,9 +30,9 @@ This authorization worked for JDBC and MongoDB. However it did not work for prov
 provider.getAuthorizations(user, res -> {
   if (res.succeeded()) {
     if (PermissionBasedAuthorization.create("printer1234").match(user)) {
-      System.out.println("User has the authority");
+      System.out.println("User can use the printer");
     } else {
-      System.out.println("User does not have the authority");
+      System.out.println("User cannot use the printer");
     }
   }
 });

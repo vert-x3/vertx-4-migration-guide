@@ -7,26 +7,28 @@ The following section describes the changes in {VertX} MQTT.
 
 Some fluent methods in `MqttClient` class return `Future` instead of being fluent. For example, methods such as, `MqttClient.connect()`, `MqttClient.disconnect()`, `MqttClient.publish()` return future in {VertX} {v4}.
 
-The following example shows the use of `publish()` method in {VertX} {v3x} releases:
+The following example shows the use of `publish()` method in {VertX} {v3x} releases.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 client
    .publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false)
    .publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);
 ----
 
-The following example shows the use of `publish()` method in {VertX} {v4} release:
+The following example shows the use of `publish()` method in {VertX} {v4} release.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 client.publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false);
 client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);
 ----
 
-== Mqtt will message returns a buffer
+== `MqttWill` messages return buffer
 
 The `MqttWill` data object wraps a string message as an {VertX} buffer instead of a byte array.
 
-== Removed the deprecated will and authorization methods from MQTT
+== Removed the deprecated `MqttWill` and authorization methods from MQTT
 
 The following MQTT methods have been removed:
 

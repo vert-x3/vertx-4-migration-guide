@@ -1,6 +1,8 @@
 ECLIPSE VERT.X 4 MIGRATION GUIDE
 
-This guide describes the updates in Eclipse Vert.x {v4} release. Use the information to upgrade your {VertX} {v3x} applications to {VertX} {v4}.
+This guide describes the updates in Eclipse Vert.x {v4} release. Use the information to upgrade your {VertX} {v3x} applications to {VertX} {v4}. It provides information about the new, deprecated and unsupported features in this release.
+
+Depending on the modules used in your application, you can read the relevant section to know more about the changes in {VertX} {v4}. 
 
 include::modules/con_mg-about-vertx.adoc[leveloffset=+1]
 
