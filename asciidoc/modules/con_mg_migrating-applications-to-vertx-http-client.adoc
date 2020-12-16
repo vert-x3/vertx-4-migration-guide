@@ -201,3 +201,36 @@ response.end(ar -> {
   }
 });
 ----
++
+
+On the other hand, we can handle the response with some operations if we want to. You can see the difference in the next examples.
+
+The following example shows an example using HTTP client in {VertX} {v3x} releases:
+
+----
+HttpClient client = vertx.createHttpClient(options);
+
+    client.request(HttpMethod.GET, 8443, "localhost", "/")
+      .onSuccess(request -> {
+        request.onSuccess(resp -> {
+
+        //Handler some operation with the response
+        });
+      });
+----
+
+The following example shows an example using HTTP client with the result method in {VertX} {v4x} releases:
+
+----
+HttpClient client = vertx.createHttpClient(options);
+
+    client.request(HttpMethod.GET, 8443, "localhost", "/")
+      .onSuccess(request -> {
+        request.response().onSuccess(resp -> {
+
+        //Handler some operation with the response
+        });
+      });
+----
+
+
