@@ -8,9 +8,9 @@ It is important to decide the migration strategy for your codebase. This is beca
 * Subscription data changes - {VertX} has changed the format of the EventBus subscription data stored in cluster managers.
 * Transport protocol changes - {VertX} has changed some fields in the message transport protocol in the cluster.
 
-If you have a {VertX} cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.
+If you have an {VertX} cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.
 
-However, if you cannot migrate the codebase at one time, use the recommendations in this section to migrate a {VertX} {v3x} codebase to {VertX} {v4}.
+However, if you cannot migrate the codebase at one time, use the recommendations in this section to migrate an {VertX} {v3x} codebase to {VertX} {v4}.
 
 == Splitting the cluster
 
@@ -26,7 +26,7 @@ After you split the cluster, each team can move to {VertX} {v4} when they are re
 
 If you cannot split your cluster, then use https://github.com/vert-x3/vertx-eventbus-link[Vert.x EventBus Link] to migrate your codebase incrementally.
 
-Vert.x EventBus Link is a tool that connects a {VertX} {v3x} clustered EventBus to a {VertX} {v4} clustered EventBus.
+Vert.x EventBus Link is a tool that connects an {VertX} {v3x} clustered EventBus to an {VertX} {v4} clustered EventBus.
 
 WARNING: The migration of shared data API, that is, maps, counters and locks is not supported.
 
