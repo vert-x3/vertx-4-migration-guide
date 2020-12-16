@@ -48,14 +48,14 @@ The following example shows how to configure key pair in {VertX} {v3x}.
 ----
 new PubSecKeyOptions()
   .setPublicKey(
-    // remove the boundaries
+    // remove the PEM boundaries
     // (don't do this as it doesn't handle end of lines
     // it's for illustration purposes)
     pubPemString
       .replaceAll("-----BEGIN PUBLIC KEY----")
       .replaceAll("-----END PUBLIC KEY----"))
   .setSecretKey(
-    // remove the boundaries
+    // remove the PEM boundaries
     // (don't do this as it doesn't handle end of lines
     // it's for illustration purposes)
     secPemString

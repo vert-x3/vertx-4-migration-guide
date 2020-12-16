@@ -3,7 +3,7 @@
 
 Authorization is a new feature in {VertX} {v4}. In earlier releases, you could only check if a user was authorized to perform the tasks on the `User` object. This meant that the provider was responsible for both authentication and authorization of the user.
 
-In {VertX} {v4}, the `User` object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.
+In {VertX} {v4}, the `User` object instances are not associated with a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.
 
 The following example shows how an application checks if a user can use Printer #1234 in {VertX} {v3x} releases.
 

@@ -9,7 +9,8 @@ In {VertX} {v4}, the SQL client has been updated to include the following client
 
 * Reactive MySQL client
 * Reactive DB2 client
-* Existing JDBC client that includes the JDBC client API and the SQL client API.
+* Continues to include reactive PostgreSQL client. This client was available in {VertX} {v3x} releases as well.
+* Existing JDBC client now includes both the JDBC client API and the SQL client API
 
 The reactive implementations use the database network protocols. This makes them resource-efficient.
 
