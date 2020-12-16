@@ -5,14 +5,22 @@ The following sections list methods deprecated and removed for authentication an
 
 == List of removed authentication and authorization methods
 
+The following classes have been renamed:
+
+[options="header"]
+|===
+|3.x|4.x
+|`OAuth2ClientOptions`| `OAuth2Options`
+|===
+
 The following methods have been removed:
 
 [options="header"]
 |===
 |Removed methods|Replacing methods
 |`OAuth2Auth.createKeycloak()`| `KeycloakAuth.create(vertx, JsonObject) ()`
-|`OAuth2Auth.create(Vertx, OAuth2FlowType, OAuth2ClientOptions)()`| `OAuth2Auth.create(vertx, new OAuth2ClientOptions().setFlow(YOUR_DESIRED_FLOW))`
-|`OAuth2Auth.create(Vertx, OAuth2FlowType)`| `OAuth2Auth.create(vertx, new OAuth2ClientOptions().setFlow(YOUR_DESIRED_FLOW))`
+|`OAuth2Auth.create(Vertx, OAuth2FlowType, OAuth2ClientOptions)()`| `OAuth2Auth.create(vertx, new OAuth2Options().setHttpClientOptions(new HttpClientOptions()).setFlow(YOUR_DESIRED_FLOW))`
+|`OAuth2Auth.create(Vertx, OAuth2FlowType)`| `OAuth2Auth.create(vertx, new OAuth2Options().setHttpClientOptions(new HttpClientOptions()).setFlow(YOUR_DESIRED_FLOW))`
 |`User.isAuthorised()`|`User.isAuthorized()`
 |`User.setAuthProvider()`|No replacing method
 |`AccessToken.refreshToken()`|`AccessToken.opaqueRefreshToken()`
@@ -31,7 +39,7 @@ The following methods have been deprecated:
 |`OAuth2Auth.decodeToken()`|`AuthProvider.authenticate()`
 |`OAuth2Auth.introspectToken()`|`AuthProvider.authenticate()`
 |`OAuth2Auth.getFlowType()`| No replacing method
-|`OAuth2Auth.loadJWK()`|`OAuth2Auth.jwkSet()`
+|`OAuth2Auth.loadJWK()`|`OAuth2Auth.jWKSet()`
 |`Oauth2ClientOptions.isUseAuthorizationHeader()`|No replacing method
 |===
 
