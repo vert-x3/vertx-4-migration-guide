@@ -203,10 +203,11 @@ response.end(ar -> {
 ----
 +
 
-On the other hand, you can also handle the response with operations like onSuccess, compose, bodyHandler, etc.
+On the other hand, you can also handle the response with method such as onSucces(), compose(), bodyHandler() and so on.
+
 The following examples demonstrate handling responses with the operation onSuccess :
 
-The following example shows an example using HTTP client in {VertX} {v3x} releases:
+The following example shows how to use HTTP client with the result() method in {VertX} {v3x} releases:
 
 ----
 HttpClient client = vertx.createHttpClient(options);
@@ -220,7 +221,7 @@ HttpClient client = vertx.createHttpClient(options);
       });
 ----
 
-The following example shows an example using HTTP client with the result method in {VertX} {v4x} releases:
+The following example shows how to use HTTP client with the result() method in {VertX} {v4x} releases:
 
 ----
 HttpClient client = vertx.createHttpClient(options);
