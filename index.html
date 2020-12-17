@@ -1782,6 +1782,41 @@ response.exceptionHandler(err -&gt; {
 </dd>
 </dl>
 </div>
+<div class="paragraph">
+<p>You can also handle the response with methods such as, <code>onSucces()</code>, <code>compose()</code>, <code>bodyHandler()</code> and so on. The following examples demonstrate handling responses using the <code>onSuccess()</code> method.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to use HTTP client with the <code>result()</code> method in Vert.x 3.x releases.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java">HttpClient client = vertx.createHttpClient(options);
+
+    client.request(HttpMethod.GET, <span class="integer">8443</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>)
+      .onSuccess(request -&gt; {
+        request.onSuccess(resp -&gt; {
+
+        <span class="comment">//Code to handle HTTP response</span>
+        });
+      });</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows how to use HTTP client with the <code>result()</code> method in Vert.x 4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java">HttpClient client = vertx.createHttpClient(options);
+
+    client.request(HttpMethod.GET, <span class="integer">8443</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>)
+      .onSuccess(request -&gt; {
+        request.response().onSuccess(resp -&gt; {
+
+        <span class="comment">//Code to handle HTTP response</span>
+        });
+      });</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect4">
@@ -5451,7 +5486,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-17 04:01:24 UTC
+Last updated 2020-12-17 14:51:49 UTC
 </div>
 </div>
 </body>
