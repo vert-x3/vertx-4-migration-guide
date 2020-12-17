@@ -533,7 +533,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel2">
 <li><a href="#changes-in-messaging_changes-in-common-components">Changes in messaging</a></li>
 <li><a href="#changes-in-eventbus_changes-in-common-components">Changes in EventBus</a></li>
-<li><a href="#changes-in-handlers_changes-in-common-components">Changes in Future</a></li>
+<li><a href="#changes-in-handlers_changes-in-common-components">Changes in future</a></li>
 <li><a href="#changes-in-verticles_changes-in-common-components">Changes in verticles</a></li>
 <li><a href="#changes-in-threads_changes-in-common-components">Changes in threads</a></li>
 <li><a href="#changes-in-http_changes-in-common-components">Changes in HTTP</a></li>
@@ -617,7 +617,10 @@ table.CodeRay td.code>pre{padding:0}
 <p>ECLIPSE VERT.X 4 MIGRATION GUIDE</p>
 </div>
 <div class="paragraph">
-<p>This guide describes the updates in Eclipse Vert.x 4 release. Use the information to upgrade your Vert.x 3.x applications to Vert.x 4.</p>
+<p>This guide describes the updates in Eclipse Vert.x 4 release. Use the information to upgrade your Vert.x 3.x applications to Vert.x 4. It provides information about the new, deprecated and unsupported features in this release.</p>
+</div>
+<div class="paragraph">
+<p>Depending on the modules used in your application, you can read the relevant section to know more about the changes in Vert.x 4.</p>
 </div>
 </div>
 </div>
@@ -766,7 +769,7 @@ fut2.onComplete(ar -&gt; {
 <div class="ulist">
 <ul>
 <li>
-<p>Some APIs were deprecated in a Vert.x 3.x release and new equivalent APIs were provided in that release.</p>
+<p>Some APIs were deprecated in an Vert.x 3.x release and new equivalent APIs were provided in that release.</p>
 </li>
 <li>
 <p>The deprecated APIs have been removed in Vert.x 4.</p>
@@ -935,9 +938,9 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 </div>
 <div class="sect2">
-<h3 id="changes-in-handlers_changes-in-common-components">Changes in Future</h3>
+<h3 id="changes-in-handlers_changes-in-common-components">Changes in future</h3>
 <div class="paragraph">
-<p>This section explains the changes in Future.</p>
+<p>This section explains the changes in future.</p>
 </div>
 <div class="sect3">
 <h4 id="_support_for_multiple_handlers_for_futures">Support for multiple handlers for futures</h4>
@@ -996,15 +999,6 @@ fut.onComplete(ar -&gt; ...);</pre>
   // Connection related code
 });</pre>
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_checking_the_version_of_http_running_on_the_server">Checking the version of HTTP running on the server</h4>
-<div class="paragraph">
-<p>In earlier releases of Vert.x, the version of HTTP running on a server was checked only if the application explicitly called the <code>HttpServerRequest.version()</code> method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.</p>
-</div>
-<div class="paragraph">
-<p>From Vert.x 4 onward, before a request is sent to the server, the HTTP version on the server is automatically checked by calling the <code>HttpServerRequest.version()</code> method. The method returns the HTTP version instead of throwing an exception when an invalid HTTP version is found.</p>
 </div>
 </div>
 </div>
@@ -1498,7 +1492,7 @@ Vert.x web client is based on Vert.x HTTP client.
 <pre class="CodeRay highlight nowrap"><code data-lang="java">HttpClientRequest request = client.get(<span class="integer">80</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">example.com</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, response -&gt; {
   <span class="type">int</span> statusCode = response.statusCode();
   response.exceptionHandler(err -&gt; {
-    <span class="comment">// Handle connection error, e.g connection closed</span>
+    <span class="comment">// Handle connection error, for example, connection closed</span>
   });
   response.bodyHandler(body -&gt; {
     <span class="comment">// Handle body entirely</span>
@@ -1538,7 +1532,7 @@ request.end();</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Simplified API with fewer interactions</p>
+<p>Simplified APIs with fewer interactions</p>
 </li>
 <li>
 <p>Robust error handling</p>
@@ -1571,7 +1565,7 @@ request.end();</code></pre>
 <pre class="CodeRay highlight nowrap"><code data-lang="java">HttpClientRequest request = client.get(<span class="integer">80</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">example.com</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>, response -&gt; {
   <span class="type">int</span> statusCode = response.statusCode();
   response.exceptionHandler(err -&gt; {
-    <span class="comment">// Handle connection error, e.g connection closed</span>
+    <span class="comment">// Handle connection error, for example, connection closed</span>
   });
   response.bodyHandler(body -&gt; {
     <span class="comment">// Handle body entirely</span>
@@ -1584,7 +1578,7 @@ request.end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to send a GET request in Vert.x 4 release.</p>
+<p>The following example shows how to send a GET request in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1600,15 +1594,15 @@ request.end();</code></pre>
             <span class="predefined-type">Buffer</span> body = ar3.result();
             <span class="comment">// Handle body entirely</span>
           } <span class="keyword">else</span> {
-            <span class="comment">// Handle server error, e.g connection closed</span>
+            <span class="comment">// Handle server error, for example, connection closed</span>
           }
         });
       } <span class="keyword">else</span> {
-        <span class="comment">// Handle server error, e.g connection closed</span>
+        <span class="comment">// Handle server error, for example, connection closed</span>
       }
     });
   } <span class="keyword">else</span> {
-    <span class="comment">// Deal connection error, e.g the invalid server or invalid SSL certificate</span>
+    <span class="comment">// Connection error, for example, invalid server or invalid SSL certificate</span>
   }
 });</code></pre>
 </div>
@@ -1617,7 +1611,7 @@ request.end();</code></pre>
 <p>You can see that error handling is better in the new HTTP client.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to use future composition in GET operation in Vert.x 4.</p>
+<p>The following example shows how to use future composition in a GET operation in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1660,7 +1654,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 <div class="sect5">
 <h6 id="_sending_requests">Sending requests</h6>
 <div class="paragraph">
-<p>In Vert.x 3.x releases, you can use the <code>end()</code> method to send requests.</p>
+<p>In Vert.x 3.x releases, you could use the <code>end()</code> method to send requests.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1668,7 +1662,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 </div>
 </div>
 <div class="paragraph">
-<p>You can also send a body in the request.</p>
+<p>You could also send a body in the request.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1676,7 +1670,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 </div>
 </div>
 <div class="paragraph">
-<p>Since <code>HttpClientRequest</code> is a <code>Writestream&lt;Buffer&gt;</code>, you can also use a pipe to stream the request.</p>
+<p>Since <code>HttpClientRequest</code> is a <code>Writestream&lt;Buffer&gt;</code>, you could also use a pipe to stream the request.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1688,7 +1682,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 </div>
 </div>
 <div class="paragraph">
-<p>In Vert.x 4, you can perform all the operations shown in the examples using the <code>get()</code> method. Additionally, you can also use the new <code>send()</code> method to perform these operations. You can pass a buffer, a string or a <code>ReadStream</code> as input to the <code>send()</code> method. The method returns an <code>HttpClientResponse</code> instance.</p>
+<p>In Vert.x 4, you can perform all the operations shown in the examples using the <code>get()</code> method. You can also use the new <code>send()</code> method to perform these operations. You can pass a buffer, a string, or a <code>ReadStream</code> as input to the <code>send()</code> method. The method returns an <code>HttpClientResponse</code> instance.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1701,7 +1695,7 @@ request.onComplete(ar -&gt; {
 })
 request.end();
 
-<span class="comment">// The new send method combines the above in a single operation</span>
+<span class="comment">// The new send method combines all the operations</span>
 request.send(ar -&gt; {
   <span class="keyword">if</span> (ar.succeeded()) {
     HttpClientResponse response = ar.result();
@@ -1714,7 +1708,7 @@ request.send(ar -&gt; {
 <div class="sect5">
 <h6 id="_handling_responses">Handling responses</h6>
 <div class="paragraph">
-<p>The <code>HttpClientResponse</code> interface has been updated and improved with following methods:</p>
+<p>The <code>HttpClientResponse</code> interface has been updated and improved with the following methods:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -1722,7 +1716,7 @@ request.send(ar -&gt; {
 <dd>
 <p>The <code>body()</code> method returns an asynchronous buffer. Use the <code>body()</code> method instead of <code>bodyHandler()</code>.</p>
 <div class="paragraph">
-<p>The following example shows how to use <code>bodyHandler()</code> method to get the request body.</p>
+<p>The following example shows how to use the <code>bodyHandler()</code> method to get the request body.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1735,7 +1729,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to use <code>body()</code> method to get the request body.</p>
+<p>The following example shows how to use the <code>body()</code> method to get the request body.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1753,7 +1747,7 @@ response.exceptionHandler(err -&gt; {
 <dd>
 <p>The <code>end()</code> method returns a future when a response is fully received successfully or failed. The method removes the response body. Use this method instead of <code>endHandler()</code> method.</p>
 <div class="paragraph">
-<p>The following example shows how to use <code>endHandler()</code> method.</p>
+<p>The following example shows how to use the <code>endHandler()</code> method.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1766,7 +1760,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows how to use <code>end()</code> method.</p>
+<p>The following example shows how to use the <code>end()</code> method.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2061,7 +2055,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 </div>
 <div class="sect5">
-<h6 id="_checking_the_version_of_http_running_on_the_server_2">Checking the version of HTTP running on the server</h6>
+<h6 id="_checking_the_version_of_http_running_on_the_server">Checking the version of HTTP running on the server</h6>
 <div class="paragraph">
 <p>In earlier releases of Vert.x, the version of HTTP running on a server was checked only if the application explicitly called the <code>HttpServerRequest.version()</code> method. If the HTTP version was HTTP/1.x, the method would return the 501 HTTP status, and close the connection.</p>
 </div>
@@ -2653,7 +2647,7 @@ SockJSHandlerOptions options = <span class="keyword">new</span> SockJSHandlerOpt
   .setRegisterWriteHandler(<span class="predefined-constant">true</span>); <span class="comment">// enable the event bus consumer registration</span>
 SockJSHandler sockJSHandler = SockJSHandler.create(vertx, options);
 router.mountSubRouter(<span class="string"><span class="delimiter">&quot;</span><span class="content">/myapp</span><span class="delimiter">&quot;</span></span>, sockJSHandler.socketHandler(sockJSSocket -&gt; {
-  <span class="comment">// Retrieve the writeHandlerID and store it (e.g. in a local map)</span>
+  <span class="comment">// Retrieve the writeHandlerID and store it (For example, in a local map)</span>
   <span class="predefined-type">String</span> writeHandlerID = sockJSSocket.writeHandlerID();
 }));</code></pre>
 </div>
@@ -3156,7 +3150,7 @@ methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3Router
 <div class="sect3">
 <h4 id="_removed_execute_command_methods_in_circuit_breaker">Removed execute command methods in circuit breaker</h4>
 <div class="paragraph">
-<p>The following methods are deprecated in <code>CircuitBreaker</code> class because they cannot be used with futures.</p>
+<p>The following methods have been removed from the <code>CircuitBreaker</code> class because they cannot be used with futures.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -3171,12 +3165,12 @@ methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3Router
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.executeCommand</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.execute</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.executeCommand()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.execute()</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.executeCommandWithFallback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.executeWithFallback</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.executeCommandWithFallback()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CircuitBreaker.executeWithFallback()</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -3188,7 +3182,7 @@ methods <code>RouterFactory.addSecurityHandler()</code> and <code>OpenAPI3Router
 <p>The following section describes the changes in Vert.x service discovery.</p>
 </div>
 <div class="sect3">
-<h4 id="_removed_create_methods_that_contain_code_servicediscovery_code_argument_from_service_discovery">Removed create methods that contain <code>ServiceDiscovery</code> argument from service discovery</h4>
+<h4 id="_removed_create_methods_from_service_discovery_that_contain_code_servicediscovery_code_argument">Removed create methods from service discovery that contain <code>ServiceDiscovery</code> argument</h4>
 <div class="paragraph">
 <p>The following create methods in service discovery that have <code>Handler&lt;AmqpMessage&gt;</code> as an argument have been removed. These methods cannot be used with futures.</p>
 </div>
@@ -3294,7 +3288,7 @@ provider.authenticate(authInfo, res -&gt; {
 <p>Authorization is a new feature in Vert.x 4. In earlier releases, you could only check if a user was authorized to perform the tasks on the <code>User</code> object. This meant that the provider was responsible for both authentication and authorization of the user.</p>
 </div>
 <div class="paragraph">
-<p>In Vert.x 4, the <code>User</code> object instances are not associated to a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.</p>
+<p>In Vert.x 4, the <code>User</code> object instances are not associated with a particular authentication provider. So you can authenticate and authorize a user using different providers. For example, you can authenticate a user using OAuth2 and perform authorization checks against MongoDB or SQL database.</p>
 </div>
 <div class="paragraph">
 <p>The following example shows how an application checks if a user can use Printer #1234 in Vert.x 3.x releases.</p>
@@ -3306,16 +3300,16 @@ user.isAuthorized(<span class="string"><span class="delimiter">&quot;</span><spa
   <span class="keyword">if</span> (res.succeeded()) {
     <span class="type">boolean</span> hasAuthority = res.result();
     <span class="keyword">if</span> (hasAuthority) {
-      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User has the authority</span><span class="delimiter">&quot;</span></span>);
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User can use the printer</span><span class="delimiter">&quot;</span></span>);
     } <span class="keyword">else</span> {
-      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User does not have the authority</span><span class="delimiter">&quot;</span></span>);
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User cannot use the printer</span><span class="delimiter">&quot;</span></span>);
     }
   }
 });</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From Vert.x 4, it is possible to perform such authorization by using different providers.</p>
+<p>This authorization worked for JDBC and MongoDB. However it did not work for providers such as OAuth2, because the provider did not perform authorization checks. From Vert.x 4, it is possible to perform such authorization checks by using different providers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3323,9 +3317,9 @@ user.isAuthorized(<span class="string"><span class="delimiter">&quot;</span><spa
 provider.getAuthorizations(user, res -&gt; {
   <span class="keyword">if</span> (res.succeeded()) {
     <span class="keyword">if</span> (PermissionBasedAuthorization.create(<span class="string"><span class="delimiter">&quot;</span><span class="content">printer1234</span><span class="delimiter">&quot;</span></span>).match(user)) {
-      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User has the authority</span><span class="delimiter">&quot;</span></span>);
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User can use the printer</span><span class="delimiter">&quot;</span></span>);
     } <span class="keyword">else</span> {
-      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User does not have the authority</span><span class="delimiter">&quot;</span></span>);
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">User cannot use the printer</span><span class="delimiter">&quot;</span></span>);
     }
   }
 });</code></pre>
@@ -3369,9 +3363,9 @@ provider.getAuthorizations(user, res -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>new SecretOptions()
-    .setType("HS256")
-    .setSecret("password")</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">new</span> SecretOptions()
+    .setType(<span class="string"><span class="delimiter">&quot;</span><span class="content">HS256</span><span class="delimiter">&quot;</span></span>)
+    .setSecret(<span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3379,9 +3373,9 @@ provider.getAuthorizations(user, res -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>new PubSecKeyOptions()
-    .setAlgorithm("HS256")
-    .setSecretKey("password")</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">new</span> PubSecKeyOptions()
+    .setAlgorithm(<span class="string"><span class="delimiter">&quot;</span><span class="content">HS256</span><span class="delimiter">&quot;</span></span>)
+    .setSecretKey(<span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
@@ -3407,16 +3401,12 @@ provider.getAuthorizations(user, res -&gt; {
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">new</span> PubSecKeyOptions()
   .setPublicKey(
-    <span class="comment">// remove the boundaries</span>
-    <span class="comment">// (don't do this as it doesn't handle end of lines</span>
-    <span class="comment">// it's for illustration purposes)</span>
+    <span class="comment">// remove the PEM boundaries</span>
     pubPemString
       .replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content">-----BEGIN PUBLIC KEY----</span><span class="delimiter">&quot;</span></span>)
       .replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content">-----END PUBLIC KEY----</span><span class="delimiter">&quot;</span></span>))
   .setSecretKey(
-    <span class="comment">// remove the boundaries</span>
-    <span class="comment">// (don't do this as it doesn't handle end of lines</span>
-    <span class="comment">// it's for illustration purposes)</span>
+    <span class="comment">// remove the PEM boundaries</span>
     secPemString
       .replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content">-----BEGIN PUBLIC KEY----</span><span class="delimiter">&quot;</span></span>)
       .replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content">-----END PUBLIC KEY----</span><span class="delimiter">&quot;</span></span>));</code></pre>
@@ -3432,12 +3422,12 @@ provider.getAuthorizations(user, res -&gt; {
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java">PubSecKeyOptions pubKey =
   <span class="keyword">new</span> PubSecKeyOptions()
-    <span class="comment">// the buffer is the exact contents of the PEM file (boundaries included)</span>
+    <span class="comment">// the buffer is the exact contents of the PEM file and had boundaries included in it</span>
     .setBuffer(pubPemString);
 
 PubSecKeyOptions secKey =
   <span class="keyword">new</span> PubSecKeyOptions()
-    <span class="comment">// the buffer is the exact contents of the PEM file (boundaries included)</span>
+    <span class="comment">// the buffer is the exact contents of the PEM file and had boundaries included in it</span>
     .setBuffer(secPemString);</code></pre>
 </div>
 </div>
@@ -3448,7 +3438,7 @@ PubSecKeyOptions secKey =
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java">PubSecKeyOptions x509Certificate =
   <span class="keyword">new</span> PubSecKeyOptions()
-    <span class="comment">// the buffer is the exact contents of the PEM file (boundaries included)</span>
+    <span class="comment">// the buffer is the exact contents of the PEM file and had boundaries included in it</span>
     .setBuffer(x509PemString);</code></pre>
 </div>
 </div>
@@ -3484,12 +3474,12 @@ PubSecKeyOptions secKey =
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">new</span> KeyStoreOptions()
   .setPath(<span class="string"><span class="delimiter">&quot;</span><span class="content">path/to/keystore.jks</span><span class="delimiter">&quot;</span></span>)
-  <span class="comment">// this is required as for modern JDKs this isn't the default</span>
-  <span class="comment">// type and probaly `pkcs12` will be picked instead</span>
+  <span class="comment">// Modern JDKs use `jceks` keystore. But this type is not the default</span>
+  <span class="comment">// If the type is not set to `jceks` then probably `pkcs12` will be used</span>
   .setType(<span class="string"><span class="delimiter">&quot;</span><span class="content">jceks</span><span class="delimiter">&quot;</span></span>)
   .setPassword(<span class="string"><span class="delimiter">&quot;</span><span class="content">keystore-password</span><span class="delimiter">&quot;</span></span>)
   <span class="comment">// optionally if your keys have different passwords</span>
-  <span class="comment">// if a key specific id is not provided it defaults to</span>
+  <span class="comment">// and if a key specific id is not provided it defaults to</span>
   <span class="comment">// the keystore password</span>
   .putPasswordProtection(<span class="string"><span class="delimiter">&quot;</span><span class="content">key-id</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">key-specific-password</span><span class="delimiter">&quot;</span></span>);</code></pre>
 </div>
@@ -3662,7 +3652,7 @@ PubSecKeyOptions secKey =
 <div class="sect3">
 <h4 id="_new_grpc_compiler_plugin">New gRPC compiler plugin</h4>
 <div class="paragraph">
-<p>In Vert.x 4, the module <code>protoc-gen-grpc-java</code> is longer available. This module was a fork of the official gRPC compiler. In earlier releases of Vert.x, you had to work with this fork. This fork is maintained by the Eclipse project. Working with the fork was complex.</p>
+<p>In Vert.x 4, the module <code>protoc-gen-grpc-java</code> is no longer available. This module was a fork of the official gRPC compiler. In earlier releases of Vert.x, you had to work with this fork. This fork is maintained by the Eclipse project. Working with the fork was complex.</p>
 </div>
 <div class="paragraph">
 <p>In previous releases, to work with gRPC, the following details were added to <code>pom.xml</code> file.</p>
@@ -3762,7 +3752,7 @@ VertxGreeterGrpc.GreeterVertxImplBase service =
 <p>In Vert.x 4, the gRPC APIs support futures. The gRPC plugin generates promisified APIs. These APIs use the standard Vert.x input and output arguments, which makes it easier to create standard Vert.x applications.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you use of promises in Vert.x 3.x.</p>
+<p>The following example shows the use of promise in Vert.x 3.x.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3778,7 +3768,7 @@ GreeterGrpc.GreeterVertxImplBase service =
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows use of futures in Vert.x 4.</p>
+<p>The following example shows the use of futures in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3808,33 +3798,33 @@ VertxGreeterGrpc.GreeterVertxImplBase service =
 <p>Some fluent methods in <code>MqttClient</code> class return <code>Future</code> instead of being fluent. For example, methods such as, <code>MqttClient.connect()</code>, <code>MqttClient.disconnect()</code>, <code>MqttClient.publish()</code> return future in Vert.x 4.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows the use of <code>publish()</code> method in Vert.x 3.x releases:</p>
+<p>The following example shows the use of <code>publish()</code> method in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client
-   .publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false)
-   .publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">client
+   .publish(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">Buffer</span>.buffer(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>), MqttQoS.EXACTLY_ONCE, <span class="predefined-constant">false</span>, <span class="predefined-constant">false</span>)
+   .publish(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">Buffer</span>.buffer(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>), MqttQoS.AT_LEAST_ONCE, <span class="predefined-constant">false</span>, <span class="predefined-constant">false</span>);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows the use of <code>publish()</code> method in Vert.x 4 release:</p>
+<p>The following example shows the use of <code>publish()</code> method in Vert.x 4 release.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client.publish("hello", Buffer.buffer("hello"), MqttQoS.EXACTLY_ONCE, false, false);
-client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, false);</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">client.publish(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">Buffer</span>.buffer(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>), MqttQoS.EXACTLY_ONCE, <span class="predefined-constant">false</span>, <span class="predefined-constant">false</span>);
+client.publish(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>, <span class="predefined-type">Buffer</span>.buffer(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello</span><span class="delimiter">&quot;</span></span>), MqttQoS.AT_LEAST_ONCE, <span class="predefined-constant">false</span>, <span class="predefined-constant">false</span>);</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_mqtt_will_message_returns_a_buffer">Mqtt will message returns a buffer</h4>
+<h4 id="_code_mqttwill_code_messages_return_buffer"><code>MqttWill</code> messages return buffer</h4>
 <div class="paragraph">
 <p>The <code>MqttWill</code> data object wraps a string message as an Vert.x buffer instead of a byte array.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_removed_the_deprecated_will_and_authorization_methods_from_mqtt">Removed the deprecated will and authorization methods from MQTT</h4>
+<h4 id="_removed_the_deprecated_code_mqttwill_code_and_authorization_methods_from_mqtt">Removed the deprecated <code>MqttWill</code> and authorization methods from MQTT</h4>
 <div class="paragraph">
 <p>The following MQTT methods have been removed:</p>
 </div>
@@ -3891,7 +3881,7 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;dependencies&gt;
+<pre class="CodeRay highlight nowrap"><code data-lang="java">&lt;dependencies&gt;
   &lt;dependency&gt;
     &lt;groupId&gt;io.vertx&lt;/groupId&gt;
     &lt;artifactId&gt;vertx-codegen&lt;/artifactId&gt;
@@ -3901,7 +3891,7 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
     &lt;groupId&gt;io.vertx&lt;/groupId&gt;
     &lt;artifactId&gt;vertx-service-proxy&lt;/artifactId&gt;
   &lt;/dependency&gt;
-&lt;/dependencies&gt;</pre>
+&lt;/dependencies&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3955,7 +3945,10 @@ client.publish("hello", Buffer.buffer("hello"), MqttQoS.AT_LEAST_ONCE, false, fa
 <p>Reactive DB2 client</p>
 </li>
 <li>
-<p>Existing JDBC client that includes the JDBC client API and the SQL client API.</p>
+<p>Continues to include reactive PostgreSQL client. This client was available in Vert.x 3.x releases as well.</p>
+</li>
+<li>
+<p>Existing JDBC client now includes both the JDBC client API and the SQL client API</p>
 </li>
 </ul>
 </div>
@@ -3998,7 +3991,7 @@ JDBCPool pool = JDBCPool.pool(vertx, jsonConfig);</code></pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-Though the Vert.x 3.x APIs are supported in Vert.x 4, it is recommended that you use the new JDC client APIs in your applications.
+Though the Vert.x 3.x APIs are supported in Vert.x 4, it is recommended that you use the new JDBC client APIs in your applications.
 </td>
 </tr>
 </table>
@@ -4015,10 +4008,10 @@ Though the Vert.x 3.x APIs are supported in Vert.x 4, it is recommended that you
 client.getConnection(res -&gt; {
   <span class="keyword">if</span> (res.succeeded()) {
     SQLConnection connection = res.result();
-    <span class="comment">// very important! do not forget to return the connection</span>
+    <span class="comment">// Important, do not forget to return the connection</span>
     connection.close();
   } <span class="keyword">else</span> {
-    <span class="comment">// Failed to get connection - deal with it</span>
+    <span class="comment">// Failed to get connection</span>
   }
 });</code></pre>
 </div>
@@ -4032,10 +4025,10 @@ client.getConnection(res -&gt; {
 pool
   .getConnection()
   .onFailure(e -&gt; {
-    <span class="comment">// failed to get a connection</span>
+    <span class="comment">// Failed to get a connection</span>
   })
   .onSuccess(conn -&gt; {
-    <span class="comment">// very important! don't forget to return the connection</span>
+    <span class="comment">// Important, do not forget to return the connection</span>
     conn.close();
   });</code></pre>
 </div>
@@ -4097,7 +4090,7 @@ To use Typesafe Config, you must include the <code>agroal</code> connection pool
 client.query(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT * FROM user WHERE emp_id &gt; ?</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> JsonArray().add(<span class="integer">1000</span>), res -&gt; {
   <span class="keyword">if</span> (res.succeeded()) {
     <span class="predefined-type">ResultSet</span> rs = res2.result();
-    <span class="comment">// Do something with results</span>
+    <span class="comment">// You can use these results in your application</span>
   }
 });</code></pre>
 </div>
@@ -4130,22 +4123,22 @@ pool
 <pre class="CodeRay highlight"><code data-lang="java">pool
   .getConnection()
   .onFailure(e -&gt; {
-    <span class="comment">// failed to get a connection</span>
+    <span class="comment">// Failed to get a connection</span>
   })
   .onSuccess(conn -&gt; {
     conn
       .query(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT * FROM user</span><span class="delimiter">&quot;</span></span>)
       .execute()
       .onFailure(e -&gt; {
-        <span class="comment">// handle the failure</span>
-        <span class="comment">// very important! don't forget to return the connection</span>
+        <span class="comment">// Handle the failure</span>
+        <span class="comment">// Important, do not forget to return the connection</span>
         conn.close();
       })
       .onSuccess(rows -&gt; {
         <span class="keyword">for</span> (Row row : rows) {
           <span class="predefined-type">System</span>.out.println(row.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">FIRST_NAME</span><span class="delimiter">&quot;</span></span>));
         }
-        <span class="comment">// very important! don't forget to return the connection</span>
+        <span class="comment">// Important, do not forget to return the connection</span>
         conn.close();
       });
   });</code></pre>
@@ -4233,7 +4226,7 @@ client
 <div class="ulist">
 <ul>
 <li>
-<p>For an argument is of type <code>OUT</code>, you can specify its return type. In the example, the <code>OUT</code> argument is specified as type <code>VARCHAR</code> which is a JDBC constant.</p>
+<p>For an argument of type <code>OUT</code>, you can specify its return type. In the example, the <code>OUT</code> argument is specified as type <code>VARCHAR</code> which is a JDBC constant.</p>
 </li>
 <li>
 <p>The types are not bound by JSON limitations. You can now use database specific types instead of text constants for the type name.</p>
@@ -4268,7 +4261,7 @@ client
 <div class="sect3">
 <h4 id="_removed_methods_in_amqp_client_that_contain_code_amqpmessage_code_argument">Removed methods in AMQP client that contain <code>AmqpMessage</code> argument</h4>
 <div class="paragraph">
-<p>The AMQP client methods that had <code>Handler&lt;AmqpMessage&gt;</code> as an argument have been removed. In earlier releases, you could set this handler on  <code>ReadStream&lt;AmqpMessage&gt;</code>. However, if you migrate your applications to use futures, such types of methods cannot be used.</p>
+<p>The AMQP client methods that had <code>Handler&lt;AmqpMessage&gt;</code> as an argument have been removed. In earlier releases, you could set this handler on  <code>ReadStream&lt;AmqpMessage&gt;</code>. However, if you migrate your applications to use futures, such methods cannot be used.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -4428,7 +4421,7 @@ client
 <div class="sect3">
 <h4 id="_versioning_of_javascript_client">Versioning of JavaScript client</h4>
 <div class="paragraph">
-<p>In earlier releases, for every Vert.x release included a new release of the JavaScript client.</p>
+<p>Before Vert.x 4, every Vert.x release included a new release of the JavaScript client.</p>
 </div>
 <div class="paragraph">
 <p>However, from Vert.x 4 onward, a new version of JavaScript client will be available in npm only if there changes in the client. You do not need to update your client application for every Vert.x release, unless there is a version change.</p>
@@ -4476,7 +4469,7 @@ client
 <div class="sect3">
 <h4 id="migrating-applications-to-new-redis-client_changes-in-vertx-redis-client">Migrating existing Redis client applications to new client</h4>
 <div class="paragraph">
-<p>You can migrate your existing applications to new <code>Redis</code> client directly or use the helper class <code>RedisAPI</code> to move your in two steps.</p>
+<p>You can migrate your existing applications to new <code>Redis</code> client directly or use the helper class <code>RedisAPI</code> to migrate your applications in two steps.</p>
 </div>
 <div class="paragraph">
 <p>Before migrating the applications you must create the client.</p>
@@ -4488,9 +4481,9 @@ client
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Create the redis client (3.x)
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Create the redis client (3.x)</span>
 RedisClient client = RedisClient
-  .create(vertx, new RedisOptions().setHost(host));</pre>
+  .create(vertx, <span class="keyword">new</span> RedisOptions().setHost(host));</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4498,11 +4491,11 @@ RedisClient client = RedisClient
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Create the redis client (4.x)
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Create the redis client (4.x)</span>
 Redis client = Redis
   .createClient(
     vertx,
-    "redis://server.address:port");</pre>
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">redis://server.address:port</span><span class="delimiter">&quot;</span></span>);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4510,7 +4503,7 @@ Redis client = Redis
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>redis[s]://[[user]:password@]server[:port]/[database]</pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="java">redis[s]:<span class="comment">//[[user]:password@]server[:port]/[database]</span></code></pre>
 </div>
 </div>
 </div>
@@ -4540,22 +4533,22 @@ Redis client = Redis
 <p>You must create the client and then update the applications to handle requests.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to handle requests after creating the client in Vert.x 3.x releases.</p>
+<p>The following example shows how to handle requests after creating the client in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Using 3.x
-// omitting the error handling for brevity
-client.set("key", "value", s -&gt; {
-  if (s.succeeded()) {
-    System.out.println("key stored");
-    client.get("key", g -&gt; {
-      if (s.succeeded()) {
-        System.out.println("Retrieved value: " + s.result());
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Using 3.x</span>
+<span class="comment">// omitting the error handling for brevity</span>
+client.set(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span>, s -&gt; {
+  <span class="keyword">if</span> (s.succeeded()) {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">key stored</span><span class="delimiter">&quot;</span></span>);
+    client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>, g -&gt; {
+      <span class="keyword">if</span> (s.succeeded()) {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Retrieved value: </span><span class="delimiter">&quot;</span></span> + s.result());
       }
     });
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4564,24 +4557,24 @@ for setting the key-value pairs instead of hard coding options. See <a href="htt
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Using 4.x
-// omitting the error handling for brevity
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Using 4.x</span>
+<span class="comment">// omitting the error handling for brevity</span>
 
-// 1. Wrap the client into a RedisAPI
+<span class="comment">// 1. Wrap the client into a RedisAPI</span>
 api = RedisAPI.api(client);
 
-// 2. Use the typed API
+<span class="comment">// 2. Use the typed API</span>
 api.set(
-    Arrays.asList("key", "value"), s -&gt; {
-    if (s.succeeded()) {
-      System.out.println("key stored");
-      client.get("key", g -&gt; {
-        if (s.succeeded()) {
-          System.out.println("Retrieved value: " + s.result());
+    <span class="predefined-type">Arrays</span>.asList(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span>), s -&gt; {
+    <span class="keyword">if</span> (s.succeeded()) {
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">key stored</span><span class="delimiter">&quot;</span></span>);
+      client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>, g -&gt; {
+        <span class="keyword">if</span> (s.succeeded()) {
+          <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Retrieved value: </span><span class="delimiter">&quot;</span></span> + s.result());
         }
       });
     }
-});</pre>
+});</code></pre>
 </div>
 </div>
 </div>
@@ -4607,45 +4600,45 @@ api.set(
 <p>You must create the client and then update the applications to handle requests.</p>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to set and get requests after creating the client in Vert.x 3.x releases.</p>
+<p>The following example shows how to set and get requests after creating the client in Vert.x 3.x releases.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Using 3.x
-// omitting the error handling for brevity
-client.set("key", "value", s -&gt; {
-  if (s.succeeded()) {
-    System.out.println("key stored");
-    client.get("key", g -&gt; {
-      if (s.succeeded()) {
-        System.out.println("Retrieved value: " + s.result());
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Using 3.x</span>
+<span class="comment">// omitting the error handling for brevity</span>
+client.set(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span>, s -&gt; {
+  <span class="keyword">if</span> (s.succeeded()) {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">key stored</span><span class="delimiter">&quot;</span></span>);
+    client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>, g -&gt; {
+      <span class="keyword">if</span> (s.succeeded()) {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Retrieved value: </span><span class="delimiter">&quot;</span></span> + s.result());
       }
     });
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The following example shows you how to handle requests after creating the client in Vert.x 4.</p>
+<p>The following example shows how to handle requests after creating the client in Vert.x 4.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Using 4.x
-// omitting the error handling for brevity
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Using 4.x</span>
+<span class="comment">// omitting the error handling for brevity</span>
 
-import static io.vertx.redis.client.Request.cmd;
-import static io.vertx.redis.client.Command.*;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">io.vertx.redis.client.Request.cmd</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">io.vertx.redis.client.Command</span>.*;
 
-client.send(cmd(SET).arg("key").arg("value"), s -&gt; {
-    if (s.succeeded()) {
-      System.out.println("key stored");
-      client.send(cmd(GET).arg("key"), g -&gt; {
-        if (s.succeeded()) {
-          System.out.println("Retrieved value: " + s.result());
+client.send(cmd(SET).arg(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>).arg(<span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span>), s -&gt; {
+    <span class="keyword">if</span> (s.succeeded()) {
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">key stored</span><span class="delimiter">&quot;</span></span>);
+      client.send(cmd(GET).arg(<span class="string"><span class="delimiter">&quot;</span><span class="content">key</span><span class="delimiter">&quot;</span></span>), g -&gt; {
+        <span class="keyword">if</span> (s.succeeded()) {
+          <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Retrieved value: </span><span class="delimiter">&quot;</span></span> + s.result());
         }
       });
     }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4661,7 +4654,7 @@ client.send(cmd(SET).arg("key").arg("value"), s -&gt; {
 <p>In the new client, the commands are not hardcoded. The responses are of the type <code>Response</code>. The new wire protocol has more range of types.</p>
 </div>
 <div class="paragraph">
-<p>In older client, a response would be of a type:</p>
+<p>In older client, a response would be of following types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4683,7 +4676,7 @@ client.send(cmd(SET).arg("key").arg("value"), s -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>In the new client, the response is of type:</p>
+<p>In the new client, the response is of following types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4715,7 +4708,7 @@ client.send(cmd(SET).arg("key").arg("value"), s -&gt; {
 </ul>
 </div>
 <div class="paragraph">
-<p>If the data received is not of the requested type, then the type converters convert it to the closet possible data type.
+<p>If the received data is not of the requested type, then the type converters convert it to the closet possible data type.
 When the conversion to a particular type is not possible, the <code>UnsupportedOperationException</code> is thrown. For example, conversion from <code>String</code> to <code>List</code> or <code>Map</code> is not possible.</p>
 </div>
 <div class="paragraph">
@@ -4726,16 +4719,16 @@ When the conversion to a particular type is not possible, the <code>UnsupportedO
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Using 4.x
-// omitting the error handling for brevity
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// Using 4.x</span>
+<span class="comment">// omitting the error handling for brevity</span>
 
-import static io.vertx.redis.client.Request.cmd;
-import static io.vertx.redis.client.Command.*;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">io.vertx.redis.client.Request.cmd</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">io.vertx.redis.client.Command</span>.*;
 
-client.send(cmd(MGET).arg("key1").arg("key2").arg("key3"), mget -&gt; {
+client.send(cmd(MGET).arg(<span class="string"><span class="delimiter">&quot;</span><span class="content">key1</span><span class="delimiter">&quot;</span></span>).arg(<span class="string"><span class="delimiter">&quot;</span><span class="content">key2</span><span class="delimiter">&quot;</span></span>).arg(<span class="string"><span class="delimiter">&quot;</span><span class="content">key3</span><span class="delimiter">&quot;</span></span>), mget -&gt; {
   mget.result()
     .forEach(value -&gt; {
-      // Do something with a single value...</pre>
+      <span class="comment">// Use the single value</span></code></pre>
 </div>
 </div>
 </div>
@@ -5033,7 +5026,7 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 </div>
 <div class="paragraph">
-<p>If you run a Vert.x cluster on Openshift, the <code>infinispan-cloud</code> JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the <code>infinispan-core</code> JAR.</p>
+<p>If you run an Vert.x cluster on Openshift, the <code>infinispan-cloud</code> JAR is no longer needed. The JAR has been removed from the dependencies section of the build file. The configuration files that were bundled in this JAR are now included in the <code>infinispan-core</code> JAR.</p>
 </div>
 </div>
 </div>
@@ -5208,10 +5201,10 @@ This change removes more than 10MB of assets from the dependencies.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>If you have a Vert.x cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.</p>
+<p>If you have an Vert.x cluster for a single application or for some closely related microservices, you can migrate the entire codebase to the new cluster at one time.</p>
 </div>
 <div class="paragraph">
-<p>However, if you cannot migrate the codebase at one time, use the recommendations in this section to migrate a Vert.x 3.x codebase to Vert.x 4.</p>
+<p>However, if you cannot migrate the codebase at one time, use the recommendations in this section to migrate an Vert.x 3.x codebase to Vert.x 4.</p>
 </div>
 <div class="sect3">
 <h4 id="_splitting_the_cluster">Splitting the cluster</h4>
@@ -5241,7 +5234,7 @@ This change removes more than 10MB of assets from the dependencies.</p>
 <p>If you cannot split your cluster, then use <a href="https://github.com/vert-x3/vertx-eventbus-link">Vert.x EventBus Link</a> to migrate your codebase incrementally.</p>
 </div>
 <div class="paragraph">
-<p>Vert.x EventBus Link is a tool that connects a Vert.x 3.x clustered EventBus to a Vert.x 4 clustered EventBus.</p>
+<p>Vert.x EventBus Link is a tool that connects an Vert.x 3.x clustered EventBus to an Vert.x 4 clustered EventBus.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -5486,7 +5479,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-17 14:51:49 UTC
+Last updated 2020-12-17 16:52:47 UTC
 </div>
 </div>
 </body>
