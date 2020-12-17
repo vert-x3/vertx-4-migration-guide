@@ -37,7 +37,11 @@ request.exceptionHandler(err -> {
 request.end();
 ----
 
+<<<<<<< HEAD
+The following example shows how to send a GET request in {VertX} {v4} release.
+=======
 The following example shows how to send a GET request in {VertX} {v4}.
+>>>>>>> Rephrasing changes
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -68,7 +72,11 @@ client.request(HttpMethod.GET, 80, "example.com", "/", ar -> {
 
 You can see that error handling is better in the new HTTP client.
 
+<<<<<<< HEAD
+The following example shows you how to use future composition in GET operation in {VertX} {v4}.
+=======
 The following example shows how to use future composition in a GET operation in {VertX} {v4}.
+>>>>>>> Rephrasing changes
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
