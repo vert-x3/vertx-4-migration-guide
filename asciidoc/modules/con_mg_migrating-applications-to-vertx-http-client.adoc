@@ -201,14 +201,12 @@ response.end(ar -> {
   }
 });
 ----
-+
 
-On the other hand, you can also handle the response with method such as onSucces(), compose(), bodyHandler() and so on.
+You can also handle the response with methods such as, `onSucces()`, `compose()`, `bodyHandler()` and so on. The following examples demonstrate handling responses using the `onSuccess()` method.
 
-The following examples demonstrate handling responses with the operation onSuccess :
+The following example shows how to use HTTP client with the `result()` method in {VertX} {v3x} releases.
 
-The following example shows how to use HTTP client with the result() method in {VertX} {v3x} releases:
-
+[source,java,options="nowrap",subs="attributes+"]
 ----
 HttpClient client = vertx.createHttpClient(options);
 
@@ -216,13 +214,14 @@ HttpClient client = vertx.createHttpClient(options);
       .onSuccess(request -> {
         request.onSuccess(resp -> {
 
-        //Handler some operation with the response
+        //Code to handle HTTP response
         });
       });
 ----
 
-The following example shows how to use HTTP client with the result() method in {VertX} {v4x} releases:
+The following example shows how to use HTTP client with the `result()` method in {VertX} {v4}.
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 HttpClient client = vertx.createHttpClient(options);
 
@@ -230,9 +229,7 @@ HttpClient client = vertx.createHttpClient(options);
       .onSuccess(request -> {
         request.response().onSuccess(resp -> {
 
-        //Handler some operation with the response
+        //Code to handle HTTP response
         });
       });
 ----
-
-
