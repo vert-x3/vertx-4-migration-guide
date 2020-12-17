@@ -49,15 +49,11 @@ The following example shows how to configure key pair in {VertX} {v3x}.
 new PubSecKeyOptions()
   .setPublicKey(
     // remove the PEM boundaries
-    // (don't do this as it doesn't handle end of lines
-    // it's for illustration purposes)
     pubPemString
       .replaceAll("-----BEGIN PUBLIC KEY----")
       .replaceAll("-----END PUBLIC KEY----"))
   .setSecretKey(
     // remove the PEM boundaries
-    // (don't do this as it doesn't handle end of lines
-    // it's for illustration purposes)
     secPemString
       .replaceAll("-----BEGIN PUBLIC KEY----")
       .replaceAll("-----END PUBLIC KEY----"));
@@ -71,12 +67,12 @@ The following example shows how to configure key pair in {VertX} {v4}.
 ----
 PubSecKeyOptions pubKey =
   new PubSecKeyOptions()
-    // the buffer is the exact contents of the PEM file (boundaries included)
+    // the buffer is the exact contents of the PEM file and had boundaries included in it
     .setBuffer(pubPemString);
 
 PubSecKeyOptions secKey =
   new PubSecKeyOptions()
-    // the buffer is the exact contents of the PEM file (boundaries included)
+    // the buffer is the exact contents of the PEM file and had boundaries included in it
     .setBuffer(secPemString);
 ----
 
@@ -86,7 +82,7 @@ You can now handle X509 certificates using `PubSecKeyOptions`.
 ----
 PubSecKeyOptions x509Certificate =
   new PubSecKeyOptions()
-    // the buffer is the exact contents of the PEM file (boundaries included)
+    // the buffer is the exact contents of the PEM file and had boundaries included in it
     .setBuffer(x509PemString);
 ----
 
@@ -115,8 +111,8 @@ The following example shows how to load a `jceks` keystore in {VertX} {v4}.
 ----
 new KeyStoreOptions()
   .setPath("path/to/keystore.jks")
-  // this is required as for modern JDKs this isn't the default
-  // type and probaly `pkcs12` will be picked instead
+  // Modern JDKs use `jceks` keystore. But this type is not the default
+  // If the type is not set to `jceks` then probably `pkcs12` will be used
   .setType("jceks")
   .setPassword("keystore-password")
   // optionally if your keys have different passwords
