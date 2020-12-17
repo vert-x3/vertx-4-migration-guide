@@ -38,7 +38,10 @@ request.end();
 ----
 
 The following example shows how to send a GET request in {VertX} {v4}.
+<<<<<<< HEAD
 
+=======
+>>>>>>> fef25c1c2fd1384740904ee86a123daf6ae43e0c
 [source,java,options="nowrap",subs="attributes+"]
 ----
 client.request(HttpMethod.GET, 80, "example.com", "/", ar -> {

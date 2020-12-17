@@ -9,6 +9,7 @@ The `ServiceProxyProcessor` class has been removed.
 
 To use the service proxy code generator, you must import `vertx-codegen` with processor classifier in your classpath:
 
+[source,java,options="nowrap",subs="attributes+"]
 ----
 <dependencies>
   <dependency>

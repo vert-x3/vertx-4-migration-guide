@@ -5,11 +5,11 @@ The following section describes the changes in {VertX} circuit breaker.
 
 == Removed execute command methods in circuit breaker
 
-The following methods are deprecated in `CircuitBreaker` class because they cannot be used with futures.
+The following methods have been removed from the `CircuitBreaker` class because they cannot be used with futures.
 
 [options="header"]
 |===
 |Removed methods|Replacing methods
-|`CircuitBreaker.executeCommand`| `CircuitBreaker.execute`
-|`CircuitBreaker.executeCommandWithFallback`| `CircuitBreaker.executeWithFallback`
+|`CircuitBreaker.executeCommand()`| `CircuitBreaker.execute()`
+|`CircuitBreaker.executeCommandWithFallback()`| `CircuitBreaker.executeWithFallback()`
 |===

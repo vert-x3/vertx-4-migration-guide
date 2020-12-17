@@ -13,7 +13,7 @@ The following example shows how to use HTTP client in {VertX} {v3x} releases.
 HttpClientRequest request = client.get(80, "example.com", "/", response -> {
   int statusCode = response.statusCode();
   response.exceptionHandler(err -> {
-    // Handle connection error, e.g connection closed
+    // Handle connection error, for example, connection closed
   });
   response.bodyHandler(body -> {
     // Handle body entirely

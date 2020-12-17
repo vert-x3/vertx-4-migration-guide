@@ -9,7 +9,8 @@ In {VertX} {v4}, the SQL client has been updated to include the following client
 
 * Reactive MySQL client
 * Reactive DB2 client
-* Existing JDBC client that includes the JDBC client API and the SQL client API.
+* Continues to include reactive PostgreSQL client. This client was available in {VertX} {v3x} releases as well.
+* Existing JDBC client now includes both the JDBC client API and the SQL client API
 
 The reactive implementations use the database network protocols. This makes them resource-efficient.
 
@@ -37,7 +38,7 @@ The following example shows how to create a pool in {VertX} {v4}.
 JDBCPool pool = JDBCPool.pool(vertx, jsonConfig);
 ----
 
-NOTE: Though the {VertX} {v3x} APIs are supported in {VertX} {v4}, it is recommended that you use the new JDC client APIs in your applications.
+NOTE: Though the {VertX} {v3x} APIs are supported in {VertX} {v4}, it is recommended that you use the new JDBC client APIs in your applications.
 
 A pool enables you to perform simple queries. You do not need to manage connections for simple queries. However, for complex queries or multiple queries, you must manage your connections.
 
@@ -49,10 +50,10 @@ The following example shows how to manage connections for queries in {VertX} {v3
 client.getConnection(res -> {
   if (res.succeeded()) {
     SQLConnection connection = res.result();
-    // very important! do not forget to return the connection
+    // Important, do not forget to return the connection
     connection.close();
   } else {
-    // Failed to get connection - deal with it
+    // Failed to get connection
   }
 });
 ----
@@ -65,10 +66,10 @@ The following example shows how to manage connections for queries in {VertX} {v4
 pool
   .getConnection()
   .onFailure(e -> {
-    // failed to get a connection
+    // Failed to get a connection
   })
   .onSuccess(conn -> {
-    // very important! don't forget to return the connection
+    // Important, do not forget to return the connection
     conn.close();
   });
 ----
@@ -114,7 +115,7 @@ The following example shows how to run queries without managing the connection i
 client.query("SELECT * FROM user WHERE emp_id > ?", new JsonArray().add(1000), res -> {
   if (res.succeeded()) {
     ResultSet rs = res2.result();
-    // Do something with results
+    // You can use these results in your application
   }
 });
 ----
@@ -144,22 +145,22 @@ The following example shows how to run queries on managed connections in {VertX}
 pool
   .getConnection()
   .onFailure(e -> {
-    // failed to get a connection
+    // Failed to get a connection
   })
   .onSuccess(conn -> {
     conn
       .query("SELECT * FROM user")
       .execute()
       .onFailure(e -> {
-        // handle the failure
-        // very important! don't forget to return the connection
+        // Handle the failure
+        // Important, do not forget to return the connection
         conn.close();
       })
       .onSuccess(rows -> {
         for (Row row : rows) {
           System.out.println(row.getString("FIRST_NAME"));
         }
-        // very important! don't forget to return the connection
+        // Important, do not forget to return the connection
         conn.close();
       });
   });
@@ -235,6 +236,6 @@ client
 
 In the JDBC client, the data types have been updated.
 
-* For an argument is of type `OUT`, you can specify its return type. In the example, the `OUT` argument is specified as type `VARCHAR` which is a JDBC constant.
+* For an argument of type `OUT`, you can specify its return type. In the example, the `OUT` argument is specified as type `VARCHAR` which is a JDBC constant.
 
 * The types are not bound by JSON limitations. You can now use database specific types instead of text constants for the type name.

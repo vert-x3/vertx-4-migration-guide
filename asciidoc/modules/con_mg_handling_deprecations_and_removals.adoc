@@ -3,7 +3,7 @@
 
 Some features and functions have been deprecated or removed in {VertX} {v4}. Before you migrate your applications to {VertX} {v4}, check for deprecations and removals.
 
-* Some APIs were deprecated in a {VertX} {v3x} release and new equivalent APIs were provided in that release.
+* Some APIs were deprecated in an {VertX} {v3x} release and new equivalent APIs were provided in that release.
 
 * The deprecated APIs have been removed in {VertX} {v4}.
 
