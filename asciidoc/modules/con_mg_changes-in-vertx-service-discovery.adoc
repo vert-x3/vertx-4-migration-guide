@@ -5,7 +5,7 @@ The following section describes the changes in {VertX} service discovery.
 
 == Removed create methods from service discovery that contain `ServiceDiscovery` argument 
 
-The following create methods in service discovery that have `Handler<AmqpMessage>` as an argument have been removed. These methods cannot be used with futures.
+The following create methods in service discovery that have `Handler<ServiceDiscovery>` as an argument have been removed. These methods cannot be used with futures.
 
 [options="header"]
 |===
