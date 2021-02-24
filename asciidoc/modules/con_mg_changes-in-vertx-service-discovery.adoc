@@ -17,3 +17,19 @@ The following create methods in service discovery that have `Handler<ServiceDisc
 == Service importer and exporter methods are no longer fluent
 
 The `ServiceDiscovery.registerServiceImporter()` and `ServiceDiscovery.registerServiceExporter()` methods are no longer fluent. The methods return `Future<Void>`.
+
+
+== Kubernetes Service Importer no longer registered automatically
+
+Since {VertX} {v4}, the Kubernetes bridge is no longer registered automatically.
+It is not sufficient anymore to have it on the _classpath_.
+
+It must be registered manually after creating `ServiceDiscovery`:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+JsonObject defaultConf = new JsonObject();
+serviceDiscovery.registerServiceImporter(new KubernetesServiceImporter(), defaultConf);
+----
+
+
