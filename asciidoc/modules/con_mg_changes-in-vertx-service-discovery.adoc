@@ -19,17 +19,20 @@ The following create methods in service discovery that have `Handler<ServiceDisc
 The `ServiceDiscovery.registerServiceImporter()` and `ServiceDiscovery.registerServiceExporter()` methods are no longer fluent. The methods return `Future<Void>`.
 
 
-== Kubernetes Service Importer no longer registered automatically
+== Kubernetes service importer is no longer registered automatically
 
-Since {VertX} {v4}, the Kubernetes bridge is no longer registered automatically.
-It is not sufficient anymore to have it on the _classpath_.
+The `vertx-service-discovery-bridge-kubernetes` adds the `KubernetesServiceImporter` discovery bridge.
+The bridge imports services from Kubernetes or Openshift into the Eclipse Vert.x service discovery.
 
-It must be registered manually after creating `ServiceDiscovery`:
+From {VertX} {v4}, this bridge is no longer registered automatically.
+Even if you have added the bridge in the classpath of your project, it will not be automatically registered.
+
+You must manually register the bridge after creating the `ServiceDiscovery` instance.
+
+The following example shows you how to manually register the bridge.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
 JsonObject defaultConf = new JsonObject();
 serviceDiscovery.registerServiceImporter(new KubernetesServiceImporter(), defaultConf);
 ----
-
-
