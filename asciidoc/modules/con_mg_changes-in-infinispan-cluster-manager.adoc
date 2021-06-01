@@ -5,7 +5,7 @@ The following section describes the changes in the Infinispan cluster manager.
 
 == Updates in custom configurations
 
-The Infinispan cluster manager is based on Infinispan 11.
+The Infinispan cluster manager is based on Infinispan 12.
 
 In {VertX} {v4}, the clustering SPI has been redesigned. The subscription data model has changed. As a result of this, {VertX} {v3x} nodes and {VertX} {v4} nodes cannot be added together in the same Infinispan cluster.
 
