@@ -107,7 +107,25 @@ If you want to continue using the Base64 encoder in {VertX} {v4}, you can use th
 java -Dvertx.json.base64=legacy ...
 ----
 
-A new utility method `Json.toBase64()` converts the Base64URL string to Base64. This utility can be for:
+Users that must use both {VertX} {v3x} and {VertX} {v4} releases may need to create some utility to convert from Base64
+to Base64URL. Given that both encodings are Base64, we're just changing the alphabet which makes this a trivial task:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+public String toBase64(String base64Url) {
+  return base64Url
+    .replace('+', '-')
+    .replace('/', '_');
+}
+
+public String toBase64Url(String base64) {
+  return base64
+    .replace('-', '+')
+    .replace('_', '/');
+}
+----
+
+Users should consider using these utility methods for:
 
 * Handling integration while migrating from {VertX} {v3x} releases to {VertX} {v4}.
 
@@ -118,7 +136,7 @@ Use the following example code to convert a Base64URL to Base64 encoder.
 [source,java,options="nowrap",subs="attributes+"]
 ----
 String base64url = someJsonObject.getString("base64encodedElement")
-String base64 = Json.toBase64(base64url);
+String base64 = toBase64(base64url);
 ----
 
 == Removed the JSON converter method from trust options
