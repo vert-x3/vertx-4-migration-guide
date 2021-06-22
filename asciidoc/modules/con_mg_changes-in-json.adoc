@@ -107,8 +107,9 @@ If you want to continue using the Base64 encoder in {VertX} {v4}, you can use th
 java -Dvertx.json.base64=legacy ...
 ----
 
-Users that must use both {VertX} {v3x} and {VertX} {v4} releases may need to create some utility to convert from Base64
-to Base64URL. Given that both encodings are Base64, we're just changing the alphabet which makes this a trivial task:
+If you want to use both {VertX} {v3x} and {VertX} {v4} releases, you can use the following utility to convert the Base64
+string to Base64URL. Since both the encodings are Base64, you will have to make minimal updates to your existing
+applications.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -125,7 +126,7 @@ public String toBase64Url(String base64) {
 }
 ----
 
-Users should consider using these utility methods for:
+You must use the utility methods in the following scenarios:
 
 * Handling integration while migrating from {VertX} {v3x} releases to {VertX} {v4}.
 
@@ -137,6 +138,38 @@ Use the following example code to convert a Base64URL to Base64 encoder.
 ----
 String base64url = someJsonObject.getString("base64encodedElement")
 String base64 = toBase64(base64url);
+----
+
+The helper functions described above address plain JSON migrations. If you use automatic object mapping from JSON
+to a {Java} POJO, then a custom object mapper needs to be created to your specific use case.
+
+An object mapper with a custom Base64 decoder:
+
+[source,java,options="nowrap",subs="attributes+"]
+----
+// simple deserializer from base64 to byte[]
+class ByteArrayDeserializer extends JsonDeserializer<byte[]> {
+  ByteArrayDeserializer() {
+  }
+
+  public byte[] deserialize(JsonParser p, DeserializationContext ctxt) {
+    String text = p.getText();
+    return Base64.getDecoder()
+      .decode(text);
+  }
+}
+
+// ...
+
+ObjectMapper mapper = new ObjectMapper();
+
+// create a custom module to address the base64 decoding
+SimpleModule module = new SimpleModule();
+module.addDeserializer(byte[].class, new ByteArrayDeserializer());
+mapper.registerModule(module);
+
+// JSON to POJO with custom deserializer
+mapper.readValue(json, MyClass.class);
 ----
 
 == Removed the JSON converter method from trust options
