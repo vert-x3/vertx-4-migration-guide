@@ -140,8 +140,8 @@ String base64url = someJsonObject.getString("base64encodedElement")
 String base64 = toBase64(base64url);
 ----
 
-The helper functions {toBase64} and {toBase64Url} enable only JSON migrations. If you use automatic object mapping from JSON
-to a {Java} POJO in your applications, then you must create a custom object mapper to convert the Base64
+The helper functions {toBase64} and {toBase64Url} enable only JSON migrations. If you use automatic object mapping from
+JSON to a {Java} POJO in your applications, then you must create a custom object mapper to convert the Base64
 string to Base64URL.
 
 The following example shows you how to create a object mapper with custom Base64 decoder.
