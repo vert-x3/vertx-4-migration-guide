@@ -108,7 +108,7 @@ java -Dvertx.json.base64=legacy ...
 ----
 
 During your migration from {VertX} {v3x} and {VertX} {v4} if you have partially migrated your applications, then you
-will have some applications on version 3 and 4. In such cases where you have two versions of Vert.x, you can use the
+will have applications on both version 3 and 4. In such cases where you have two versions of {VertX} you can use the
 following utility to convert the Base64 string to Base64URL.
 
 [source,java,options="nowrap",subs="attributes+"]
