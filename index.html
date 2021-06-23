@@ -2452,7 +2452,27 @@ default:
 </div>
 </div>
 <div class="paragraph">
-<p>A new utility method <code>Json.toBase64()</code> converts the Base64URL string to Base64. This utility can be for:</p>
+<p>During your migration from Vert.x 3.x and Vert.x 4 if you have partially migrated your applications, then you
+will have applications on both version 3 and 4. In such cases where you have two versions of Vert.x you can use the
+following utility to convert the Base64 string to Base64URL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> toBase64(<span class="predefined-type">String</span> base64Url) {
+  <span class="keyword">return</span> base64Url
+    .replace(<span class="string"><span class="delimiter">'</span><span class="content">+</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">-</span><span class="delimiter">'</span></span>)
+    .replace(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">_</span><span class="delimiter">'</span></span>);
+}
+
+<span class="directive">public</span> <span class="predefined-type">String</span> toBase64Url(<span class="predefined-type">String</span> base64) {
+  <span class="keyword">return</span> base64
+    .replace(<span class="string"><span class="delimiter">'</span><span class="content">-</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">+</span><span class="delimiter">'</span></span>)
+    .replace(<span class="string"><span class="delimiter">'</span><span class="content">_</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You must use the utility methods in the following scenarios:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2470,7 +2490,42 @@ default:
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="predefined-type">String</span> base64url = someJsonObject.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">base64encodedElement</span><span class="delimiter">&quot;</span></span>)
-<span class="predefined-type">String</span> base64 = Json.toBase64(base64url);</code></pre>
+<span class="predefined-type">String</span> base64 = toBase64(base64url);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The helper functions {toBase64} and {toBase64Url} enable only JSON migrations. If you use object mapping to
+automatically map JSON objects to a {Java} POJO in your applications, then you must create a custom object mapper to
+convert the Base64 string to Base64URL.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows you how to create a object mapper with custom Base64 decoder.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="comment">// simple deserializer from Base64 to byte[]</span>
+<span class="type">class</span> <span class="class">ByteArrayDeserializer</span> <span class="directive">extends</span> JsonDeserializer&lt;<span class="type">byte</span><span class="type">[]</span>&gt; {
+  ByteArrayDeserializer() {
+  }
+
+  <span class="directive">public</span> <span class="type">byte</span><span class="type">[]</span> deserialize(JsonParser p, DeserializationContext ctxt) {
+    <span class="predefined-type">String</span> text = p.getText();
+    <span class="keyword">return</span> Base64.getDecoder()
+      .decode(text);
+  }
+}
+
+<span class="comment">// ...</span>
+
+ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();
+
+<span class="comment">// create a custom module to address the Base64 decoding</span>
+SimpleModule module = <span class="keyword">new</span> SimpleModule();
+module.addDeserializer(<span class="type">byte</span><span class="type">[]</span>.class, <span class="keyword">new</span> ByteArrayDeserializer());
+mapper.registerModule(module);
+
+<span class="comment">// JSON to POJO with custom deserializer</span>
+mapper.readValue(json, MyClass.class);</code></pre>
 </div>
 </div>
 </div>
@@ -5502,7 +5557,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-23 04:01:46 UTC
+Last updated 2021-06-23 08:58:52 UTC
 </div>
 </div>
 </body>
