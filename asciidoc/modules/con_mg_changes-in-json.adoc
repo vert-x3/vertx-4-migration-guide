@@ -107,9 +107,9 @@ If you want to continue using the Base64 encoder in {VertX} {v4}, you can use th
 java -Dvertx.json.base64=legacy ...
 ----
 
-If you want to use both {VertX} {v3x} and {VertX} {v4} releases, you can use the following utility to convert the Base64
-string to Base64URL. Since both the encodings are Base64, you will have to make minimal updates to your existing
-applications.
+During your migration from {VertX} {v3x} and {VertX} {v4} if you have partially migrated your applications, then you
+will have some applications on version 3 and 4. In such cases where you have two versions of Vert.x, you can use the
+following utility to convert the Base64 string to Base64URL.
 
 [source,java,options="nowrap",subs="attributes+"]
 ----
@@ -140,9 +140,9 @@ String base64url = someJsonObject.getString("base64encodedElement")
 String base64 = toBase64(base64url);
 ----
 
-The helper functions {toBase64} and {toBase64Url} enable only JSON migrations. If you use automatic object mapping from
-JSON to a {Java} POJO in your applications, then you must create a custom object mapper to convert the Base64
-string to Base64URL.
+The helper functions {toBase64} and {toBase64Url} enable only JSON migrations. If you use object mapping to
+automatically map JSON objects to a {Java} POJO in your applications, then you must create a custom object mapper to
+convert the Base64 string to Base64URL.
 
 The following example shows you how to create a object mapper with custom Base64 decoder.
 
