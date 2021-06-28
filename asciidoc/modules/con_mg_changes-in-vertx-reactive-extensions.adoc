@@ -3,6 +3,22 @@
 
 This section describes the changes in Reactive Extensions (Rx) in {VertX}. {VertX} uses the RxJava library.
 
+== Support for RxJava 3
+
+From {VertX} 4.1.0, RxJava 3 is supported.
+
+* A new rxified API is available in the `io.vertx.rxjava3` package.
+
+* Integration with {VertX} JUnit5 is provided by the `vertx-junit5-rx-java3` binding.
+
+To upgrade to RxJava 3, you must make the following changes:
+
+* In the `pom.xml` file, under `<dependency>` change the RxJava 1 and 2 bindings from `vertx-rx-java` or `vertx-rx-java2` to `vertx-rx-java3`.
+
+* In your application, update the imports from `io.vertx.reactivex.\*` to `io.vertx.rxjava3.*`.
+
+* In your application, update the imports for RxJava 3 types also. For more information, see _What’s new_ section in RxJava 3 documentation.
+
 == Removed `onComplete` callback from write stream
 
 The `WriteStreamSubscriber.onComplete()` callback has been removed. This callback was invoked if `WriteStream` had pending streams of data to be written.
