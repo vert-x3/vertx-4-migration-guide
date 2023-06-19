@@ -32,7 +32,7 @@ The following example shows how methods of `PubSecKeyOptions` class should be us
 ----
 new PubSecKeyOptions()
     .setAlgorithm("HS256")
-    .setSecretKey("password")
+    .setBuffer("password")
 ----
 
 == Updates in public secret keys management
