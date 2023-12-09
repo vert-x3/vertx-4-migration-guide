@@ -2169,6 +2169,38 @@ default:
 <p>This section describes the changes in Reactive Extensions (Rx) in Vert.x. Vert.x uses the RxJava library.</p>
 </div>
 <div class="sect3">
+<h4 id="_support_for_rxjava_3">Support for RxJava 3</h4>
+<div class="paragraph">
+<p>From Vert.x 4.1.0, RxJava 3 is supported.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A new rxified API is available in the <code>io.vertx.rxjava3</code> package.</p>
+</li>
+<li>
+<p>Integration with Vert.x JUnit5 is provided by the <code>vertx-junit5-rx-java3</code> binding.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To upgrade to RxJava 3, you must make the following changes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <code>pom.xml</code> file, under <code>&lt;dependency&gt;</code> change the RxJava 1 and 2 bindings from <code>vertx-rx-java</code> or <code>vertx-rx-java2</code> to <code>vertx-rx-java3</code>.</p>
+</li>
+<li>
+<p>In your application, update the imports from <code>io.vertx.reactivex.*</code> to <code>io.vertx.rxjava3.*</code>.</p>
+</li>
+<li>
+<p>In your application, update the imports for RxJava 3 types also. For more information, see <em>What’s new</em> section in RxJava 3 documentation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_removed_code_oncomplete_code_callback_from_write_stream">Removed <code>onComplete</code> callback from write stream</h4>
 <div class="paragraph">
 <p>The <code>WriteStreamSubscriber.onComplete()</code> callback has been removed. This callback was invoked if <code>WriteStream</code> had pending streams of data to be written.</p>
@@ -3453,7 +3485,7 @@ provider.getAuthorizations(user, res -&gt; {
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="java"><span class="keyword">new</span> PubSecKeyOptions()
     .setAlgorithm(<span class="string"><span class="delimiter">&quot;</span><span class="content">HS256</span><span class="delimiter">&quot;</span></span>)
-    .setSecretKey(<span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>)</code></pre>
+    .setBuffer(<span class="string"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
@@ -5464,6 +5496,9 @@ This change resulted in following updates in JUnit5:</p>
 </li>
 <li>
 <p>RxJava 1 and 2 bindings are now available as <code>vertx-junit5-rx-java</code> and <code>vertx-junit5-rx-java2</code> modules in the <code>vertx-junit5-extensions</code> repository.</p>
+<div class="paragraph">
+<p>From Eclipse Vert.x 4.1.0, the RxJava 3 binding <code>vertx-junit5-rx-java3</code> is available.</p>
+</div>
 </li>
 </ul>
 </div>
@@ -5557,7 +5592,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-08-23 04:01:58 UTC
+Last updated 2023-12-09 04:00:59 UTC
 </div>
 </div>
 </body>
