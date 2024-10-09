@@ -649,16 +649,16 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>WebClient client = WebClient.create(vertx);
-HttpRequest request = client.get("/resource");
+<pre class="CodeRay highlight"><code data-lang="java">WebClient client = WebClient.create(vertx);
+HttpRequest request = client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/resource</span><span class="delimiter">&quot;</span></span>);
 
 request.send(ar -&gt; {
-  if (ar.succeeded()) {
+  <span class="keyword">if</span> (ar.succeeded()) {
     HttpResponse response = ar.result();
-  } else {
-    Throwable error = ar.cause();
+  } <span class="keyword">else</span> {
+    <span class="predefined-type">Throwable</span> error = ar.cause();
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -666,18 +666,18 @@ request.send(ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>WebClient client = WebClient.create(vertx);
-HttpRequest request = client.get("/resource");
+<pre class="CodeRay highlight"><code data-lang="java">WebClient client = WebClient.create(vertx);
+HttpRequest request = client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/resource</span><span class="delimiter">&quot;</span></span>);
 
-Future&lt;HttpResponse&gt; response = request.send();
+<span class="predefined-type">Future</span>&lt;HttpResponse&gt; response = request.send();
 
 response.onComplete(ar -&gt; {
-  if (ar.succeeded()) {
+  <span class="keyword">if</span> (ar.succeeded()) {
     HttpResponse response = ar.result();
-  } else {
-    Throwable failure = ar.cause();
+  } <span class="keyword">else</span> {
+    <span class="predefined-type">Throwable</span> failure = ar.cause();
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -689,21 +689,21 @@ can see that the error is handled at every composition.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client.get("/resource1").send(ar1 -&gt; {
-  if (ar1.succeeded()) {
+<pre class="CodeRay highlight"><code data-lang="java">client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/resource1</span><span class="delimiter">&quot;</span></span>).send(ar1 -&gt; {
+  <span class="keyword">if</span> (ar1.succeeded()) {
     HttpResponse response = ar.result();
     JsonObject json = response.body();
-    client.put("/resource2").sendJsonObject(ar2 -&gt; {
-      if (ar2.succeeded()) {
-        // Handle final result
-      } else {
-        Throwable failure2 = ar.cause();
+    client.put(<span class="string"><span class="delimiter">&quot;</span><span class="content">/resource2</span><span class="delimiter">&quot;</span></span>).sendJsonObject(ar2 -&gt; {
+      <span class="keyword">if</span> (ar2.succeeded()) {
+        <span class="comment">// Handle final result</span>
+      } <span class="keyword">else</span> {
+        <span class="predefined-type">Throwable</span> failure2 = ar.cause();
       }
     });
-  } else {
-    Throwable failure1 = ar.cause();
+  } <span class="keyword">else</span> {
+    <span class="predefined-type">Throwable</span> failure1 = ar.cause();
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -711,17 +711,17 @@ can see that the error is handled at every composition.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Future&lt;HttpResponse&gt; fut1 = client.get("/resource1").send();
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Future</span>&lt;HttpResponse&gt; fut1 = client.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">/resource1</span><span class="delimiter">&quot;</span></span>).send();
 
-Future&lt;HttpResponse&gt; fut2 = fut1.compose(response -&gt; client.put("/resource2").sendJsonObject(response.body()));
+<span class="predefined-type">Future</span>&lt;HttpResponse&gt; fut2 = fut1.compose(response -&gt; client.put(<span class="string"><span class="delimiter">&quot;</span><span class="content">/resource2</span><span class="delimiter">&quot;</span></span>).sendJsonObject(response.body()));
 
 fut2.onComplete(ar -&gt; {
-  if (ar.succeeded()) {
-    // Handle final result
-  } else {
-    Throwable failure = ar.cause();
+  <span class="keyword">if</span> (ar.succeeded()) {
+    <span class="comment">// Handle final result</span>
+  } <span class="keyword">else</span> {
+    <span class="predefined-type">Throwable</span> failure = ar.cause();
   }
-});</pre>
+});</code></pre>
 </div>
 </div>
 </div>
@@ -739,18 +739,18 @@ fut2.onComplete(ar -&gt; {
 <p>If you are object mapping JSON, then you must explicitly add the dependency in your project descriptor in the <code>com.fasterxml.jackson.core:jackson-databind</code> jar.</p>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;dependencies&gt;
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependencies&gt;</span>
 ...
-&lt;dependency&gt;
-&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
-&lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
-&lt;/dependency&gt;
+<span class="tag">&lt;dependency&gt;</span>
+<span class="tag">&lt;groupId&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/groupId&gt;</span>
+<span class="tag">&lt;artifactId&gt;</span>jackson-databind<span class="tag">&lt;/artifactId&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span>
 ...
-&lt;/dependencies&gt;</pre>
+<span class="tag">&lt;/dependencies&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In future, if you decide not to use object mapping of JSON, you can remove this dependency.</p>
+<p>In the future, if you decide not to use object mapping of JSON, you can remove this dependency.</p>
 </div>
 </li>
 <li>
@@ -785,10 +785,10 @@ fut2.onComplete(ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Send was deprecated in Vert.x 3.x release
-vertx.eventBus().send("some-address", "hello world", ar -&gt; {
-  // Handle response here
-});</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Send was deprecated in Vert.x 3.x release</span>
+vertx.eventBus().send(<span class="string"><span class="delimiter">&quot;</span><span class="content">some-address</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">hello world</span><span class="delimiter">&quot;</span></span>, ar -&gt; {
+  <span class="comment">// Handle response here</span>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -799,10 +799,10 @@ vertx.eventBus().send("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// New method can be used in Vert.x 3.x and Vert.x 4.x releases
-vertx.eventBus().request("some-address", "hello world", ar -&gt; {
-  // Handle response here
-});</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// New method can be used in Vert.x 3.x and Vert.x 4.x releases</span>
+vertx.eventBus().request(<span class="string"><span class="delimiter">&quot;</span><span class="content">some-address</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">hello world</span><span class="delimiter">&quot;</span></span>, ar -&gt; {
+  <span class="comment">// Handle response here</span>
+});</code></pre>
 </div>
 </div>
 </div>
@@ -893,7 +893,7 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>eventBus.send("the-address", body, ar -&gt; ...);</pre>
+<pre class="CodeRay highlight"><code data-lang="java">eventBus.send(<span class="string"><span class="delimiter">&quot;</span><span class="content">the-address</span><span class="delimiter">&quot;</span></span>, body, ar -&gt; ...);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -903,9 +903,9 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>eventBus.consumer("the-address", message -&gt; {
+<pre class="CodeRay highlight"><code data-lang="java">eventBus.consumer(<span class="string"><span class="delimiter">&quot;</span><span class="content">the-address</span><span class="delimiter">&quot;</span></span>, message -&gt; {
        message.reply(body, ar -&gt; ...);
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -918,7 +918,7 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>eventBus.request("the-address", body, ar -&gt; ...);</pre>
+<pre class="CodeRay highlight"><code data-lang="java">eventBus.request(<span class="string"><span class="delimiter">&quot;</span><span class="content">the-address</span><span class="delimiter">&quot;</span></span>, body, ar -&gt; ...);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -928,9 +928,9 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>eventBus.consumer("the-address", message -&gt; {
+<pre class="CodeRay highlight"><code data-lang="java">eventBus.consumer(<span class="string"><span class="delimiter">&quot;</span><span class="content">the-address</span><span class="delimiter">&quot;</span></span>, message -&gt; {
   message.replyAndRequest(body, ar -&gt; ...);
-});</pre>
+});</code></pre>
 </div>
 </div>
 </div>
@@ -950,8 +950,8 @@ vertx.eventBus().request("some-address", "hello world", ar -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Future&lt;String&gt; fut = getSomeFuture();
-fut.setHandler(ar -&gt; ...);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Future</span>&lt;<span class="predefined-type">String</span>&gt; fut = getSomeFuture();
+fut.setHandler(ar -&gt; ...);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -959,8 +959,8 @@ fut.setHandler(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Future&lt;String&gt; fut = getSomeFuture();
-fut.onComplete(ar -&gt; ...);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Future</span>&lt;<span class="predefined-type">String</span>&gt; fut = getSomeFuture();
+fut.onComplete(ar -&gt; ...);</code></pre>
 </div>
 </div>
 </div>
@@ -983,9 +983,9 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client.request().connectionHandler(conn -&gt; {
-  // Connection related code
-}).end();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">client.request().connectionHandler(conn -&gt; {
+  <span class="comment">// Connection related code</span>
+}).end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -993,9 +993,9 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client.connectionHandler(conn -&gt; {
-  // Connection related code
-});</pre>
+<pre class="CodeRay highlight"><code data-lang="java">client.connectionHandler(conn -&gt; {
+  <span class="comment">// Connection related code</span>
+});</code></pre>
 </div>
 </div>
 </div>
@@ -1015,7 +1015,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception;</pre>
+<pre class="CodeRay highlight"><code data-lang="java">Verticle createVerticle(<span class="predefined-type">String</span> verticleName, <span class="predefined-type">ClassLoader</span> classLoader) <span class="directive">throws</span> <span class="exception">Exception</span>;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1023,7 +1023,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>void createVerticle(String verticleName, ClassLoader classLoader, Promise&lt;Callable&lt;Verticle&gt;&gt; promise);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">void</span> createVerticle(<span class="predefined-type">String</span> verticleName, <span class="predefined-type">ClassLoader</span> classLoader, Promise&lt;<span class="predefined-type">Callable</span>&lt;Verticle&gt;&gt; promise);</code></pre>
 </div>
 </div>
 </div>
@@ -1040,7 +1040,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>return new MyVerticle();</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">return</span> <span class="keyword">new</span> MyVerticle();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1048,7 +1048,7 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>promise.complete(() -&gt; new MyVerticle());</pre>
+<pre class="CodeRay highlight"><code data-lang="java">promise.complete(() -&gt; <span class="keyword">new</span> MyVerticle());</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1312,10 +1312,10 @@ fut.onComplete(ar -&gt; ...);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// 3.x
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
 server.requestHandler(req -&gt; {
   WebSocket ws = req.upgrade();
-});</pre>
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1323,12 +1323,12 @@ server.requestHandler(req -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// 4.0
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.0</span>
 server.requestHandler(req -&gt; {
-  Future&lt;WebSocket&gt; fut = req.toWebSocket();
+  <span class="predefined-type">Future</span>&lt;WebSocket&gt; fut = req.toWebSocket();
   fut.onSuccess(ws -&gt; {
   });
-});</pre>
+});</code></pre>
 </div>
 </div>
 </li>
@@ -1345,8 +1345,8 @@ server.requestHandler(req -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// 3.x
-options.setMaxPoolSize(30); // Maximum connection is set to 30 for each endpoint</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 3.x</span>
+options.setMaxPoolSize(<span class="integer">30</span>); <span class="comment">// Maximum connection is set to 30 for each endpoint</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1357,8 +1357,8 @@ options.setMaxPoolSize(30); // Maximum connection is set to 30 for each endpoint
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// 4.0
-options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoint</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// 4.0</span>
+options.setMaxWebSockets(<span class="integer">30</span>); <span class="comment">// Maximum connection is set to 30 for each endpoint</span></code></pre>
 </div>
 </div>
 </div>
@@ -1410,15 +1410,15 @@ options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>HttpMethod PROPFIND = HttpMethod.valueOf("PROPFIND");
+<pre class="CodeRay highlight"><code data-lang="java">HttpMethod PROPFIND = HttpMethod.valueOf(<span class="string"><span class="delimiter">&quot;</span><span class="content">PROPFIND</span><span class="delimiter">&quot;</span></span>);
 
-if (method == HttpMethod.GET) {
+<span class="keyword">if</span> (method == HttpMethod.GET) {
   ...
-} else if (method.equals(PROPFIND)) {
+} <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(PROPFIND)) {
   ...
-} else {
+} <span class="keyword">else</span> {
   ...
-}</pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1429,7 +1429,7 @@ if (method == HttpMethod.GET) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client.request(HttpMethod.OTHER, ...).setRawName("PROPFIND");</pre>
+<pre class="CodeRay highlight"><code data-lang="java">client.request(HttpMethod.OTHER, ...).setRawName(<span class="string"><span class="delimiter">&quot;</span><span class="content">PROPFIND</span><span class="delimiter">&quot;</span></span>);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1437,7 +1437,7 @@ if (method == HttpMethod.GET) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>client.request(HttpMethod.valueOf("PROPFIND"), ...);</pre>
+<pre class="CodeRay highlight"><code data-lang="java">client.request(HttpMethod.valueOf(<span class="string"><span class="delimiter">&quot;</span><span class="content">PROPFIND</span><span class="delimiter">&quot;</span></span>), ...);</code></pre>
 </div>
 </div>
 </div>
@@ -1656,7 +1656,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>request.end();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">request.end();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1664,7 +1664,7 @@ When you use the HTTP client with futures, the <code>HttpClientResponse()</code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>request.end(Buffer.buffer("hello world));</pre>
+<pre class="CodeRay highlight"><code data-lang="java">request.end(<span class="predefined-type">Buffer</span>.buffer(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello world));</span></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1975,7 +1975,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Future&lt;HttpClientResponse&gt; f1 = client.send(HttpMethod.GET, 8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"));</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Future</span>&lt;HttpClientResponse&gt; f1 = client.send(HttpMethod.GET, <span class="integer">8080</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">localhost</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">/uri</span><span class="delimiter">&quot;</span></span>, HttpHeaders.set(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span>));</code></pre>
 </div>
 </div>
 </div>
@@ -2005,7 +2005,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>MultiMap headers = MultiMap.caseInsensitiveMultiMap();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">MultiMap headers = MultiMap.caseInsensitiveMultiMap();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2013,12 +2013,12 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>MultiMap headers = HttpHeaders.headers();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">MultiMap headers = HttpHeaders.headers();</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>MultiMap headers = HttpHeaders.set("content-type", "application.data");</pre>
+<pre class="CodeRay highlight"><code data-lang="java">MultiMap headers = HttpHeaders.set(<span class="string"><span class="delimiter">&quot;</span><span class="content">content-type</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application.data</span><span class="delimiter">&quot;</span></span>);</code></pre>
 </div>
 </div>
 </div>
@@ -2032,7 +2032,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>CaseInsensitiveHeaders headers = new CaseInsensitiveHeaders();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">CaseInsensitiveHeaders headers = <span class="keyword">new</span> CaseInsensitiveHeaders();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2040,7 +2040,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>MultiMap multiMap = MultiMap#caseInsensitiveMultiMap();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">MultiMap multiMap = MultiMap<span class="error">#</span>caseInsensitiveMultiMap();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2048,7 +2048,7 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>MultiMap headers = HttpHeaders.headers();</pre>
+<pre class="CodeRay highlight"><code data-lang="java">MultiMap headers = HttpHeaders.headers();</code></pre>
 </div>
 </div>
 </div>
@@ -2117,13 +2117,13 @@ response.exceptionHandler(err -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>switch (options.getClientAuth()) {
-case REQUIRED:
-// ... behavior same as in releases prior to {VertX} {v4}
-break;
-default:
-// fallback statement...
-}</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">switch</span> (options.getClientAuth()) {
+<span class="keyword">case</span> REQUIRED:
+<span class="comment">// ... behavior same as in releases prior to {VertX} {v4}</span>
+<span class="keyword">break</span>;
+<span class="keyword">default</span>:
+<span class="comment">// fallback statement...</span>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2131,8 +2131,8 @@ default:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>if (options.getClientAuth() == ClientAuth.REQUIRED) {
-// behavior in releases prior to {VertX} {v4}</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">if</span> (options.getClientAuth() == ClientAuth.REQUIRED) {
+<span class="comment">// behavior in releases prior to {VertX} {v4}</span></code></pre>
 </div>
 </div>
 </div>
@@ -3767,7 +3767,7 @@ PubSecKeyOptions secKey =
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">  <span class="comment">&lt;!-- Vert.x 3.x --&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="comment">&lt;!-- Vert.x 3.x --&gt;</span>
 <span class="tag">&lt;plugin&gt;</span>
   <span class="tag">&lt;groupId&gt;</span>org.xolstice.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
   <span class="tag">&lt;artifactId&gt;</span>protobuf-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
@@ -3786,7 +3786,7 @@ PubSecKeyOptions secKey =
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="comment">&lt;!-- Vert.x 4.0 --&gt;</span>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="comment">&lt;!-- Vert.x 4.0 --&gt;</span>
 <span class="tag">&lt;plugin&gt;</span>
   <span class="tag">&lt;groupId&gt;</span>org.xolstice.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
   <span class="tag">&lt;artifactId&gt;</span>protobuf-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
@@ -4501,11 +4501,11 @@ client
 <p>JSON scripts</p>
 <div class="listingblock">
 <div class="content">
-<pre>{
-  "devDependencies": {
-    "@vertx/eventbus-bridge-client.js": "1.0.0-1"
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">devDependencies</span><span class="delimiter">&quot;</span></span>: {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">@vertx/eventbus-bridge-client.js</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">1.0.0-1</span><span class="delimiter">&quot;</span></span>
   }
-}</pre>
+}</code></pre>
 </div>
 </div>
 </li>
@@ -4861,14 +4861,14 @@ client.send(cmd(MGET).arg(<span class="string"><span class="delimiter">&quot;</s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Before (3.x)
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Before (3.x)</span>
 Redis.createClient(
       rule.vertx(),
-      new RedisOptions()
+      <span class="keyword">new</span> RedisOptions()
         .setType(RedisClientType.SENTINEL)
-        .addConnectionString("redis://localhost:5000")
-        .setMasterName("sentinel7000")
-        .setRole(RedisRole.SLAVE));</pre>
+        .addConnectionString(<span class="string"><span class="delimiter">&quot;</span><span class="content">redis://localhost:5000</span><span class="delimiter">&quot;</span></span>)
+        .setMasterName(<span class="string"><span class="delimiter">&quot;</span><span class="content">sentinel7000</span><span class="delimiter">&quot;</span></span>)
+        .setRole(RedisRole.SLAVE));</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4876,14 +4876,14 @@ Redis.createClient(
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// After (4.0)
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// After (4.0)</span>
 Redis.createClient(
       rule.vertx(),
-      new RedisOptions()
+      <span class="keyword">new</span> RedisOptions()
         .setType(RedisClientType.SENTINEL)
-        .addConnectionString("redis://localhost:5000")
-        .setMasterName("sentinel7000")
-        .setRole(RedisRole.REPLICA));</pre>
+        .addConnectionString(<span class="string"><span class="delimiter">&quot;</span><span class="content">redis://localhost:5000</span><span class="delimiter">&quot;</span></span>)
+        .setMasterName(<span class="string"><span class="delimiter">&quot;</span><span class="content">sentinel7000</span><span class="delimiter">&quot;</span></span>)
+        .setRole(RedisRole.REPLICA));</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -4896,8 +4896,8 @@ Redis.createClient(
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// Before (3.9)
-options.setUseSlaves(RedisSlaves);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Before (3.9)</span>
+options.setUseSlaves(RedisSlaves);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4905,8 +4905,8 @@ options.setUseSlaves(RedisSlaves);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// After (4.0)
-options.setUseReplicas(RedisReplicas);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// After (4.0)</span>
+options.setUseReplicas(RedisReplicas);</code></pre>
 </div>
 </div>
 </div>
@@ -4930,18 +4930,18 @@ options.setUseReplicas(RedisReplicas);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
-import com.datastax.driver.core.SimpleStatement;
-import io.vertx.cassandra.CassandraClient;
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">com.datastax.driver.core.ResultSet</span>;
+<span class="keyword">import</span> <span class="include">com.datastax.driver.core.Row</span>;
+<span class="keyword">import</span> <span class="include">com.datastax.driver.core.SimpleStatement</span>;
+<span class="keyword">import</span> <span class="include">io.vertx.cassandra.CassandraClient</span>;
 
 SimpleStatement statement =
-  new SimpleStatement("SELECT release_version FROM system.local");
+  <span class="keyword">new</span> SimpleStatement(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT release_version FROM system.local</span><span class="delimiter">&quot;</span></span>);
 cassandraClient.execute(statement, done -&gt; {
-    ResultSet results = done.result();
+    <span class="predefined-type">ResultSet</span> results = done.result();
     Row row = resultSet.one();
-    System.out.println(row.getString("release_version"));
-});</pre>
+    <span class="predefined-type">System</span>.out.println(row.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">release_version</span><span class="delimiter">&quot;</span></span>));
+});</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4949,18 +4949,18 @@ cassandraClient.execute(statement, done -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>import com.datastax.oss.driver.api.core.cql.ResultSet;
-import com.datastax.oss.driver.api.core.cql.Row;
-import com.datastax.oss.driver.api.core.cql.SimpleStatement;
-import io.vertx.cassandra.CassandraClient;
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">com.datastax.oss.driver.api.core.cql.ResultSet</span>;
+<span class="keyword">import</span> <span class="include">com.datastax.oss.driver.api.core.cql.Row</span>;
+<span class="keyword">import</span> <span class="include">com.datastax.oss.driver.api.core.cql.SimpleStatement</span>;
+<span class="keyword">import</span> <span class="include">io.vertx.cassandra.CassandraClient</span>;
 
 SimpleStatement statement =
-  SimpleStatement.newInstance("SELECT release_version FROM system.local");
+  SimpleStatement.newInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">SELECT release_version FROM system.local</span><span class="delimiter">&quot;</span></span>);
 cassandraClient.execute(statement, done -&gt; {
-    ResultSet results = done.result();
+    <span class="predefined-type">ResultSet</span> results = done.result();
     Row row = resultSet.one();
-    System.out.println(row.getString("release_version"));
-});</pre>
+    <span class="predefined-type">System</span>.out.println(row.getString(<span class="string"><span class="delimiter">&quot;</span><span class="content">release_version</span><span class="delimiter">&quot;</span></span>));
+});</code></pre>
 </div>
 </div>
 </div>
@@ -4974,12 +4974,12 @@ cassandraClient.execute(statement, done -&gt; {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>@Table(keyspace = "test", name = "names")
-public class MappedClass {
-  @PartitionKey
-  private String name;
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Table</span>(keyspace = <span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>, name = <span class="string"><span class="delimiter">&quot;</span><span class="content">names</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MappedClass</span> {
+  <span class="annotation">@PartitionKey</span>
+  <span class="directive">private</span> <span class="predefined-type">String</span> name;
    ...
-}</pre>
+}</code></pre>
 </div>
 </div>
 </div>
@@ -4993,13 +4993,13 @@ public class MappedClass {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>import io.vertx.cassandra.CassandraClient;
-import io.vertx.cassandra.CassandraClientOptions;
-CassandraClientOptions options = new CassandraClientOptions()
-  .setContactPoints(List.of("node1.address", "node2.address", "node3.address"))
-  .setPort(9142)
-  .setKeyspace("my_keyspace");
-CassandraClient client = CassandraClient.create(vertx, options);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">io.vertx.cassandra.CassandraClient</span>;
+<span class="keyword">import</span> <span class="include">io.vertx.cassandra.CassandraClientOptions</span>;
+CassandraClientOptions options = <span class="keyword">new</span> CassandraClientOptions()
+  .setContactPoints(<span class="predefined-type">List</span>.of(<span class="string"><span class="delimiter">&quot;</span><span class="content">node1.address</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">node2.address</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">node3.address</span><span class="delimiter">&quot;</span></span>))
+  .setPort(<span class="integer">9142</span>)
+  .setKeyspace(<span class="string"><span class="delimiter">&quot;</span><span class="content">my_keyspace</span><span class="delimiter">&quot;</span></span>);
+CassandraClient client = CassandraClient.create(vertx, options);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5007,14 +5007,14 @@ CassandraClient client = CassandraClient.create(vertx, options);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>import io.vertx.cassandra.CassandraClient;
-import io.vertx.cassandra.CassandraClientOptions;
-CassandraClientOptions options = new CassandraClientOptions()
-  .addContactPoint("node1.address", 9142)
-  .addContactPoint("node2.address", 9142)
-  .addContactPoint("node3.address", 9142)
-  .setKeyspace("my_keyspace");
-CassandraClient client = CassandraClient.create(vertx, options);</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">io.vertx.cassandra.CassandraClient</span>;
+<span class="keyword">import</span> <span class="include">io.vertx.cassandra.CassandraClientOptions</span>;
+CassandraClientOptions options = <span class="keyword">new</span> CassandraClientOptions()
+  .addContactPoint(<span class="string"><span class="delimiter">&quot;</span><span class="content">node1.address</span><span class="delimiter">&quot;</span></span>, <span class="integer">9142</span>)
+  .addContactPoint(<span class="string"><span class="delimiter">&quot;</span><span class="content">node2.address</span><span class="delimiter">&quot;</span></span>, <span class="integer">9142</span>)
+  .addContactPoint(<span class="string"><span class="delimiter">&quot;</span><span class="content">node3.address</span><span class="delimiter">&quot;</span></span>, <span class="integer">9142</span>)
+  .setKeyspace(<span class="string"><span class="delimiter">&quot;</span><span class="content">my_keyspace</span><span class="delimiter">&quot;</span></span>);
+CassandraClient client = CassandraClient.create(vertx, options);</code></pre>
 </div>
 </div>
 </div>
@@ -5086,9 +5086,9 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;map name="__vertx.nodeInfo"&gt;
-  &lt;backup-count&gt;1&lt;/backup-count&gt;
-&lt;/map&gt;</pre>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;map</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.nodeInfo</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;backup-count&gt;</span>1<span class="tag">&lt;/backup-count&gt;</span>
+<span class="tag">&lt;/map&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -5124,13 +5124,13 @@ RabbitMQOptions options = <span class="keyword">new</span> RabbitMQOptions()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre> &lt;cache-container default-cache="distributed-cache"&gt;
-    &lt;distributed-cache name="distributed-cache"/&gt;
-    &lt;replicated-cache name="__vertx.subs"/&gt;
-    &lt;replicated-cache name="__vertx.haInfo"/&gt;
-    &lt;replicated-cache name="__vertx.nodeInfo"/&gt;
-    &lt;distributed-cache-configuration name="__vertx.distributed.cache.configuration"/&gt;
-  &lt;/cache-container&gt;</pre>
+<pre class="CodeRay highlight"><code data-lang="xml"> <span class="tag">&lt;cache-container</span> <span class="attribute-name">default-cache</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">distributed-cache</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;distributed-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">distributed-cache</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;replicated-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.subs</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;replicated-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.haInfo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;replicated-cache</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.nodeInfo</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;distributed-cache-configuration</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">__vertx.distributed.cache.configuration</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/cache-container&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5590,7 +5590,7 @@ to compile these scripts.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-10-09 04:00:56 UTC
+Last updated 2024-10-09 05:30:30 UTC
 </div>
 </div>
 </body>
