@@ -11,6 +11,7 @@ In {VertX} {v4}, the Cassandra client uses Datastax Java driver with version 4.x
 
 The following example shows Datastax Java driver classes and create statements in {VertX} {v3x} releases.
 
+[source,java]
 ----
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
@@ -28,6 +29,7 @@ cassandraClient.execute(statement, done -> {
 
 The following example shows Datastax Java driver classes and create statements in {VertX} {v4}.
 
+[source,java]
 ----
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
@@ -49,6 +51,7 @@ Object mappers are no longer supported because of changes in Datastax Java drive
 
 The following mapping construction is not supported in {VertX} {v4} release:
 
+[source,java]
 ----
 @Table(keyspace = "test", name = "names")
 public class MappedClass {
@@ -64,6 +67,7 @@ The `CassandraClientOptions.setPort()`, `CassandraClientOptions.getContactPoints
 
 The following example shows the use of older methods in {VertX} {v3x} releases.
 
+[source,java]
 ----
 import io.vertx.cassandra.CassandraClient;
 import io.vertx.cassandra.CassandraClientOptions;
@@ -76,6 +80,7 @@ CassandraClient client = CassandraClient.create(vertx, options);
 
 The following example shows how to use `CassandraClientOptions.addContactPoint()`method in {VertX} {v4}.
 
+[source,java]
 ----
 import io.vertx.cassandra.CassandraClient;
 import io.vertx.cassandra.CassandraClientOptions;

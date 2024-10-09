@@ -8,11 +8,15 @@ This section explains the changes in the verticles.
 In earlier releases of {VertX}, `VerticleFactory.createVerticle()` method synchronously instantiated a verticle. From {VertX} {v4} onward, the method asynchronously instantiates the verticle and returns the callback `Callable<Verticle>` instead of the single verticle instance. This improvement enables the application to call this method once and invoke the returned callable multiple times for creating multiple instances.
 
 The following code shows how verticles were instantiated in {VertX} {v3x} releases.
+
+[source,java]
 ----
 Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception;
 ----
 
 The following code shows how verticles are instantiated in {VertX} {v4}.
+
+[source,java]
 ----
 void createVerticle(String verticleName, ClassLoader classLoader, Promise<Callable<Verticle>> promise);
 ----
@@ -24,11 +28,15 @@ The `VerticleFactory` class has been simplified. The class does not require init
 If your existing applications use factories, in {VertX} {v4} you can update the code to use a callable when a promise completes or fails. The callable can be called several times.
 
 The following example shows existing factories in an {VertX} {v3x} application.
+
+[source,java]
 ----
 return new MyVerticle();
 ----
 
 The following example shows how to update existing factories to use promise in {VertX} {v4}.
+
+[source,java]
 ----
 promise.complete(() -> new MyVerticle());
 ----

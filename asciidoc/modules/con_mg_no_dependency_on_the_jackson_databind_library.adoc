@@ -7,6 +7,7 @@ In {VertX} {v4}, Jackson Databind is an optional Maven dependency. If you want t
 
 * If you are object mapping JSON, then you must explicitly add the dependency in your project descriptor in the `com.fasterxml.jackson.core:jackson-databind` jar.
 +
+[source,xml]
 ----
 <dependencies>
 ...
@@ -18,6 +19,6 @@ In {VertX} {v4}, Jackson Databind is an optional Maven dependency. If you want t
 </dependencies>
 ----
 +
-In future, if you decide not to use object mapping of JSON, you can remove this dependency.
+In the future, if you decide not to use object mapping of JSON, you can remove this dependency.
 
 * If you are not object mapping JSON, the Jackson Databind library is not required. You can run your applications without this jar.

@@ -16,11 +16,13 @@ The request-response messaging pattern should use the new `request` and `replyAn
 The following example shows the request and reply to a message in {VertX} {v3x} releases.
 
 Request::
+[source,java]
 ----
 eventBus.send("the-address", body, ar -> ...);
 ----
 
 Reply::
+[source,java]
 ----
 eventBus.consumer("the-address", message -> {
        message.reply(body, ar -> ...);
@@ -30,11 +32,13 @@ eventBus.consumer("the-address", message -> {
 The following example shows the request and reply to a message in {VertX} {v4}.
 
 Request::
+[source,java]
 ----
 eventBus.request("the-address", body, ar -> ...);
 ----
 
 Reply::
+[source,java]
 ----
 eventBus.consumer("the-address", message -> {
   message.replyAndRequest(body, ar -> ...);

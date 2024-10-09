@@ -71,6 +71,7 @@ Use the new method `HttpServerRequest.toWebSocket()` instead. This new method is
 +
 The following example shows the use of synchronous method in {VertX} {v3x}.
 +
+[source,java]
 ----
 // 3.x
 server.requestHandler(req -> {
@@ -80,6 +81,7 @@ server.requestHandler(req -> {
 +
 The following example shows the use of asynchronous method in {VertX} {v4}.
 +
+[source,java]
 ----
 // 4.0
 server.requestHandler(req -> {
@@ -95,6 +97,7 @@ In {VertX} {v3x}, you could use the the HTTP client pool size to define the maxi
 
 The following example shows how WebSocket connections are set in {VertX} {v3x}.
 
+[source,java]
 ----
 // 3.x
 options.setMaxPoolSize(30); // Maximum connection is set to 30 for each endpoint
@@ -104,6 +107,7 @@ However, in {VertX} {v4}, there is no pooling of WebSocket TCP connections, beca
 
 The following example shows how to set WebSocket connections in {VertX} {v4}.
 
+[source,java]
 ----
 // 4.0
 options.setMaxWebSockets(30); // Maximum connection is set to 30 for each endpoint
@@ -149,6 +153,7 @@ switch (method.name()) {
 
 You can also use the following code in {VertX} {v4}.
 
+[source,java]
 ----
 HttpMethod PROPFIND = HttpMethod.valueOf("PROPFIND");
 
@@ -164,11 +169,15 @@ if (method == HttpMethod.GET) {
 If you are using `HttpMethod.OTHER` value in your applications, use the following code to migrate the application to {VertX} {v4}.
 
 The following example shows you the code in {VertX} {v3x} releases.
+
+[source,java]
 ----
 client.request(HttpMethod.OTHER, ...).setRawName("PROPFIND");
 ----
 
 The following example shows you the code in {VertX} {v4}.
+
+[source,java]
 ----
 client.request(HttpMethod.valueOf("PROPFIND"), ...);
 ----

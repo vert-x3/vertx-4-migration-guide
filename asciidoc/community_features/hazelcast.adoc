@@ -15,6 +15,7 @@ If you had a custom Hazelcast configuration file in your {VertX} {v3x} applicati
 
 * Add the map `__vertx.nodeInfo`.
 
+[source,xml]
 ----
 <map name="__vertx.nodeInfo">
   <backup-count>1</backup-count>

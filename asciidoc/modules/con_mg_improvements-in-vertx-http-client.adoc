@@ -121,6 +121,7 @@ A new `send()` method is available in the `HttpClient` class.
 
 The following code shows how to send a request in {VertX} {v4}.
 
+[source,java]
 ----
 Future<HttpClientResponse> f1 = client.send(HttpMethod.GET, 8080, "localhost", "/uri", HttpHeaders.set("foo", "bar"));
 ----
@@ -137,15 +138,19 @@ The following new `MultiMap` methods have been added in the `HttpHeaders` interf
 
 The following example shows how `MultiMap` instances were created in {VertX} {v3x} releases.
 
+[source,java]
 ----
 MultiMap headers = MultiMap.caseInsensitiveMultiMap();
 ----
 
 The following examples show how to create `MultiMap` instances in {VertX} {v4}.
 
+[source,java]
 ----
 MultiMap headers = HttpHeaders.headers();
 ----
+
+[source,java]
 ----
 MultiMap headers = HttpHeaders.set("content-type", "application.data");
 ----
@@ -156,16 +161,21 @@ The `CaseInsensitiveHeaders` class is no longer public. Use the `MultiMap.caseIn
 
 The following example shows how `CaseInsensitiveHeaders` method was used in {VertX} {v3x} releases.
 
+[source,java]
 ----
 CaseInsensitiveHeaders headers = new CaseInsensitiveHeaders();
 ----
 
 The following examples show how `MultiMap` method is used in {VertX} {v4}.
 
+[source,java]
 ----
 MultiMap multiMap = MultiMap#caseInsensitiveMultiMap();
 ----
+
 OR
+
+[source,java]
 ----
 MultiMap headers = HttpHeaders.headers();
 ----

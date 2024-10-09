@@ -5,6 +5,7 @@
 
 The following example shows how a callback was used for asynchronous operations in {VertX} {v3x} releases.
 
+[source,java]
 ----
 WebClient client = WebClient.create(vertx);
 HttpRequest request = client.get("/resource");
@@ -20,6 +21,7 @@ request.send(ar -> {
 
 The following example shows how to use callback and future methods together for asynchronous operations in {VertX} {v4}.
 
+[source,java]
 ----
 WebClient client = WebClient.create(vertx);
 HttpRequest request = client.get("/resource");
@@ -40,6 +42,7 @@ Error handling is better with futures. In callbacks, you have to handle failures
 The following example shows how callbacks can be used to compose two asynchronous operations. You
 can see that the error is handled at every composition.
 
+[source,java]
 ----
 client.get("/resource1").send(ar1 -> {
   if (ar1.succeeded()) {
@@ -60,6 +63,7 @@ client.get("/resource1").send(ar1 -> {
 
 The following example shows how callbacks and futures can be used to compose two asynchronous operations in {VertX} {v4}. The error is handled only once in the end.
 
+[source,java]
 ----
 Future<HttpResponse> fut1 = client.get("/resource1").send();
 

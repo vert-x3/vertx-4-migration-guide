@@ -16,6 +16,7 @@ If you had a custom Infinispan configuration file in your {VertX} {v3x} applicat
 * Change the `__vertx.subs` cache type to replicated instead of distributed.
 * Add the replicated cache `__vertx.nodeInfo`.
 
+[source,xml]
 ----
  <cache-container default-cache="distributed-cache">
     <distributed-cache name="distributed-cache"/>

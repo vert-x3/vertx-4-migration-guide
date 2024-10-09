@@ -13,6 +13,7 @@ If the cluster manager is used without any configuration changes there is no mig
 To overide the `default-ignite.json` you can simply add `ignite.json` to your classpath. The json format supports customizing ignite options, cache options, discovery options and ssl options. For further customization you need to fall back to the old XML format.
 
 In the example below the default config is extended to activate TLS for cluster communication.
+
 [source,json]
 ----
 {

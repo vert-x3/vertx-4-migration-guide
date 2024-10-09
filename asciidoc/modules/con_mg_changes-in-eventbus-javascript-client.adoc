@@ -21,6 +21,7 @@ Use the following code in your build scripts to access the module.
 +
 ** JSON scripts
 +
+[source,json]
 ----
 {
   "devDependencies": {

@@ -4,7 +4,8 @@ The https://github.com/vert-x3/vertx-embedded-mongo-db[vertx-embedded-mongo-db] 
 
 Let's assume we want to test our persistence layer's `findApples` method to make sure it creates the correct mongo query. Here's what such a test may look like with vertx-wiremongo:
 
-```java
+[source,java]
+----
 @Test
 public void testFindApples(TestContext ctx) {
 
@@ -24,6 +25,6 @@ public void testFindApples(TestContext ctx) {
     })
     .onComplete(ctx.asyncAssertSuccess());
 }
-```
+----
 
 A complete documentation can be found https://github.com/NoEnv/vertx-wiremongo[here].

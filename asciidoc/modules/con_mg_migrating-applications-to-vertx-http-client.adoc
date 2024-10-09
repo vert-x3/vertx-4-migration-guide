@@ -100,12 +100,14 @@ WARNING: When you use the HTTP client with futures, the `HttpClientResponse()` m
 
 In {VertX} {v3x} releases, you could use the `end()` method to send requests.
 
+[source,java]
 ----
 request.end();
 ----
 
 You could also send a body in the request.
 
+[source,java]
 ----
 request.end(Buffer.buffer("hello world));
 ----

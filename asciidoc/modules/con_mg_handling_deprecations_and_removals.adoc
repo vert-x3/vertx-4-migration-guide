@@ -13,6 +13,7 @@ The Java compiler generates warnings when deprecated APIs are used. You can use 
 
 The following example shows an EventBus method that was deprecated in an {VertX} {v3x} releases.
 
+[source,java]
 ----
 // Send was deprecated in Vert.x 3.x release
 vertx.eventBus().send("some-address", "hello world", ar -> {
@@ -24,6 +25,7 @@ The method `send(String,String,Handler<AsyncResult<Message>>)` has been replaced
 
 The following example shows how to update your application to use the new method.
 
+[source,java]
 ----
 // New method can be used in Vert.x 3.x and Vert.x 4.x releases
 vertx.eventBus().request("some-address", "hello world", ar -> {

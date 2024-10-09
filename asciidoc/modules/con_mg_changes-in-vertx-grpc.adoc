@@ -10,9 +10,8 @@ In {VertX} {v4}, the module `protoc-gen-grpc-java` is no longer available. This 
 In previous releases, to work with gRPC, the following details were added to `pom.xml` file.
 
 [source,xml]
-
 ----
-  <!-- Vert.x 3.x -->
+<!-- Vert.x 3.x -->
 <plugin>
   <groupId>org.xolstice.maven.plugins</groupId>
   <artifactId>protobuf-maven-plugin</artifactId>
@@ -29,9 +28,8 @@ In previous releases, to work with gRPC, the following details were added to `po
 In {VertX} {v4}, a new gRPC compiler plugin is available. This plugin uses the official gRPC compiler instead of the fork. To work with the new gRPC plugin, add the following details to `pom.xml` file.
 
 [source,xml]
-
 ----
-    <!-- Vert.x 4.0 -->
+<!-- Vert.x 4.0 -->
 <plugin>
   <groupId>org.xolstice.maven.plugins</groupId>
   <artifactId>protobuf-maven-plugin</artifactId>

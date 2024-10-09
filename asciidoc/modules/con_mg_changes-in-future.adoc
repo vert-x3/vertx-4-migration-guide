@@ -8,6 +8,8 @@ This section explains the changes in future.
 From {VertX} {v4} onward, multiple handlers are supported for a future. The `Future<T>.setHandler()` method used to set a single handler and has been removed. Use `Future<T>.onComplete()`, `Future<T>.onSuccess()`, and `Future<T>.onFailure()` methods instead to call handlers on completion, success, and failure results of an action.
 
 The following example shows how to call a handler in {VertX} {v3x} releases.
+
+[source,java]
 ----
 Future<String> fut = getSomeFuture();
 fut.setHandler(ar -> ...);
@@ -15,6 +17,7 @@ fut.setHandler(ar -> ...);
 
 The following example shows how to call the new `Future<T>.onComplete()` method in {VertX} {v4}.
 
+[source,java]
 ----
 Future<String> fut = getSomeFuture();
 fut.onComplete(ar -> ...);
@@ -31,6 +34,8 @@ In {VertX} {v4}, the `Future<T>.completer()` method has been removed. `Future<T>
 The `HttpClientRequest.connectionHandler()` method has been removed. Use `HttpClient.connectionHandler()` method instead to call connection handlers for client requests in your application.
 
 The following example shows how the `HttpClientRequest.connectionHandler()` method was used in {VertX} {v3x} releases.
+
+[source,java]
 ----
 client.request().connectionHandler(conn -> {
   // Connection related code
@@ -38,6 +43,8 @@ client.request().connectionHandler(conn -> {
 ----
 
 The following example shows you how to use the new `HttpClient.connectionHandler()` method in {VertX} {v4}.
+
+[source,java]
 ----
 client.connectionHandler(conn -> {
   // Connection related code

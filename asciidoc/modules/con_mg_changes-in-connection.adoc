@@ -9,6 +9,7 @@ The `NetServerOptions.isClientAuthRequired()` method has been removed. Use the `
 
 The following example shows how to use a switch statement to check if authentication of the client is required.
 
+[source,java]
 ----
 switch (options.getClientAuth()) {
 case REQUIRED:
@@ -20,6 +21,8 @@ default:
 ----
 
 The following example shows how to use the check if authentication of the client is required in {Vertx} {v4}.
+
+[source,java]
 ----
 if (options.getClientAuth() == ClientAuth.REQUIRED) {
 // behavior in releases prior to {VertX} {v4}
